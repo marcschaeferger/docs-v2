@@ -1,0 +1,28 @@
+---
+title: "Pangolin vs. VPN"
+---
+
+Pangolin and VPNs both provide secure remote access, but they differ in functionality and use cases. VPNs grant full network-level access, requiring client-side software to connect, while Pangolin provides application-specific access directly through a web browser with authentication, eliminating the need for additional software on the user’s device.
+
+## Key Differences
+
+### Access Scope
+
+  - **Pangolin**: Exposes specific applications or services securely. Users access resources via a browser, ensuring no full network access is granted.
+  - **VPN**: Provides unrestricted access to the entire private network, which can increase security risks if a device is compromised.
+
+### Access Control
+
+  - **Pangolin**: Enforces zero-trust policies with role-based access control (RBAC), path-based rules, and authentication methods like SSO, OIDC, and 2FA.
+  - **VPN**: Relies on network segmentation or ACLs for security, with fewer granular controls.
+
+### Deployment
+
+  - **Pangolin**: Operates as a centralized reverse proxy using encrypted WireGuard tunnels, requiring no public IPs or open ports on edge networks.
+  - **VPN**: Requires a VPN server, public IPs, and open ports for inbound connections.
+
+# Pangolin vs. Mesh VPN (e.g., Tailscale, Netbird)
+
+Pangolin and mesh VPNs like Tailscale or Netbird both provide secure remote access, but they differ in their approach and functionality. Mesh VPNs focus on creating peer-to-peer connections between devices for full network access, while Pangolin is designed to expose specific applications or services securely through points of presence, with no need for client-side software on user devices.
+
+Pangolin is a better choice for application-specific access with zero-trust security and no client-side software requirements. Mesh VPNs like Tailscale or Netbird are more suitable for full network access and peer-to-peer connectivity. For environments prioritizing granular access control and simplicity, Pangolin offers a more focused and secure solution. 

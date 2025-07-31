@@ -1,0 +1,218 @@
+---
+title: "Development Guide"
+description: "Set up your local development environment for contributing to Pangolin"
+---
+
+This guide describes how to set up your local development environment for contributing to Pangolin. We recommend using Docker Compose for the most consistent development experience across different environments.
+
+## Prerequisites
+
+<Check>
+- Text Editor (VSCode, Neovim, etc.)
+- NodeJS v20.10.0
+- NPM v10.2.3 (or similar)
+- Go v1.23.1
+- Git
+- Docker & Docker Compose
+</Check>
+
+<Info>
+For managing multiple versions of Go, you may want to use [gvm](https://github.com/moovweb/gvm).
+For managing multiple versions of NodeJS, you may want to use [nvm](https://github.com/nvm-sh/nvm).
+</Info>
+
+## Setup Your Repository
+
+Below is an example if you're working on the Pangolin repository.
+
+<Steps>
+<Step title="Fork and clone">
+  [Fork](https://help.github.com/articles/fork-a-repo/) the repository(ies) to your own GitHub account and [clone](https://help.github.com/articles/cloning-a-repository/) to your local device:
+
+  ```bash
+  git clone https://github.com/YOUR_USERNAME/pangolin.git
+  cd pangolin/
+  ```
+</Step>
+
+<Step title="Add upstream remote">
+  Add the remote `upstream`:
+
+  ```bash
+  git remote add upstream https://github.com/fosrl/pangolin.git
+  ```
+</Step>
+
+<Step title="Create feature branch">
+  Create a new branch:
+
+  ```bash
+  git checkout -b BRANCH_NAME dev
+  ```
+
+  <Tip>
+  It is recommended to give your branch a meaningful name, relevant to the feature or fix you are working on.
+  
+  **Good examples**:
+  - `docs-docker`
+  - `feature-new-system`
+  - `fix-title-cards`
+  
+  **Bad examples**:
+  - `bug`
+  - `docs`
+  - `feature`
+  - `fix`
+  - `patch`
+  </Tip>
+</Step>
+
+<Step title="Open pull request">
+  If you open a pull request, open it against the `dev` branch of the original repository.
+</Step>
+</Steps>
+
+## Pangolin Development Setup
+
+### Option 1: Docker Compose (Recommended)
+
+<CardGroup cols={2}>
+<Card title="Advantages" icon="check">
+  - Consistent environment
+  - Easy setup and teardown
+  - Isolated dependencies
+  - Works on any OS
+</Card>
+
+<Card title="Requirements" icon="docker">
+  - Docker installed
+  - Docker Compose installed
+  - 4GB+ RAM available
+</Card>
+</CardGroup>
+
+<Steps>
+<Step title="Install dependencies">
+  Install package dependencies:
+
+  ```bash
+  npm install
+  ```
+</Step>
+
+<Step title="Configure environment">
+  Ensure you have a `config/` directory at the root with a `config.yml` inside. Refer to the [Pangolin Configuration docs](/self-host/advanced/config-file) or the `config.example.yml` in the repo for a sample of what to include in that file.
+
+  <Warning>
+  You may need to tweak this to run in dev, such as setting the `dashboard_url` to `http://localhost:3002`.
+  </Warning>
+</Step>
+
+<Step title="Generate database schema">
+  Generate the database schema and push it:
+
+  ```bash
+  npm run db:sqlite:generate
+  npm run db:sqlite:push
+  ```
+</Step>
+
+<Step title="Start development server">
+  Start the development server using Docker Compose:
+
+  ```bash
+  docker compose up --build
+  ```
+
+  <Tip>
+  This will build and start all services in development mode with hot reloading enabled.
+  </Tip>
+</Step>
+</Steps>
+
+<Note>
+When running Pangolin for the first time there will be no exit nodes. This means that there have been no Gerbil "exit nodes" registered in the database. When Gerbil first starts up and requests its config from Pangolin for the first time it gets registered as an exit node.
+
+The easiest way to resolve this is to run Gerbil and have it register in your dev environment. Download the Gerbil binary and run it with localhost:
+
+```bash
+./gerbil \
+--remoteConfig http://localhost:3001/api/v1/gerbil/get-config \
+--reportBandwidthTo http://localhost:3001/api/v1/gerbil/receive-bandwidth \
+--generateAndSaveKeyTo=/var/key \
+--reachableAt=http://localhost:3003
+```
+</Note>
+
+### Option 2: Local Development
+
+<Warning>
+Local development requires more setup and may have environment-specific issues. Docker Compose is recommended for consistency.
+</Warning>
+
+<Steps>
+<Step title="Install dependencies">
+  Install package dependencies:
+
+  ```bash
+  npm install
+  ```
+</Step>
+
+<Step title="Configure environment">
+  Ensure you have a `config/` directory at the root with a `config.yml` inside. Refer to the [Pangolin Configuration docs](/self-host/advanced/config-file) or the `config.example.yml` in the repo for a sample of what to include in that file.
+
+  <Warning>
+  You may need to tweak this to run in dev, such as setting the `dashboard_url` to `http://localhost:3002`.
+  </Warning>
+</Step>
+
+<Step title="Generate database schema">
+  Generate the database schema and push it:
+
+  ```bash
+  npm run db:sqlite:generate
+  npm run db:sqlite:push
+  ```
+</Step>
+
+<Step title="Start development server">
+  Start the development server:
+
+  ```bash
+  npm run dev
+  ```
+</Step>
+</Steps>
+
+## Component Development
+
+### Gerbil
+
+<Card title="Requirements">
+  - Go v1.23.1
+</Card>
+
+```bash
+make local
+```
+
+### Newt
+
+<Card title="Requirements">
+  - Go v1.23.1
+</Card>
+
+```bash
+make local
+```
+
+### Olm
+
+<Card title="Requirements">
+  - Go v1.23.1
+</Card>
+
+```bash
+make local
+```

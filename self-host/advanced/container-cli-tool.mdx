@@ -1,0 +1,34 @@
+---
+title: "Internal CLI (pangctl)"
+description: "Command-line tool for managing your Pangolin instance"
+---
+
+The Pangolin container includes a CLI tool called `pangctl` that provides commands to help you manage your Pangolin instance.
+
+## Accessing the CLI
+
+Run the following command on the host where the Pangolin container is running:
+
+```bash
+docker exec -it pangolin pangctl <command>
+```
+
+## Available Commands
+
+To see all available commands:
+
+```bash
+docker exec -it pangolin pangctl --help
+```
+
+## Set Admin Credentials
+
+Set or reset admin credentials for your Pangolin instance:
+
+```bash
+docker exec -it pangolin pangctl set-admin-credentials --email "admin@example.com" --password "Password123!"
+```
+
+<Warning>
+Use a strong password and keep your admin credentials secure.
+</Warning>

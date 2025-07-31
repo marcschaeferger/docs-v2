@@ -1,68 +1,65 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "aspen",
+  "name": "Pangolin Docs",
+  "description": "Pangolin is a self-hosted alternative to Cloudflare Tunnels, designed to provide secure and highly-available ingress access to applications.",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#F36117",
+    "light": "#F36117",
+    "dark": "#F36117"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Docs",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "About",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "about/how-pangolin-works",
+              "about/pangolin-vs-traditional-reverse-proxy",
+              "about/pangolin-vs-vpn"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Newt Sites",
+            "pages": ["newt/installation"]
+          },
+          {
+            "group": "Fully Self-host Pangolin",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "self-host/quick-install",
+              {
+                "group": "Manual Installation",
+                "pages": [
+                  "self-host/manual/docker-compose",
+                  "self-host/manual/unraid"
+                ]
+              },
+              "self-host/choosing-a-vps",
+              "self-host/dns-and-networking",
+              "self-host/how-to-update",
+              "self-host/supporter-program",
+              {
+                "group": "Advanced Configuration",
+                "pages": [
+                  "self-host/advanced/config-file",
+                  "self-host/advanced/wild-card-domains",
+                  "self-host/advanced/cloudflare-proxy",
+                  "self-host/advanced/without-tunneling",
+                  "self-host/advanced/container-cli-tool",
+                  "self-host/advanced/database-options",
+                  "self-host/advanced/integration-api"
+                ]
+              }
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Development",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "development/contributing",
+              "development/feature-requests-and-bug-reports"
             ]
           }
         ]
@@ -71,45 +68,40 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "GitHub",
+          "href": "https://github.com/fosrl/pangolin",
+          "icon": "github"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Discord",
+          "href": "https://discord.gg/HCJR8Xhme4",
+          "icon": "discord"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://docs.digpangolin.com"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Contact Us",
+        "href": "mailto:numbat@fossorial.io"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Pangolin Dashboard",
+      "href": "https://pangolin.fossorial.io"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/fosrl/pangolin",
+      "linkedin": "https://linkedin.com/company/digpangolin"
     }
   }
 }

@@ -1,0 +1,163 @@
+---
+title: "Installation"
+description: "Install Newt VPN client as a binary or Docker container"
+---
+
+Newt can be installed as either a static binary executable or a Docker container. Configuration is passed via CLI arguments in both cases.
+
+<Warning>
+You **must first create a site and copy the Newt config** in Pangolin before running Newt.
+</Warning>
+
+<CardGroup cols={2}>
+<Card title="Binary Installation" icon="download">
+  - Static executable
+  - Cross-platform support
+  - Easy to install and run
+  - Systemd service support
+</Card>
+
+<Card title="Docker Installation" icon="docker">
+  - Containerized deployment
+  - Environment variables
+  - Docker Compose support
+  - Easy management
+</Card>
+</CardGroup>
+
+## Binary Installation
+
+### Quick Install (Recommended)
+
+Use this command to automatically install Newt. It detects your system architecture automatically and always pulls the latest version, adding Newt to your PATH:
+
+```bash
+curl -fsSL https://docs.fossorial.io/get-newt.sh | bash
+```
+
+### Manual Download
+
+Binaries for Linux, macOS, and Windows are available in the [GitHub releases](https://github.com/fosrl/newt/releases) for ARM and AMD64 (x86_64) architectures.
+
+Download and install manually:
+
+```bash
+wget -O newt "https://github.com/fosrl/newt/releases/download/{version}/newt_{architecture}" && chmod +x ./newt
+```
+
+<Note>
+Replace `{version}` with the desired version and `{architecture}` with your architecture. Check the [release notes](https://github.com/fosrl/newt/releases) for the latest information.
+</Note>
+
+### Running Newt
+
+Run Newt with the configuration from Pangolin:
+
+```bash
+newt \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
+```
+
+### Permanent Installation
+
+Install to your PATH (may need to run as root):
+
+```bash
+mv ./newt /usr/local/bin
+```
+
+<Note>
+The quick installer will do this step for you.
+</Note>
+
+### Systemd Service
+
+Create a basic systemd service:
+
+```ini title="/etc/systemd/system/newt.service"
+[Unit]
+Description=Newt
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+<Warning>
+Make sure to move the binary to `/usr/local/bin/newt` before creating the service!
+</Warning>
+
+## Docker Installation
+
+### Pull the Image
+
+Pull the latest Newt image from Docker Hub:
+
+```bash
+docker pull fosrl/newt:latest
+```
+
+### Run with Docker
+
+Run Newt with CLI arguments from Pangolin:
+
+```bash
+docker run -it fosrl/newt --id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
+```
+
+### Docker Compose
+
+#### Environment Variables (Recommended)
+
+```yaml title="docker-compose.yml"
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://example.com
+      - NEWT_ID=2ix2t8xk22ubpfy
+      - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
+```
+
+#### CLI Arguments
+
+```yaml title="docker-compose.yml"
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    command:
+      - --id 31frd0uzbjvp721
+      - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+      - --endpoint https://example.com
+```
+
+Start the service:
+
+```bash
+docker compose up -d
+```
+
+## Platform-Specific Installation
+
+### Unraid
+
+Newt is available in the Unraid Community Applications store. Search for "Newt" and follow the installation prompts. Enter the ID, secret, and endpoint from Pangolin in the template fields.
+
+<img src="/images/unraid_store.png" alt="Newt on CA" />
+
+### Portainer and Other UIs
+
+Container management UIs like Portainer typically allow passing commands and environment variables to containers similar to Docker Compose. Look for a commands or arguments configuration section and follow the relevant guides.

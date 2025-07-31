@@ -1,0 +1,56 @@
+---
+title: "Pangolin vs. Reverse Proxy"
+---
+
+Pangolin shares many similarities with traditional reverse proxies, as it builds upon the same foundational principles. In fact, Pangolin leverages Traefik, one of the most popular reverse proxies, as its core component.
+
+Like a traditional reverse proxy, Pangolin acts as an intermediary between clients and backend servers. Requests are routed through Pangolin, which determines the appropriate backend server to handle the request. This ensures that clients never directly communicate with backend servers. Pangolin also handles key reverse proxy functionalities, including:
+
+- **Routing**: Directing traffic to the appropriate backend service.
+- **SSL Termination**: Managing HTTPS encryption and decryption.
+- **Logging**: Capturing and storing request/response data.
+- **Middleware Management**: Supporting plugins and middleware for additional functionality.
+
+## Key Differences
+
+### Tunneling
+
+Traditional reverse proxies typically operate on the same network as the backend servers they connect to. This setup requires:
+
+- A public IP address for the network.
+- Open ports (e.g., TCP 443 and 80) to allow external traffic.
+
+Pangolin eliminates these requirements by introducing tunneling, which allows it to operate on a completely separate server and network from the backend services. Key benefits of Pangolin's tunneling include:
+
+- **Centralized Management**: Multiple isolated edge networks can connect to a single Pangolin instance, meaning you only need to manage one reverse proxy server.
+- **Encrypted Traffic**: All traffic between the edge network and the central Pangolin server is fully encrypted.
+- **No Public IP or Open Ports**: Edge networks do not require a public IP address or open ports, reducing the attack surface and simplifying network configurations.
+
+This tunneling capability makes Pangolin particularly useful for environments with restrictive network policies, such as those behind Carrier-Grade NAT (CGNAT) or firewalls.
+
+### Identity-Aware Proxy (IAP)
+
+Pangolin incorporates Identity-Aware Proxy (IAP) functionality, enabling zero-trust access to backend services. Unlike traditional reverse proxies, which often rely on network-based trust, Pangolin evaluates every access request based on user identity, device, location, and other contextual factors.
+
+#### How IAP Works
+
+1. **User Request**: A user attempts to access a protected internal web app, API, or resource.
+2. **Request Interception**: The request is intercepted by Pangolin's IAP instead of being routed directly to the backend.
+3. **Authentication & Authorization**: Pangolin verifies the user’s identity using OAuth2/OpenID (e.g., Google, Azure AD, Okta).
+4. **Context-Aware Checks**: Additional conditions, such as IP address, group membership, or geographic location, are evaluated.
+5. **Access Decision**: If all checks are passed, the request is forwarded to the backend service; otherwise, access is denied.
+
+#### Access Control Features
+
+Pangolin provides a robust suite of access control mechanisms, including but not limited to: 
+
+- **User and Role-Based Access Control (RBAC)**: Define granular permissions for users and roles.
+- **Resource-Specific Security**:
+  - PIN codes and passwords for individual resources.
+  - Shareable links with expiration dates.
+- **Authentication Options**:
+  - Email-based One-Time Passwords (OTP).
+  - Single Sign-On (SSO) with external identity providers via OIDC.
+  - Two-Factor Authentication (2FA) and passkeys.
+- **Contextual Rules**:
+  - IP, CIDR, and path-based access rules.

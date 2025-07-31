@@ -1,0 +1,113 @@
+---
+title: "Choosing a VPS"
+description: "Compare hosting options and find the best VPS for your Pangolin deployment"
+---
+
+Pangolin generally requires minimal resources to run effectively. A basic VPS with **1 vCPU, 1GB RAM, and 8GB SSD** is sufficient for most deployments.
+
+<CardGroup cols={2}>
+<Card title="Minimum Requirements">
+  - **CPU**: 1 vCPU
+  - **RAM**: 1GB
+  - **Storage**: 8GB SSD
+  - **Bandwidth**: 1TB/month
+</Card>
+
+<Card title="Recommended Specs">
+  - **CPU**: 2 vCPU
+  - **RAM**: 2GB
+  - **Storage**: 20GB SSD
+  - **Bandwidth**: 2TB/month
+</Card>
+</CardGroup>
+
+## Recommended Options
+
+<Tip>
+We're part of RackNerd's affiliate program. Using our links helps support Pangolin development at no extra cost to you.
+</Tip>
+
+<CardGroup cols={2}>
+<Card title="RackNerd Starter Plan" href="https://my.racknerd.com/aff.php?aff=13788&pid=912">
+**$0.91/month** - Perfect for personal use and small deployments
+  
+- 1 vCPU, 1GB RAM, 20GB SSD
+- Excellent performance for the price
+- Reliable uptime and support
+</Card>
+
+<Card title="RackNerd Basic Plan" href="https://my.racknerd.com/aff.php?aff=13788&pid=913">
+**$1.47/month** - Ideal for small teams and growing deployments
+  
+- 2 vCPU, 2GB RAM, 30GB SSD
+- Great value for performance
+</Card>
+
+<Card title="RackNerd Standard Plan" href="https://my.racknerd.com/aff.php?aff=13788&pid=914">
+**$2.49/month** - Best for larger teams and production use
+  
+- 3 vCPU, 3.5GB RAM, 60GB SSD
+- Room for growth and scaling
+</Card>
+</CardGroup>
+
+## VPS Provider Comparison
+
+| Provider | Plan | CPU | RAM | Storage | Price/Month | Price/Year | Best For |
+|----------|------|-----|-----|---------|-------------|------------|----------|
+| **[RackNerd](https://my.racknerd.com/aff.php?aff=13788)** | Starter | 1 vCPU | 1GB | 20GB SSD | $0.91 | $10.96 | Budget users |
+| **[RackNerd](https://my.racknerd.com/aff.php?aff=13788)** | Basic | 2 vCPU | 2GB | 30GB SSD | $1.47 | $17.66 | Small teams |
+| **[RackNerd](https://my.racknerd.com/aff.php?aff=13788)** | Standard | 3 vCPU | 3.5GB | 60GB SSD | $2.49 | $29.89 | Growing teams |
+| **[Hetzner Cloud](https://www.hetzner.com/cloud)** | CX11 | 2 vCPU | 4GB | 40GB SSD | $4.59 | $55.08 | Performance |
+| **[UpCloud](https://upcloud.com/pricing/)** | 1xCPU | 1 vCPU | 1GB | 10GB SSD | $3.30 | $39.60 | European users |
+| **[Vultr](https://www.vultr.com/pricing)** | Cloud Compute | 1 vCPU | 1GB | 25GB SSD | $5.00 | $60.00 | Global presence |
+| **[Linode](https://www.linode.com/pricing/)** | Nanode | 1 vCPU | 1GB | 25GB SSD | $5.00 | $60.00 | Developer friendly |
+| **[DigitalOcean](https://www.digitalocean.com/pricing/droplets)** | Basic | 1 vCPU | 1GB | 25GB SSD | $6.00 | $72.00 | Easy setup |
+| **[OVHcloud](https://www.ovhcloud.com/en/vps/)** | Starter | 2 vCPU | 2GB | 40GB SSD | $5.50 | $66.00 | European users |
+| **[AWS EC2](https://instances.vantage.sh/)** | t3.micro | 2 vCPU | 1GB | 8GB SSD | $8.50 | $102.00 | Enterprise |
+
+<Info>
+Prices shown are approximate and may vary based on location, promotions, and currency exchange rates. Check provider websites for current pricing.
+</Info>
+
+## Selection Criteria
+
+When choosing your VPS provider, consider these factors:
+
+<AccordionGroup>
+<Accordion title="Performance Requirements">
+  **Resource usage depends on several key factors:**
+  
+  **Primary factors:**
+  - **Number of connected sites**: More sites = higher CPU and memory usage
+  - **Data throughput**: Amount of traffic transiting through the server
+  
+  **Secondary factors:**
+  - **Dashboard UI usage**: Active admin sessions and configuration changes
+  - **Database activity**: User management, logging, and analytics queries
+</Accordion>
+
+<Accordion title="Geographic Location">
+  **Choose a data center close to your users:**
+  - **North America**: RackNerd, DigitalOcean, Vultr
+  - **Europe**: Hetzner, OVHcloud, UpCloud
+  - **Asia Pacific**: Vultr, Linode, DigitalOcean
+  - **Global**: AWS, Google Cloud, Azure
+</Accordion>
+
+<Accordion title="Support and Reliability">
+  **Consider these factors:**
+  - **Uptime guarantees**: Most providers offer 99.9%+
+  - **Support quality**: 24/7 support vs. community forums
+  - **Backup options**: Automated backups vs. manual
+  - **Monitoring**: Built-in monitoring tools
+</Accordion>
+
+<Accordion title="Cost Considerations">
+  **Hidden costs to watch for:**
+  - **Bandwidth overages**: Most plans include 1-2TB/month
+  - **Backup storage**: Additional charges for automated backups
+  - **IPv4 addresses**: Some providers charge extra
+  - **Support tiers**: Premium support may cost extra
+</Accordion>
+</AccordionGroup>

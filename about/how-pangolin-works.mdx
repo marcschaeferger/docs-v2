@@ -1,0 +1,52 @@
+---
+title: "How Pangolin Works"
+---
+
+## Architecture
+
+Pangolin is an open-source system composed of several interconnected components that work together to provide secure, application-specific access. The central server, often referred to as the point of presence, is the core of the system. In self-hosted deployments, the point of presence typically includes Pangolin, Gerbil, and Traefik with its custom plugin, Badger.
+
+A site represents a connection to an edge network. Pangolin can manage multiple edge networks simultaneously through its lightweight site client, Newt, which facilitates secure communication between the point of presence and the edge networks.
+
+## System Diagram
+
+<Card img="/images/system-diagram.svg">
+</Card>
+
+## Components
+
+### Pangolin
+
+Pangolin serves as the main control plane and orchestrates the system. It includes:
+- An external-facing REST API for user interactions.
+- A WebSocket server for managing connections to Newt clients.
+- An internal REST API for communication between system components.
+- A frontend server for the web interface.
+- Integration with the main database for data storage.
+- A built-in authentication system for Zero Trust Network Access (ZTNA).
+
+### Gerbil
+
+Gerbil is responsible for managing WireGuard tunnels. It acts as a peer management server, creating and maintaining secure, encrypted tunnels between edge networks (sites) and the point of presence.
+
+### Newt
+
+Newt is a lightweight, user-space client designed to run on edge networks. It:
+
+- Searches for the closest point of presence for optimal connectivity.
+- Connects to the Pangolin server via WebSocket and to Gerbil using a fully user-space WireGuard implementation.
+- Facilitates access to other resources on the edge network by creating TCP/UDP proxies.
+
+### Traefik
+
+Traefik is a high-performance, modular reverse proxy that routes requests to backend resources. It handles middleware, SSL termination, and provides extensibility through its plugin system. Key features include:
+
+- Badger: A custom authentication middleware plugin.
+- Compatibility with security plugins like GeoBlock and CrowdSec for enhanced protection.
+
+### Badger
+
+Badger is Pangolin’s custom Traefik middleware plugin that enforces authentication. It:
+
+- Intercepts incoming requests to the Traefik reverse proxy.
+- Redirects unauthenticated requests to the Pangolin server for authentication, ensuring secure access to backend resources.

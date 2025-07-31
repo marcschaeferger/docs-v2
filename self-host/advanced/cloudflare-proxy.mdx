@@ -1,0 +1,56 @@
+---
+title: "Cloudflare Proxy"
+---
+
+Pangolin works with Cloudflare proxy (orange cloud) enabled, but requires specific configuration:
+
+<Warning>
+**Terms of Service**: Enabling Cloudflare proxy binds you to Cloudflare's terms of service as traffic routes through their network.
+</Warning>
+
+### SSL Configuration
+
+**Recommended setup:**
+1. **Use wildcard certificates** with DNS-01 challenge
+2. **Set SSL/TLS mode to Full (Strict)**
+3. **Disable port 80** (not needed with wildcard certs)
+
+<Info>
+Pangolin will **not work** with Cloudflare's Full or Automatic SSL/TLS modes. Only Full (Strict) mode is supported.
+</Info>
+
+### WireGuard Configuration
+
+Since Cloudflare proxy obscures the destination IP, you must explicitly set your VPS IP in the [config file](/self-host/advanced/config-file):
+
+```yaml
+gerbil:
+  base_endpoint: "YOUR_VPS_IP_ADDRESS"  # Required with Cloudflare proxy
+```
+
+<Steps>
+<Step title="Get your VPS IP">
+  Find your VPS public IP address:
+  
+  ```bash
+  curl ifconfig.io
+  ```
+</Step>
+
+<Step title="Update configuration">
+  Add the IP to your `config.yml`:
+  
+  ```yaml
+  gerbil:
+    base_endpoint: "104.21.16.1"  # Replace with your actual IP
+  ```
+</Step>
+
+<Step title="Restart services">
+  Restart Pangolin to apply the changes:
+  
+  ```bash
+  docker-compose restart
+  ```
+</Step>
+</Steps>

@@ -1,0 +1,71 @@
+---
+title: "Enable Integration API"
+description: "Enable and configure the Integration API for external access"
+---
+
+The Integration API provides programmatic access to Pangolin functionality. It includes OpenAPI documentation via Swagger UI.
+
+## Enable Integration API
+
+Update your Pangolin configuration file:
+
+```yaml title="config.yml"
+flags:
+  enable_integration_api: true
+```
+
+If you want to specify a port other than the default `3003`, you can do so in the config as well:
+
+```yaml title="config.yml"
+server:
+  integration_port: 3003 # Specify different port
+```
+
+## Configure Traefik Routing
+
+Add the following configuration to your `dynamic_config.yml` to expose the Integration API at `https://api.example.com/v1`:
+
+```yaml title="dynamic_config.yml"
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+
+  routers:
+    int-api-router-redirect:
+      rule: "Host(`api.example.com`)"
+      service: int-api-service
+      entryPoints:
+        - web
+      middlewares:
+        - redirect-to-https
+
+    int-api-router:
+      rule: "Host(`api.example.com`)"
+      service: int-api-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    int-api-service:
+      loadBalancer:
+        servers:
+          - url: "http://pangolin:3003"
+```
+
+## Access Documentation
+
+Once configured, access the Swagger UI documentation at:
+
+```
+https://api.example.com/v1/docs
+```
+
+<img src="/images/swagger.png" alt="Swagger UI Preview"/>
+
+<Note>
+The Integration API will be accessible at `https://api.example.com/v1` for external applications.
+</Note>
