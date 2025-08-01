@@ -1,0 +1,116 @@
+---
+title: "Raw TCP & UDP"
+description: "Configure raw TCP and UDP traffic through Pangolin tunnels"
+---
+
+<Note>
+This feature is only available in self-hosted Pangolin instances.
+</Note>
+
+Pangolin supports raw TCP and UDP traffic because Newt can pass anything through the tunnel.
+
+These resources can either be:
+1. **Publically Proxied:** Map the resource to a port on the host Pangolin server, so you can access the resource from `<server-public-ip>:<mapped-port>`. This is useful if you want to access the resource over the public internet, such as exposing a game server like Minecraft.
+2. **Internal Exposure:** Map services accessible on the same network as the site to an internal port on the site address. This is useful if you only want internal exposure to a resource when connected with a client.
+
+## Proxied Resources
+
+Proxied resources require extra configuration to expose on the Pangolin server. You'll need to configure firewall rules, Docker port mappings, and Traefik entry points. These steps require a server restart.
+
+<Steps>
+<Step title="Create the resource">
+  In the Pangolin dashboard, go to Resources and click Add Resource. Select "Raw TCP/UDP resource", enable Public Proxy, and enter your desired publicly mapped port. This is the port you'll use to access the proxied resource.
+</Step>
+
+<Step title="Configure firewall">
+  Open your desired ports on your VPS firewall, just like you did for ports 51820, 443, and 80. This is highly OS and VPS dependent.
+  
+  <Note>
+  In this example, we're exposing two resources: TCP 1602 and UDP 1704.
+  </Note>
+</Step>
+
+<Step title="Configure Docker">
+  Add port mappings to your `docker-compose.yml` file:
+
+  ```yaml title="docker-compose.yml" highlight={4,5}
+  gerbil:
+    ports:
+      # ... existing ports ...
+      - 1704:1704/udp # ADDED: Your UDP port
+      - 1602:1602 # ADDED: Your TCP port
+  ```
+</Step>
+
+<Step title="Configure Traefik">
+  Add entry points to your `config/traefik/traefik_config.yml`:
+
+  ```yaml title="traefik_config.yml" highlight={12-15}
+  entryPoints:
+    web:
+      address: ":80"
+    websecure:
+      address: ":443"
+      http:
+        tls:
+          certResolver: letsencrypt
+      transport:
+        respondingTimeouts:
+          readTimeout: 30m
+    tcp-1602:
+      address: ":1602/tcp"
+    udp-1704:
+      address: ":1704/udp"
+  ```
+
+  <Info>
+  **Important**: Always name your entry points in the format `protocol-port` (e.g., `tcp-1602`, `udp-1704`). This naming is required for Pangolin's dynamic configuration.
+  </Info>
+</Step>
+
+<Step title="Restart the stack">
+  Restart your Docker stack to apply all changes:
+
+  ```bash
+  sudo docker compose down
+  sudo docker compose up -d
+  ```
+</Step>
+</Steps>
+
+<Note>
+In this example, we expose port 1602 for TCP and port 1704 for UDP. You can use any available ports on your VPS.
+</Note>
+
+## Internal Exposure with Clients
+
+Internal exposure resources are only accessible when connected via an Olm client. This approach is perfect for secure access to services without exposing them to the public internet.
+
+When you run Newt with `--accept-clients`, it operates fully in user space without creating a virtual network interface on the host. This means:
+
+- **No special permissions required** for the container or binary
+- **No virtual network interface** created on the host
+- **Client-only access** through Pangolin's tunnel
+- **Secure internal routing** to your services
+
+### Example: SSH Access
+
+Here's how to set up SSH access to your server when connected with a client:
+
+<Steps>
+<Step title="Create the resource">
+  In the Pangolin dashboard, create a new Raw TCP/UDP resource and set the port to `2022` (or any available port).
+</Step>
+
+<Step title="Add the target">
+  Configure the resource to target `localhost:22` (your SSH service).
+</Step>
+
+<Step title="Connect and access">
+  When connected with a Newt client, you can SSH to your server using `<site-address>:2022`.
+</Step>
+</Steps>
+
+<Note>
+This approach is ideal for secure remote access without exposing SSH directly to the internet.
+</Note>

@@ -1,0 +1,58 @@
+---
+title: "Add Identity Providers"
+description: "Configure external identity providers for user authentication"
+---
+
+<Note>
+Identity providers are only available in self-hosted Pangolin instances.
+</Note>
+
+Identity providers let you authenticate Pangolin users using external identity providers. This is useful for organizations that want to use their existing identity provider infrastructure to manage user authentication.
+
+For example, you may have users defined in Authentik, and you want these users to be able to log in to Pangolin using their existing credentials.
+
+<CardGroup cols={2}>
+<Card title="What it does" icon="users">
+  Allows users to authenticate using external identity providers instead of Pangolin's built-in authentication.
+</Card>
+
+<Card title="When to use" icon="gear">
+  Useful for organizations with existing identity infrastructure like Authentik, Keycloak, or Okta.
+</Card>
+</CardGroup>
+
+## Supported Identity Providers
+
+### OAuth2/OIDC
+
+This can be used to connect to any external identity provider that supports the OpenID Connect protocol such as:
+
+- **Authentik**
+- **Keycloak**
+- **Okta**
+- **Other OIDC-compliant providers**
+
+## How to Add an Identity Provider
+
+<Steps>
+<Step title="Access Server Admin">
+  Select the "Identity Providers" tab in the Server Admin UI.
+</Step>
+
+<Step title="Add New Provider">
+  Click on the "Add Identity Provider" button.
+</Step>
+
+<Step title="Select Type">
+  Select the type of identity provider you want to add (OAuth2/OIDC).
+</Step>
+
+<Step title="Configure Settings">
+  Fill in the required fields for the selected identity provider type.
+</Step>
+</Steps>
+
+## Auto Provisioning
+
+See [Auto Provision](manage/identity-providers/auto-provisioning) for more information on how to automatically provision users and assign orgs and roles in Pangolin when they log in using an external identity provider.
+

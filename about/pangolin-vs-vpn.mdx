@@ -1,25 +1,85 @@
 ---
 title: "Pangolin vs. VPN"
+description: "Learn how Pangolin provides application-specific access with zero-trust security compared to traditional VPNs"
 ---
 
-Pangolin and VPNs both provide secure remote access, but they differ in functionality and use cases. VPNs grant full network-level access, requiring client-side software to connect, while Pangolin provides application-specific access directly through a web browser with authentication, eliminating the need for additional software on the user’s device.
+Pangolin and VPNs both provide secure remote access, but they serve different purposes and offer different levels of security and convenience.
+
+## Traditional VPN Limitations
+
+Traditional VPNs provide full network access but come with significant drawbacks:
+
+- **Over-Permission**: Users get access to entire networks, not just the applications they need
+- **Client Software Required**: Users must install and configure VPN client software
+- **Network Complexity**: Requires public IP addresses, open ports, and complex network configuration
+- **Limited Access Control**: Basic network-level security with few granular controls
+- **Single Point of Failure**: If the VPN server goes down, all access is lost
+
+## Pangolin's Application-First Approach
+
+Pangolin provides secure, application-specific access without the limitations of traditional VPNs:
+
+### Zero-Trust Access Control
+
+- **Application-Specific**: Users access only the applications they're authorized to use
+- **Browser-Based**: No client software installation required - works with any web browser
+- **Granular Permissions**: Role-based access control, path-based rules, and contextual policies
+- **Multi-Factor Authentication**: Support for SSO, OIDC, 2FA, and passkeys
+
+### Simplified Infrastructure
+
+- **No Public IPs**: Edge networks don't need public IP addresses
+- **No Open Ports**: Eliminates the need to expose ports to the internet
+- **Automatic Tunneling**: Secure WireGuard tunnels are established automatically
+- **Distributed Architecture**: Multiple points of presence ensure high availability
+
+<Info>
+Pangolin's application-specific approach follows the principle of least privilege - users only get access to what they need, when they need it.
+</Info>
 
 ## Key Differences
 
-### Access Scope
+| Feature | Traditional VPN | Pangolin |
+|---------|----------------|----------|
+| **Access Scope** | Full network access | Application-specific access |
+| **Client Software** | Required | Not needed (browser-based) |
+| **Network Requirements** | Public IP, open ports | No public IP needed |
+| **Access Control** | Network-level | Zero-trust, granular |
+| **Authentication** | Basic credentials | Multi-factor, SSO, OIDC |
+| **Infrastructure** | Single server | Distributed points of presence |
+| **Security Model** | Network-based trust | Identity-based trust |
 
-  - **Pangolin**: Exposes specific applications or services securely. Users access resources via a browser, ensuring no full network access is granted.
-  - **VPN**: Provides unrestricted access to the entire private network, which can increase security risks if a device is compromised.
+## Use Cases
 
-### Access Control
+### Choose Traditional VPN When:
+- You need full network access for all users
+- Users are comfortable installing client software
+- You have simple access control requirements
+- You can manage public IP addresses and open ports
 
-  - **Pangolin**: Enforces zero-trust policies with role-based access control (RBAC), path-based rules, and authentication methods like SSO, OIDC, and 2FA.
-  - **VPN**: Relies on network segmentation or ACLs for security, with fewer granular controls.
+### Choose Pangolin When:
+- You want to expose specific applications securely
+- You prefer browser-based access without client software
+- You need granular access control and audit trails
+- You want to eliminate network infrastructure complexity
+- You need high availability and global distribution
 
-### Deployment
+<Warning>
+Traditional VPNs provide broad network access, which can be a security risk if user devices are compromised. Pangolin's application-specific approach minimizes this risk.
+</Warning>
 
-  - **Pangolin**: Operates as a centralized reverse proxy using encrypted WireGuard tunnels, requiring no public IPs or open ports on edge networks.
-  - **VPN**: Requires a VPN server, public IPs, and open ports for inbound connections.
+## Mesh VPN Comparison
+
+Mesh VPNs like Tailscale and Netbird provide peer-to-peer connectivity for full network access. While they offer some advantages over traditional VPNs, they still:
+
+- Require client software installation
+- Provide full network access rather than application-specific access
+- Lack the granular access control and audit capabilities of Pangolin
+- Don't offer the distributed, high-availability architecture
+
+<Card title="Try Pangolin Cloud" icon="rocket" href="https://pangolin.fossorial.io/auth/signup">
+  Experience application-specific access with zero-trust security and no client software required.
+</Card>
 
 # Pangolin vs. Mesh VPN (e.g., Tailscale, Netbird)
 

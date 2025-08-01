@@ -1,0 +1,70 @@
+---
+title: "OAuth2/OIDC"
+description: "Configure OpenID Connect identity provider for external authentication"
+---
+
+This identity provider follows the OpenID Connect protocol. This means that it can be used to connect to any external identity provider that supports the OpenID Connect protocol such as Authentik, Keycloak, Okta, etc.
+
+<CardGroup cols={2}>
+<Card title="What it supports" icon="shield">
+  Any external identity provider that follows the OpenID Connect standard.
+</Card>
+
+<Card title="Common providers" icon="users">
+  Authentik, Keycloak, Okta, and other OIDC-compliant identity providers.
+</Card>
+</CardGroup>
+
+## Configuration
+
+You will need to configure the following common settings:
+
+<ResponseField name="Client ID" type="string" required>
+  The client identifier provided by your identity provider.
+</ResponseField>
+
+<ResponseField name="Client Secret" type="string" required>
+  The client secret provided by your identity provider.
+</ResponseField>
+
+<ResponseField name="Authorization URL" type="string" required>
+  The authorization endpoint URL from your identity provider.
+</ResponseField>
+
+<ResponseField name="Token URL" type="string" required>
+  The token endpoint URL from your identity provider.
+</ResponseField>
+
+## Token Configuration
+
+Use JMESPath to select attributes from the claims token. See [JMESPath](https://jmespath.org/) for more information on how to use JMESPath.
+
+Determine how to access information from the claims token returned by the identity provider. This is used to map the user information from the identity provider to the user information in Pangolin.
+
+<ResponseField name="Identifier Path" type="string" required>
+  This must be unique for each user within an identity provider.
+  
+  **Example**: `sub` or `user_id`
+</ResponseField>
+
+<ResponseField name="Email Path" type="string">
+  Path to the user's email address in the claims token.
+  
+  **Example**: `email`
+</ResponseField>
+
+<ResponseField name="Name Path" type="string">
+  Path to the user's display name in the claims token.
+  
+  **Example**: `name` or `preferred_username`
+</ResponseField>
+
+<ResponseField name="Scopes" type="string">
+  The scopes to request from the identity provider (not JMESPath; must be space-delimited strings).
+  
+  **Default**: `openid profile email`
+  
+  <Note>
+  Generally, `openid profile email` is sufficient for most use cases.
+  </Note>
+</ResponseField>

@@ -60,10 +60,12 @@ pangolin/
 
 Set the network to the one you created earlier.
 
+<Frame caption="Pangolin configuration settings in Unraid">
 <img 
   src="/images/pangolin_config.png" 
   alt="Pangolin configuration settings in Unraid"
 />
+</Frame>
 
 **Ports:**
 
@@ -225,18 +227,22 @@ http:
 
 This section will use the Traefik template from the "IBRACORP" repository. If you already have a Traefik installation running, you should manually configure your Traefik config to work with Pangolin.
 
+<Frame caption="Traefik repository selection in Community Apps">
 <img 
   src="/images/traefik_repo.png" 
   width="400"
   alt="Traefik repository selection in Community Apps"
 />
+</Frame>
 
 #### 3. Configure Traefik
 
+<Frame caption="Traefik configuration settings in Unraid">
 <img 
   src="/images/traefik_config.png" 
   alt="Traefik configuration settings in Unraid"
 />
+</Frame>
 
 <Info>
 Please refer to the official Traefik docs for more information on the Traefik configuration beyond this guide.
@@ -292,10 +298,12 @@ The important concept to understand going forward, is we need to network Traefik
 
 Set the network to the one you created earlier.
 
+<Frame caption="Gerbil configuration settings in Unraid">
 <img 
   src="/images/gerbil_config.png" 
   alt="Gerbil configuration settings in Unraid"
 />
+</Frame>
 
 **Important things to consider:**
 
@@ -323,10 +331,12 @@ Toggle advanced settings, and add the following to the "Extra Parameters" sectio
 
 Then, set "Network Type" to "None".
 
+<Frame caption="Traefik networking configuration through Gerbil">
 <img 
   src="/images/traefik_networking.png" 
   alt="Traefik networking configuration through Gerbil"
 />
+</Frame>
 
 #### 4. Start the stack
 
@@ -348,9 +358,11 @@ Your logs for Gerbil should look something like this:
 You probably won't have the peer connection messages but in general, you should see the WireGuard interface being started.
 </Info>
 
+<Frame caption="Gerbil logs showing WireGuard interface startup">
 <img 
   src="/images/gerbil_logs.png" 
   alt="Gerbil logs showing WireGuard interface startup"
 />
+</Frame>
 
 Log back into the Pangolin dashboard and create a new site with Newt or basic WireGuard. Copy the credentials to your client and connect. You should see the tunnel status change to "Online" after a few moments if the connection is successful. Remember to also monitor the logs on the client and server.

@@ -1,52 +1,108 @@
 ---
 title: "How Pangolin Works"
+description: "Learn about Pangolin's architecture and how its components work together to provide secure application access"
 ---
 
-## Architecture
+## System Overview
 
-Pangolin is an open-source system composed of several interconnected components that work together to provide secure, application-specific access. The central server, often referred to as the point of presence, is the core of the system. In self-hosted deployments, the point of presence typically includes Pangolin, Gerbil, and Traefik with its custom plugin, Badger.
+Pangolin operates through a central server (called the point of presence) that manages connections to your edge networks. Each edge network runs a lightweight client that establishes secure tunnels back to the central server.
 
-A site represents a connection to an edge network. Pangolin can manage multiple edge networks simultaneously through its lightweight site client, Newt, which facilitates secure communication between the point of presence and the edge networks.
+<Frame caption="System architecture showing Pangolin components and their interactions">
+<img src="/images/system-diagram.svg" alt="Pangolin system architecture diagram"/>
+</Frame>
 
-## System Diagram
+## Core Components
 
-<Card img="/images/system-diagram.svg">
+### Pangolin (Control Plane)
+
+Pangolin is the main control center that orchestrates the entire system:
+
+- **Web Interface**: Management dashboard for configuring sites, users, and access policies
+- **REST API**: External API for automation and integration
+- **WebSocket Server**: Manages real-time connections to edge network clients
+- **Authentication System**: Handles user authentication and authorization
+- **Database**: Stores configuration, user data, and system state
+
+<Info>
+Pangolin acts as the brain of the system, coordinating all other components and managing user access.
+</Info>
+
+### Gerbil (Tunnel Manager)
+
+Gerbil manages the secure WireGuard tunnels between your edge networks and the central server:
+
+- **Peer Management**: Creates and maintains WireGuard connections
+- **Tunnel Orchestration**: Handles tunnel creation, updates, and cleanup
+- **Security**: Ensures all traffic is encrypted using WireGuard's cryptographic protocols
+
+<Check>
+WireGuard provides fast, secure, and reliable tunneling with minimal overhead.
+</Check>
+
+### Newt (Edge Client)
+
+Newt is a lightweight client that runs on your edge networks (servers, VMs, or containers):
+
+- **Automatic Discovery**: Finds the optimal point of presence for best performance
+- **Dual Connection**: Connects to Pangolin via WebSocket and Gerbil via WireGuard
+- **Resource Proxy**: Creates TCP/UDP proxies to expose your applications securely
+
+<Tip>
+Newt is designed to be resource-efficient and can run on minimal hardware or in containers.
+</Tip>
+
+### Reverse Proxy (Router)
+
+The reverse proxy handles incoming requests and routes them to your applications:
+
+- **Request Routing**: Directs traffic to the correct backend services
+- **SSL Termination**: Manages HTTPS certificates and encryption
+- **Middleware Support**: Integrates with security and monitoring plugins
+
+### Badger (Authentication Middleware)
+
+Badger is Pangolin's middleware that enforces access control:
+
+- **Request Interception**: Catches all incoming requests before they reach your applications
+- **Authentication Check**: Verifies user identity and permissions
+- **Secure Redirects**: Sends unauthenticated users to Pangolin's login system
+
+<Warning>
+Badger ensures that only authenticated and authorized users can access your applications, even if they bypass other security measures.
+</Warning>
+
+## How It All Works Together
+
+<Steps>
+<Step title="User requests access">
+  A user tries to access your application through the public domain.
+</Step>
+
+<Step title="Badger intercepts the request">
+  Badger middleware catches the request and checks if the user is authenticated.
+</Step>
+
+<Step title="Authentication redirect">
+  If not authenticated, the user is redirected to Pangolin's login system.
+</Step>
+
+<Step title="Secure tunnel access">
+  Once authenticated, requests flow through the encrypted WireGuard tunnel managed by Gerbil.
+</Step>
+
+<Step title="Application delivery">
+  The reverse proxy routes the request to your application running behind Newt on the edge network.
+</Step>
+</Steps>
+
+## Deployment Models
+
+<CardGroup cols={2}>
+<Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
+  Use Cloud for a highly available and access-controllerd ingress service with points of presence all over the world.
 </Card>
 
-## Components
-
-### Pangolin
-
-Pangolin serves as the main control plane and orchestrates the system. It includes:
-- An external-facing REST API for user interactions.
-- A WebSocket server for managing connections to Newt clients.
-- An internal REST API for communication between system components.
-- A frontend server for the web interface.
-- Integration with the main database for data storage.
-- A built-in authentication system for Zero Trust Network Access (ZTNA).
-
-### Gerbil
-
-Gerbil is responsible for managing WireGuard tunnels. It acts as a peer management server, creating and maintaining secure, encrypted tunnels between edge networks (sites) and the point of presence.
-
-### Newt
-
-Newt is a lightweight, user-space client designed to run on edge networks. It:
-
-- Searches for the closest point of presence for optimal connectivity.
-- Connects to the Pangolin server via WebSocket and to Gerbil using a fully user-space WireGuard implementation.
-- Facilitates access to other resources on the edge network by creating TCP/UDP proxies.
-
-### Traefik
-
-Traefik is a high-performance, modular reverse proxy that routes requests to backend resources. It handles middleware, SSL termination, and provides extensibility through its plugin system. Key features include:
-
-- Badger: A custom authentication middleware plugin.
-- Compatibility with security plugins like GeoBlock and CrowdSec for enhanced protection.
-
-### Badger
-
-Badger is Pangolin’s custom Traefik middleware plugin that enforces authentication. It:
-
-- Intercepts incoming requests to the Traefik reverse proxy.
-- Redirects unauthenticated requests to the Pangolin server for authentication, ensuring secure access to backend resources.
+<Card title="Self-Hosted" icon="server" href="/self-host/quick-install">
+  All components run on your infrastructure, giving you complete control over security and data.
+</Card>
+</CardGroup>

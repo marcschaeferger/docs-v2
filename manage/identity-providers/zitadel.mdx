@@ -1,0 +1,92 @@
+---
+title: "Zitadel SSO"
+description: "Configure Zitadel Single Sign-On using OpenID Connect"
+---
+
+The following steps will integrate **Zitadel** with **Pangolin SSO** using OpenID Connect (OIDC).
+
+## Prerequisites
+
+These instructions assume you have a working Zitadel organization and project setup already.
+
+### Creating an Application in Zitadel
+
+You need to configure an application in Zitadel:
+
+<Steps>
+<Step title="Create New Application">
+  Open an existing project and in `Applications` click `New`.
+</Step>
+
+<Step title="Configure Application">
+  Set the name to something memorable (eg. Pangolin).
+</Step>
+
+<Step title="Set Application Type">
+  For `Type of application` choose `Web`.
+</Step>
+
+<Step title="Set Authentication Method">
+  For `Authentication Method` choose `Code`.
+</Step>
+
+<Step title="Leave Redirect URIs Blank">
+  Leave `Redirect URIs` blank for now.
+</Step>
+</Steps>
+
+<Note>
+When you click create, you'll be shown the `ClientSecret` and `ClientId`. Make sure to save these somewhere secure - you won't be able to see the Client Secret again.
+</Note>
+
+<Steps>
+<Step title="Configure Token Settings">
+  Click `Token settings` then change `Auth Token Type` to `JWT` and check the `User Info inside ID Token` box finally hit `Save`.
+</Step>
+
+<Step title="Note Endpoints">
+  Open `URLs` and make note of:
+  - `Authorization Endpoint`
+  - `Token Endpoint`
+</Step>
+</Steps>
+
+## Configuring Identity Providers in Pangolin
+
+In Pangolin, go to the **Server Admin** section. Select "Identity Providers" before proceeding with the "Add Identity Provider" button.
+
+**Name** should be set to something memorable (eg. Zitadel). The **Provider Type** should be set to the default `OAuth2/OIDC`.
+
+### OAuth2/OIDC Configuration (Provider Credentials and Endpoints)
+
+In the OAuth2/OIDC Configuration, you'll need the following fields:
+
+<ResponseField name="Client ID" type="string" required>
+  The Client ID from your Zitadel application.
+</ResponseField>
+
+<ResponseField name="Client Secret" type="string" required>
+  The Client Secret from your Zitadel application.
+</ResponseField>
+
+<ResponseField name="Authorization URL" type="string" required>
+  Use the `Authorization Endpoint` from your Zitadel application.
+</ResponseField>
+
+<ResponseField name="Token URL" type="string" required>
+  Use the `Token Endpoint` from your Zitadel application.
+</ResponseField>
+
+## Token Configuration
+
+You should leave all of the paths default. In the **Scopes** field, add `openid profile email`.
+
+<Note>
+Set the **Identifier Path** to "preferred_username" for Zitadel integration.
+</Note>
+
+When you're done, click "Create Identity Provider"! Then, copy the Redirect URL in the "General" tab as you will now need this for your **Zitadel application**.
+
+## Returning to Zitadel
+
+Lastly, you need to edit your `Redirect Settings` in your Zitadel application. Add the URL you copied to the `Redirect URIs`, then hit the `+` button and finally `Save`. Your configuration should now be complete. You'll now need to add an external user] to Pangolin, or if you have "Auto Provision Users" enabled, you can now log in using Zitadel SSO.

@@ -23,8 +23,48 @@
             ]
           },
           {
-            "group": "Newt Sites",
-            "pages": ["newt/installation"]
+            "group": "Manage Pangolin",
+            "pages": [
+              "manage/points-of-presence",
+              "manage/high-availability",
+              {
+                "group": "Sites",
+                "pages": [
+                  "manage/sites/add-site",
+                  "manage/sites/install-newt",
+                  "manage/sites/configure-newt"
+                ]
+              },
+              {
+                "group": "Resources",
+                "pages": ["manage/resources/tcp-udp-resources"]
+              },
+              {
+                "group": "Clients",
+                "pages": [
+                  "manage/clients/add-client",
+                  "manage/clients/install-client",
+                  "manage/clients/configure-client"
+                ]
+              },
+              {
+                "group": "Access Control",
+                "pages": ["manage/access-control/bypass-rules"]
+              },
+              {
+                "group": "Identity Providers",
+                "pages": [
+                  "manage/identity-providers/add-an-idp",
+                  "manage/identity-providers/auto-provisioning",
+                  "manage/identity-providers/openid-connect",
+                  "manage/identity-providers/google",
+                  "manage/identity-providers/pocket-id",
+                  "manage/identity-providers/zitadel"
+                ]
+              },
+              "manage/domains",
+              "manage/integration-api"
+            ]
           },
           {
             "group": "Fully Self-host Pangolin",
