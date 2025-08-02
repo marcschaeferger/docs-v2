@@ -148,5 +148,11 @@
       "github": "https://github.com/fosrl/pangolin",
       "linkedin": "https://linkedin.com/company/digpangolin"
     }
+  },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
+      "apiHost": "https://digpangolin.com/relay-O7yI"
+    }
   }
 }
