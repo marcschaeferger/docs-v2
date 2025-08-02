@@ -5,19 +5,25 @@ description: "Learn about Pangolin's global network of points of presence and ho
 
 Pangolin's points of presence (PoPs) are strategically located servers around the world that serve as entry points for user traffic to your applications. They form the foundation of Pangolin's distributed architecture, providing global high availability and optimal performance.
 
-## Contact Us
-
-For hybrid deployments, points of presence, and high availability contact us:
-- **Email**: [numbat@fossorial.io](mailto:numbat@fossorial.io)
-
 ## What Are Points of Presence?
 
-Points of presence are geographically distributed servers that:
+<CardGroup cols={2}>
+<Card title="Entry Points" icon="door-open">
+  Handle incoming user requests before routing them to your applications.
+</Card>
 
-- **Serve as Entry Points**: Handle incoming user requests before routing them to your applications
-- **Provide Global Coverage**: Located worldwide to minimize latency for users in different regions
-- **Enable High Availability**: Multiple locations ensure your applications remain accessible even if individual locations fail
-- **Handle Authentication**: Verify user identity and enforce access policies before allowing access
+<Card title="Global Coverage" icon="globe">
+  Located regionally to minimize latency for users in different regions.
+</Card>
+
+<Card title="High Availability" icon="shield-check">
+  Multiple locations ensure your applications remain accessible even if individual locations fail.
+</Card>
+
+<Card title="Authentication" icon="key">
+  Verify user identity and enforce access policies before allowing access.
+</Card>
+</CardGroup>
 
 <Info>
 Think of points of presence as the "front doors" to your applications - users connect to the closest one, and it securely routes their requests to your backend services.
@@ -25,92 +31,79 @@ Think of points of presence as the "front doors" to your applications - users co
 
 ## How Points of Presence Work
 
-### Geographic Routing
+<Steps>
+<Step title="Ingress Routing">
+  Request is routed to the closest available point of presence. If one goes down, there is always another point available.
+</Step>
 
-When a user requests access to your application:
+<Step title="Authentication">
+  User identity is verified at the point of presence before getting routed to your backend.
+</Step>
 
-1. **DNS Resolution**: The user's request is automatically routed to the closest available point of presence
-2. **Authentication**: The point of presence verifies the user's identity and permissions
-3. **Tunnel Routing**: Authenticated requests are sent through secure tunnels to your applications
-4. **Response Delivery**: Responses follow the same path back to the user
+<Step title="Tunnel Selection">
+  Pangolin selects the optimal tunnel route to your backend service. Site tunnel clients (Newt) connect to the optimal point of presence.
+</Step>
 
-<Check>
-This routing happens automatically and transparently - users always get the best possible performance without any manual configuration.
-</Check>
-
-### Automatic Failover
-
-Pangolin's points of presence provide built-in high availability:
-
-- **Health Monitoring**: Each point of presence continuously monitors its health and connectivity
-- **Automatic Failover**: If one location becomes unavailable, traffic automatically routes to the next closest location
-- **Load Distribution**: Traffic is automatically balanced across multiple locations to prevent overload
-- **Global Redundancy**: Multiple points of presence ensure your applications remain accessible during regional outages
+<Step title="Failover Handling">
+  If the primary tunnel fails, traffic automatically switches to an alternative route.
+</Step>
+</Steps>
 
 ## Advantages of Points of Presence
 
-### Global Performance
+<CardGroup cols={2}>
+<Card title="Low Latency" icon="bolt">
+  Users connect to the geographically closest point of presence.
+</Card>
 
-- **Low Latency**: Users connect to the geographically closest point of presence
-- **Optimized Routing**: Automatic selection of the best available location
-- **Edge Computing**: Processing happens closer to users for faster response times
+<Card title="Optimized Routing" icon="route">
+  Automatic selection of the best available tunnel to route to your backend services.
+</Card>
 
-### High Availability
+<Card title="Edge Computing" icon="microchip">
+  Provide ingress to thin-clients on private networks via tunnels.
+</Card>
 
-- **Fault Tolerance**: No single point of failure - if one location goes down, others remain available
-- **Automatic Recovery**: Failed locations are automatically bypassed and traffic is rerouted
-- **Regional Redundancy**: Multiple locations per region provide additional redundancy
+<Card title="Health Monitoring" icon="heart-pulse">
+  Each point of presence continuously monitors its health and connectivity to your backend.
+</Card>
+</CardGroup>
 
-### Security and Compliance
+<CardGroup cols={2}>
+<Card title="Global Redundancy" icon="check-double">
+  Multiple points of presence ensure your applications remain accessible during regional outages.
+</Card>
 
-- **Distributed Security**: Security controls are enforced at every point of presence
-- **Regional Compliance**: Points of presence can be configured to meet regional data requirements
-- **Encrypted Transit**: All traffic between points of presence and your applications is encrypted
-
-### Scalability
-
-- **Automatic Scaling**: New points of presence are automatically added as needed
-- **Load Balancing**: Traffic is distributed across multiple locations to handle high volumes
-- **Global Distribution**: Support for applications with users worldwide
+<Card title="Fault Tolerance" icon="shield">
+  No single point of failure - if one location goes down, there is always a way back to your application.
+</Card>
+</CardGroup>
 
 ## Deployment Models
 
-### Pangolin Cloud
-
-Pangolin Cloud includes a global network of points of presence that provide:
-
-- **Automatic Management**: Points of presence are automatically deployed, monitored, and maintained
-- **Global Coverage**: Strategic locations worldwide for optimal performance
-- **Built-in High Availability**: Multiple redundant locations ensure 99.9%+ uptime
-- **Zero Configuration**: No setup or management required on your part
-
-<Card title="Try Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
-  Get started with Pangolin Cloud and experience global points of presence with automatic high availability.
+<CardGroup cols={3}>
+<Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
+  Global network of points of presence with automatic failover and routing to your backend services.
 </Card>
 
-### Self-Hosted Pangolin
+<Card title="Hybrid" icon="circle-nodes" href="mailto:numbat@fossorial.io">
+  Host your own multiple points of presence with cloud coordination and automatic failover. Data always transits yours servers.
+</Card>
 
-Self-hosted Pangolin operates as a single point of presence:
-
-- **Single Location**: Your Pangolin instance serves as the only entry point
-- **Limited Availability**: No built-in redundancy - if your server goes down, access is lost
-- **Manual Management**: You're responsible for server maintenance and uptime
-- **Regional Limitation**: Performance depends on your server's location
+<Card title="Self-Hosted" icon="server" href="/self-host/quick-install">
+  Fully self-hosted, self-contained Pangolin server acting as a single point of presence.
+</Card>
+</CardGroup>
 
 <Warning>
 Self-hosted Pangolin provides only a single point of presence and is not highly available. Consider Pangolin Cloud or hybrid deployment for production environments requiring high availability.
 </Warning>
 
-### Hybrid Deployment
-
-Hybrid deployment allows you to host your own points of presence while leveraging Pangolin's cloud coordination:
-
-- **Your Infrastructure**: Host points of presence on your own servers or cloud infrastructure
-- **Cloud Coordination**: Pangolin Cloud handles failover logic and coordination between your points of presence
-- **Automatic Failover**: If your points of presence go down, traffic automatically fails over to Pangolin Cloud
-- **Data Control**: Traffic flows through your servers, giving you control over data transit costs and privacy
-- **Custom Locations**: Deploy points of presence in specific regions or data centers of your choice
-
 <Tip>
 Hybrid deployment is ideal for organizations that need high availability while maintaining control over their infrastructure and data transit.
 </Tip>
+
+## Contact Us
+
+For hybrid deployments, points of presence, and high availability contact us:
+- **Email**: [numbat@fossorial.io](mailto:numbat@fossorial.io)

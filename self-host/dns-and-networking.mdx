@@ -57,7 +57,7 @@ You'll need to create A (or AAAA for IPv6) records pointing to your VPS IP addre
 
 Pangolin requires these ports to be open on your VPS:
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
 <Card title="TCP Port 80">
   **HTTP/SSL Verification**
   
@@ -75,13 +75,21 @@ Pangolin requires these ports to be open on your VPS:
 </Card>
 
 <Card title="UDP Port 51820">
-  **WireGuard Tunnel**
+  **Site Tunnels**
   
-  - Newt client connections
-  - Gerbil tunnel endpoint
-  - Secure traffic routing
+  This is the default port for sites (Newt) to establish tunnels to the cloud exit node.
+</Card>
+
+<Card title="UDP Port 21820">
+  **Client Tunnels**
+
+  This is the default port for clients relaying through Gerbil to newt. This port is only required for clients.
 </Card>
 </CardGroup>
+
+<Warning>
+Always verify your exposed ports (e.g., with [nmap](https://nmap.org/) or [RustScan](https://github.com/bee-san/RustScan)) and ensure you expose **only** the ports that are absolutely necessary. By tunneling out to the VPS, you are effectively including the VPS in your security boundary, so you must secure it as part of your overall network strategy. For more details, see [Docker’s port publishing documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/#port-publishing-and-mapping).
+</Warning>
 
 ### Docker Port Exposure
 

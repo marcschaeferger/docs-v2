@@ -3,106 +3,72 @@ title: "How Pangolin Works"
 description: "Learn about Pangolin's architecture and how its components work together to provide secure application access"
 ---
 
-## System Overview
+Pangolin provides secure, application-specific ingress to your applications through a global network of points of presence. Users connect to the closest point of presence, which authenticates them and routes their requests through secure tunnels to your applications.
 
-Pangolin operates through a central server (called the point of presence) that manages connections to your edge networks. Each edge network runs a lightweight client that establishes secure tunnels back to the central server.
-
-<Frame caption="System architecture showing Pangolin components and their interactions">
-<img src="/images/system-diagram.svg" alt="Pangolin system architecture diagram"/>
+<Frame>
+  <img src="/images/diagram.svg" width="400" centered/>
 </Frame>
 
-## Core Components
-
-### Pangolin (Control Plane)
-
-Pangolin is the main control center that orchestrates the entire system:
-
-- **Web Interface**: Management dashboard for configuring sites, users, and access policies
-- **REST API**: External API for automation and integration
-- **WebSocket Server**: Manages real-time connections to edge network clients
-- **Authentication System**: Handles user authentication and authorization
-- **Database**: Stores configuration, user data, and system state
-
-<Info>
-Pangolin acts as the brain of the system, coordinating all other components and managing user access.
-</Info>
-
-### Gerbil (Tunnel Manager)
-
-Gerbil manages the secure WireGuard tunnels between your edge networks and the central server:
-
-- **Peer Management**: Creates and maintains WireGuard connections
-- **Tunnel Orchestration**: Handles tunnel creation, updates, and cleanup
-- **Security**: Ensures all traffic is encrypted using WireGuard's cryptographic protocols
-
-<Check>
-WireGuard provides fast, secure, and reliable tunneling with minimal overhead.
-</Check>
-
-### Newt (Edge Client)
-
-Newt is a lightweight client that runs on your edge networks (servers, VMs, or containers):
-
-- **Automatic Discovery**: Finds the optimal point of presence for best performance
-- **Dual Connection**: Connects to Pangolin via WebSocket and Gerbil via WireGuard
-- **Resource Proxy**: Creates TCP/UDP proxies to expose your applications securely
-
-<Tip>
-Newt is designed to be resource-efficient and can run on minimal hardware or in containers.
-</Tip>
-
-### Reverse Proxy (Router)
-
-The reverse proxy handles incoming requests and routes them to your applications:
-
-- **Request Routing**: Directs traffic to the correct backend services
-- **SSL Termination**: Manages HTTPS certificates and encryption
-- **Middleware Support**: Integrates with security and monitoring plugins
-
-### Badger (Authentication Middleware)
-
-Badger is Pangolin's middleware that enforces access control:
-
-- **Request Interception**: Catches all incoming requests before they reach your applications
-- **Authentication Check**: Verifies user identity and permissions
-- **Secure Redirects**: Sends unauthenticated users to Pangolin's login system
-
-<Warning>
-Badger ensures that only authenticated and authorized users can access your applications, even if they bypass other security measures.
-</Warning>
-
-## How It All Works Together
+## How It Works
 
 <Steps>
-<Step title="User requests access">
-  A user tries to access your application through the public domain.
+<Step title="User enters through point of presence">
+  DNS automatically routes users to the closest available regional point of presence (PoP). A PoP is always available because the control plane fails over between PoPs.
 </Step>
 
-<Step title="Badger intercepts the request">
-  Badger middleware catches the request and checks if the user is authenticated.
+<Step title="Authentication and authorization">
+  The point of presence verifies the user's identity, checks access permissions, and applies context aware rules such as IP and path based filters, geoblocking, and rate limiting.
 </Step>
 
-<Step title="Authentication redirect">
-  If not authenticated, the user is redirected to Pangolin's login system.
-</Step>
-
-<Step title="Secure tunnel access">
-  Once authenticated, requests flow through the encrypted WireGuard tunnel managed by Gerbil.
+<Step title="Secure tunnel routing">
+  Authenticated requests are routed and flow through encrypted WireGuard tunnels to your applications with optional load balancing and failover for your backend servers.
 </Step>
 
 <Step title="Application delivery">
-  The reverse proxy routes the request to your application running behind Newt on the edge network.
+  Your applications receive the requests and respond through the same secure path.
 </Step>
 </Steps>
 
-## Deployment Models
+<Info>
+Points of presence provide global high availability - if one location goes down, traffic automatically routes to the next closest location.
+</Info>
+
+## Deployment Options
 
 <CardGroup cols={2}>
 <Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
-  Use Cloud for a highly available and access-controllerd ingress service with points of presence all over the world.
+  Global network of points of presence with automatic failover and routing to your backend services.
+</Card>
+
+<Card title="Hybrid" icon="circle-nodes" href="mailto:numbat@fossorial.io">
+  Host your own multiple points of presence with cloud coordination and automatic failover. Data always transits yours servers.
 </Card>
 
 <Card title="Self-Hosted" icon="server" href="/self-host/quick-install">
-  All components run on your infrastructure, giving you complete control over security and data.
+  Fully self-hosted, self-contained Pangolin server acting as a single point of presence.
+</Card>
+
+<Card title="Learn More" icon="book" href="/manage/points-of-presence">
+  Detailed information about points of presence and high availability options.
+</Card>
+</CardGroup>
+
+## Key Benefits
+
+<CardGroup cols={2}>
+<Card title="No Public IPs or Ports" icon="network-wired">
+  Your applications can run on private networks without exposing ports.
+</Card>
+
+<Card title="Ingress Mesh" icon="globe">
+  Users always connect to the closest available point of presence.
+</Card>
+
+<Card title="Zero-Trust Security" icon="shield">
+  Every request is authenticated and authorized before reaching your applications.
+</Card>
+
+<Card title="High Availability" icon="check-double">
+  Multiple points of presence, failover, and load balancing between tunnels ensures there is always a way for users to access your applications.
 </Card>
 </CardGroup>

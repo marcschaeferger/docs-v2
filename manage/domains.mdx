@@ -1,0 +1,126 @@
+---
+title: "Domains"
+description: "Learn how to configure domains for your Pangolin resources and understand the different domain types available"
+---
+
+Domains allow you to access your Pangolin resources through custom URLs. Pangolin supports different domain types depending on your deployment model and requirements.
+
+## Getting Started
+
+In Pangolin Cloud, a domain is not required. You can use our provided domain endings like `.hostlocal.app` or `.tunneled.to` for your resources.
+
+## Domain Types
+
+<Info>
+SSL certificates are automatically acquired and managed for both CNAME and NS domain types. No additional certificate configuration is required.
+</Info>
+
+### Domain Delegation (NS Records)
+
+Domain delegation gives Pangolin full DNS control over your domain:
+
+- **Full Domain Control**: Includes the base domain and all subdomains
+- **NS Records**: Uses nameserver delegation for complete DNS management
+- **Automatic Subdomains**: All subdomains work automatically
+
+<Tip>
+Domain delegation is ideal when you want Pangolin to manage your entire domain and all its subdomains.
+</Tip>
+
+### Single Domain (CNAME Records)
+
+Single domain is limited to the exact domain you specify:
+
+- **Exact Domain Only**: Only the specific domain provided works
+- **CNAME Records**: Uses CNAME records pointing to Pangolin
+- **No Subdomains**: Subdomains will not work with CNAME domains
+- **External DNS**: Your domain remains controlled by your existing DNS provider
+
+<Tip>
+CNAME domains are useful when your domain is already controlled by another provider but you still want to expose resources via Pangolin.
+</Tip>
+
+## Adding Domains
+
+### Pangolin Cloud
+
+Domains can be added to an organization via the domains section of the organization settings:
+
+<Steps>
+<Step title="Navigate to Organization Settings">
+  Go to your organization settings and select the "Domains" section.
+</Step>
+
+<Step title="Choose Domain Type">
+  Select either "Domain Delegation" or "Single Domain" based on your needs.
+</Step>
+
+<Step title="Enter Domain">
+  Provide your domain name (e.g., example.com).
+</Step>
+
+<Step title="Configure DNS Records">
+  Follow the provided instructions to add the required DNS records to your provider.
+</Step>
+
+<Step title="Wait for Verification">
+  DNS changes may take time to propagate. The domain will show as verified once propagation is complete.
+</Step>
+</Steps>
+
+<Warning>
+Domain delegation and CNAME domains are only available in Pangolin Cloud. Self-hosted Pangolin uses different domain configuration methods.
+</Warning>
+
+### Self-Hosted Pangolin
+
+For self-hosted Pangolin, domains are configured differently, though you can still create domains in the UI.
+
+<CardGroup cols={2}>
+<Card title="System-Wide Domains" icon="gear" href="/self-host/advanced/config-file#domain-configuration">
+  Configure domains via the config file, including certificate resolver settings.
+</Card>
+
+<Card title="Wildcard Domains" icon="asterisk" href="/self-host/advanced/wild-card-domains">
+  Set up wildcard domains for flexible subdomain management.
+</Card>
+</CardGroup>
+
+<Info>
+In self-hosted Pangolin, domains do not need individual verification, but you're responsible for ensuring correct DNS records point to your server.
+</Info>
+
+## DNS Configuration
+
+### For Domain Delegation
+
+When using domain delegation, you'll need to update your domain's nameservers:
+
+**Example NS Records:**
+```dns
+Type: NS
+Name: test.example.com
+Value: ns-east.fossorial.io
+Value: ns-west.fossorial.io
+```
+
+### For Single Domain (CNAME)
+
+When using CNAME domains, you'll need to add CNAME records:
+
+**Example CNAME Records:**
+```dns
+Record 1:
+Type: CNAME
+Name: test.example.com
+Value: 0nbn5rpcq4wthq6.cname.fossorial.io
+
+Record 2:
+Type: CNAME
+Name: _acme-challenge.test.example.com
+Value: _acme-challenge.0nbn5rpcq4wthq6.cname.fossorial.io
+```
+
+<Check>
+Once DNS is properly configured and propagated, your domain will be verified and ready to use with your Pangolin resources.
+</Check>

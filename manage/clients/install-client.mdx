@@ -1,0 +1,141 @@
+---
+title: "Install Client"
+description: "Install Olm as a binary"
+---
+
+Olm can be installed as either a static binary executable or a Docker container. Configuration is passed via CLI arguments in both cases.
+
+<Warning>
+You **must first create a client and copy the Olm config** in Pangolin before running Olm.
+</Warning>
+
+## Binary Installation
+
+### Quick Install (Recommended)
+
+Use this command to automatically install Olm. It detects your system architecture automatically and always pulls the latest version, adding Olm to your PATH:
+
+```bash
+curl -fsSL https://docs.fossorial.io/get-olm.sh | bash
+```
+
+### Manual Download
+
+Binaries for Linux, macOS, and Windows are available in the [GitHub releases](https://github.com/fosrl/olm/releases) for ARM and AMD64 (x86_64) architectures.
+
+Download and install manually:
+
+```bash
+wget -O olm "https://github.com/fosrl/olm/releases/download/{version}/olm_{architecture}" && chmod +x ./olm
+```
+
+<Note>
+Replace `{version}` with the desired version and `{architecture}` with your architecture. Check the [release notes](https://github.com/fosrl/olm/releases) for the latest information.
+</Note>
+
+### Running Olm
+
+Run Olm with the configuration from Pangolin:
+
+```bash
+olm \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
+```
+
+### Permanent Installation
+
+Install to your PATH (may need to run as root):
+
+```bash
+mv ./olm /usr/local/bin
+```
+
+<Note>
+The quick installer will do this step for you.
+</Note>
+
+### Systemd Service
+
+Create a basic systemd service:
+
+```ini title="/etc/systemd/system/olm.service"
+[Unit]
+Description=Olm
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/olm --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+<Warning>
+Make sure to move the binary to `/usr/local/bin/olm` before creating the service!
+</Warning>
+
+## Windows Service
+
+On Windows, olm has to be installed and run as a Windows service. When running it with the cli args, it will attempt to install and run the service to function like a cli tool. You can also run the following:
+
+### Service Management Commands
+
+```
+# Install the service
+olm.exe install
+
+# Start the service
+olm.exe start
+
+# Stop the service
+olm.exe stop
+
+# Check service status
+olm.exe status
+
+# Remove the service
+olm.exe remove
+
+# Run in debug mode (console output) with our without id & secret
+olm.exe debug
+
+# Show help
+olm.exe help
+```
+
+### Service Configuration
+
+When running as a service, Olm will read configuration from environment variables or you can modify the service to include command-line arguments:
+
+1. Install the service: `olm.exe install`
+2. Configure the service with your credentials using Windows Service Manager or by setting system environment variables:
+    - `PANGOLIN_ENDPOINT=https://example.com`
+    - `OLM_ID=your_olm_id`
+    - `OLM_SECRET=your_secret`
+3. Start the service: `olm.exe start`
+
+### Service Logs
+
+When running as a service, logs are written to:
+
+-   Windows Event Log (Application log, source: "OlmWireguardService")
+-   Log files in: `%PROGRAMDATA%\olm\logs\olm.log`
+
+You can view the Windows Event Log using Event Viewer or PowerShell:
+
+```powershell
+Get-EventLog -LogName Application -Source "OlmWireguardService" -Newest 10
+```
+
+## Gotchas
+
+Olm creates a native tun interface. This usually requires sudo / admin permissions. Some notes:
+
+- **Windows**: Olm will run as a service. You can use the commands described [Configure Client](/manage/clients/configure-client) to manage it. You can use this to run it in the background if needed!
+- **LXC containers**: Need to be configured to allow tun access. See [Tailscale's guide](https://tailscale.com/kb/1130/lxc-unprivileged).
+- **Linux**: May require root privileges or specific capabilities to create tun interfaces.
+- **macOS**: May require additional permissions for network interface creation.

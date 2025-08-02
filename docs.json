@@ -31,8 +31,9 @@
                 "group": "Sites",
                 "pages": [
                   "manage/sites/add-site",
-                  "manage/sites/install-newt",
-                  "manage/sites/configure-newt"
+                  "manage/sites/install-site",
+                  "manage/sites/configure-site",
+                  "manage/sites/update-site"
                 ]
               },
               {
@@ -49,7 +50,10 @@
               },
               {
                 "group": "Access Control",
-                "pages": ["manage/access-control/bypass-rules"]
+                "pages": [
+                  "manage/access-control/bypass-rules",
+                  "manage/access-control/forwarded-headers"
+                ]
               },
               {
                 "group": "Identity Providers",
@@ -67,7 +71,7 @@
             ]
           },
           {
-            "group": "Fully Self-host Pangolin",
+            "group": "Self-host Pangolin",
             "pages": [
               "self-host/quick-install",
               {
@@ -81,6 +85,7 @@
               "self-host/dns-and-networking",
               "self-host/how-to-update",
               "self-host/supporter-program",
+              "self-host/system-architecture",
               {
                 "group": "Advanced Configuration",
                 "pages": [

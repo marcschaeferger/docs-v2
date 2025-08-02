@@ -32,6 +32,7 @@ sudo docker compose down
   - **Pangolin**: [GitHub Releases](https://github.com/fosrl/pangolin/releases)
   - **Gerbil**: [GitHub Releases](https://github.com/fosrl/gerbil/releases)
   - **Traefik**: [Docker Hub](https://hub.docker.com/_/traefik)
+  - **Badger**: [GitHub Releases](https://github.com/fosrl/badger/releases)
   
   <Info>
   Look for the latest stable release (not pre-release or beta versions).
@@ -54,6 +55,16 @@ services:
     traefik:
       image: traefik:v3.4.0       # Update if needed
       # ... rest of config
+  ```
+
+  Increase the Badger version number in `config/traefik_config.yml`:
+
+  ```yaml title="traefik_config.yml"
+  experimental:
+    plugins:
+      badger:
+        moduleName: github.com/fosrl/badger
+        version: v1.2.0 # Update to latest version
   ```
   
   <Warning>

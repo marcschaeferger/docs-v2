@@ -3,73 +3,70 @@ title: "Pangolin vs. Reverse Proxy"
 description: "Learn how Pangolin's distributed architecture eliminates single points of failure and provides global, authenticated access to your applications"
 ---
 
-
 Pangolin builds upon traditional reverse proxy principles but adds distributed architecture, tunneling, and identity-aware access control. While traditional reverse proxies are typically single-server solutions, Pangolin operates as a distributed network of points of presence that provide global, highly-available access to your applications.
 
 ## Traditional Reverse Proxy Limitations
 
-Traditional reverse proxies operate as single-server solutions with inherent limitations:
+<CardGroup cols={2}>
+<Card title="Single Point of Failure" icon="triangle-exclamation">
+  If the reverse proxy server goes down, all applications become inaccessible.
+</Card>
 
-- **Single Point of Failure**: If the reverse proxy server goes down, all applications become inaccessible
-- **Geographic Limitations**: Users far from the server location experience higher latency
-- **Network Dependencies**: Requires public IP addresses and open ports on your network
-- **Basic Authentication**: Typically relies on network-based trust rather than user identity
+<Card title="Geographic Limitations" icon="globe">
+  Users far from the server location experience higher latency.
+</Card>
+
+<Card title="Network Dependencies" icon="network-wired">
+  Requires public IP addresses and open ports on your network.
+</Card>
+
+<Card title="Basic Authentication" icon="shield">
+  Typically relies on network-based trust rather than user identity.
+</Card>
+</CardGroup>
 
 ## Pangolin's Dual-Layer High Availability
 
 Pangolin provides high availability at two critical layers: ingress points and backend routing.
 
-### Global Points of Presence (Ingress Layer)
+### How It Works
 
-Pangolin operates a distributed network of points of presence worldwide that serve as entry points for user traffic:
+<Steps>
+<Step title="Ingress Routing">
+  Request is routed to the closest available point of presence. If one goes down, there is always another point available.
+</Step>
 
-- **Automatic Failover**: If one point of presence becomes unavailable, traffic automatically routes to the next closest location
-- **Geographic Optimization**: Users always connect to the nearest available point of presence for minimal latency
-- **Load Distribution**: Traffic is automatically balanced across multiple locations to prevent overload
+<Step title="Authentication">
+  User identity is verified at the point of presence before getting routed to your backend.
+</Step>
 
-### Intelligent Backend Routing (Tunnel Layer)
+<Step title="Tunnel Selection">
+  Pangolin selects the optimal tunnel route to your backend service.
+</Step>
 
-Once traffic reaches a point of presence, Pangolin provides additional high availability for routing to your backend services:
+<Step title="Failover Handling">
+  If the primary tunnel fails, traffic automatically switches to an alternative route.
+</Step>
 
-- **Multiple Tunnel Connections**: Each edge network can maintain connections to multiple points of presence simultaneously
-- **Automatic Tunnel Failover**: If a tunnel connection fails, traffic automatically switches to an alternative route
-- **Load Balanced Tunnels**: Multiple tunnel connections can be used simultaneously to distribute load and improve performance
-- **Health Monitoring**: Pangolin continuously monitors tunnel health and automatically routes around failed connections
+<Step title="Response Delivery">
+  Response follows the same resilient path back to the user.
+</Step>
+</Steps>
 
 <Info>
 This dual-layer approach ensures your applications remain accessible even if individual points of presence or tunnel connections fail.
 </Info>
 
-### How Dual-Layer High Availability Works
-
-When a user requests access to your application:
-
-1. **Ingress Routing**: Request is routed to the closest available point of presence
-2. **Authentication**: User identity is verified at the point of presence
-3. **Tunnel Selection**: Pangolin selects the optimal tunnel route to your backend service
-4. **Failover Handling**: If the primary tunnel fails, traffic automatically switches to an alternative route
-5. **Response Delivery**: Response follows the same resilient path back to the user
-
-<Check>
-Both ingress points and tunnel connections are automatically managed, providing seamless failover without any manual intervention.
-</Check>
-
 ## Key Differences
 
 ### Tunneling vs. Direct Network Access
 
-Traditional reverse proxies require direct network connectivity:
-
-- **Public IP Required**: Your network needs a public IP address
-- **Open Ports**: Must expose ports (80, 443) to the internet
-- **Network Configuration**: Complex firewall and routing setup required
-
-Pangolin uses secure tunneling:
-
-- **No Public IP Needed**: Your applications can run on private networks
-- **No Open Ports**: Edge networks don't need to expose any ports
-- **Automatic Discovery**: Newt clients automatically find and connect to the optimal point of presence
-- **Encrypted Traffic**: All communication is encrypted using WireGuard
+| Traditional Reverse Proxy | Pangolin |
+|--------------------------|----------|
+| **Public IP Required** | **No Public IP Needed** |
+| **Open Ports (80, 443)** | **No Open Ports** |
+| **Complex Network Setup** | **Automatic Discovery** |
+| **Network-Based Security** | **Encrypted WireGuard Tunnels** |
 
 <Tip>
 This tunneling capability makes Pangolin ideal for environments behind restrictive firewalls, CGNAT, or corporate networks.
@@ -77,25 +74,25 @@ This tunneling capability makes Pangolin ideal for environments behind restricti
 
 ### Identity-Aware Proxy (IAP)
 
-Traditional reverse proxies typically rely on network-based trust, while Pangolin implements zero-trust access control:
+Traditional reverse proxies rely on network-based trust, while Pangolin implements zero-trust access control:
 
-#### How Pangolin's IAP Works
+<CardGroup cols={2}>
+<Card title="Multi-Factor Authentication" icon="key">
+  Support for 2FA, passkeys, and OTP.
+</Card>
 
-1. **Request Interception**: Every request is intercepted by the nearest point of presence
-2. **Identity Verification**: User identity is verified using OAuth2/OpenID Connect
-3. **Context Evaluation**: Additional factors like location, device, and time are assessed
-4. **Access Decision**: Access is granted or denied based on identity and context
-5. **Secure Delivery**: Authenticated requests are tunneled to your application
+<Card title="Single Sign-On" icon="users">
+  Integration with Google, Okta, and other identity providers.
+</Card>
 
-#### Advanced Access Control Features
+<Card title="Granular Permissions" icon="shield-check">
+  Role-based access control and path-based rules.
+</Card>
 
-Pangolin provides comprehensive access control:
-
-- **Multi-Factor Authentication**: Support for 2FA, passkeys, and OTP
-- **Single Sign-On**: Integration with Google, Azure AD, Okta, and other identity providers
-- **Granular Permissions**: User and role-based access control (RBAC)
-- **Resource-Specific Security**: PIN codes, passwords, and expiring share links
-- **Contextual Rules**: IP-based, geographic, and time-based access policies
+<Card title="Contextual Rules" icon="map-pin">
+  IP-based, path-based, and geographic access policies.
+</Card>
+</CardGroup>
 
 <Warning>
 Unlike traditional reverse proxies, Pangolin authenticates every single request, ensuring that only authorized users can access your applications.
@@ -113,5 +110,5 @@ Unlike traditional reverse proxies, Pangolin authenticates every single request,
 | **Scalability** | Manual scaling | Automatic global distribution |
 
 <Card title="Try Pangolin Cloud" icon="rocket" href="https://pangolin.fossorial.io/auth/signup">
-  Experience distributed, authenticated access to your applications with Pangolin's global network of points of presence.
+  Get distributed, authenticated access to your applications with Pangolin's global network of points of presence.
 </Card>

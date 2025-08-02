@@ -1,0 +1,48 @@
+---
+title: "Update Site"
+description: "Update Newt to the latest version"
+---
+
+The update process depends on how you originally installed Newt.
+
+Find the lates version in the [GitHub releases](https://github.com/fosrl/newt/releases).
+
+## Docker Installation
+
+Update the image version in your `docker-compose.yml`:
+
+```yaml title="docker-compose.yml"
+services:
+  newt:
+    image: fosrl/newt:{version} #  Replace {version} with the latest version tag
+    # ... rest of config
+```
+
+Then pull and restart:
+
+```bash
+docker compose pull newt
+docker compose up -d newt
+```
+
+## Binary Installation
+
+### Auto Installer (Recommended)
+
+If you used the auto installer, simply run it again.
+
+```bash
+curl -fsSL https://docs.fossorial.io/get-newt.sh | bash
+```
+
+### Manual Installation
+
+Download the latest binary for your system from [GitHub releases](https://github.com/fosrl/newt/releases) and replace your existing binary.
+
+```bash
+wget -O newt "https://github.com/fosrl/newt/releases/download/{version}/newt_{architecture}" && chmod +x ./newt
+```
+
+<Note>
+Replace `{version}` with the desired version and `{architecture}` with your architecture. Check the [release notes](https://github.com/fosrl/newt/releases) for the latest information.
+</Note>

@@ -313,6 +313,19 @@ Anywhere you see `http://pangolin:3001` must match. The hostname should be the n
 
 **WireGuard Port:**
 
+<Warning>
+You **must** use the default port of `51822` for WireGuard in the Gerbil container. Using any other port may cause connection issues that are difficult to debug.
+
+Make sure this is also reflected in your Pangolin `config.yml`:
+
+```yml
+gerbil:
+  start_port: 51822
+```
+
+See [this GitHub issue comment](https://github.com/fosrl/pangolin/issues/227#issuecomment-2781608815) for more details.
+</Warning>
+
 The port you use for WireGuard must also match what you set the port to in the Pangolin config. By default we use a slightly different port than the standard WireGuard port to avoid conflicts with the built in WireGuard server in Unraid.
 
 **HTTP and HTTPS Ports:**
