@@ -3,7 +3,7 @@ title: "How Pangolin Works"
 description: "Learn about Pangolin's architecture and how its components work together to provide secure application access"
 ---
 
-Pangolin provides secure, application-specific ingress to your applications through a global network of points of presence. Users connect to the closest point of presence, which authenticates them and routes their requests through secure tunnels to your applications.
+Pangolin provides secure, application-specific ingress to your applications through a network of points of presence. Users connect to the closest point of presence, which authenticates them and routes their requests through secure tunnels to your applications.
 
 <Frame>
   <img src="/images/diagram.svg" width="400" centered/>
@@ -30,14 +30,14 @@ Pangolin provides secure, application-specific ingress to your applications thro
 </Steps>
 
 <Info>
-Points of presence provide global high availability - if one location goes down, traffic automatically routes to the next closest location.
+Points of presence provide a mesh of high availability - if one location goes down, traffic automatically routes to the next closest location.
 </Info>
 
 ## Deployment Options
 
 <CardGroup cols={2}>
 <Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
-  Global network of points of presence with automatic failover and routing to your backend services.
+  Large network of points of presence with automatic failover and routing to your backend services.
 </Card>
 
 <Card title="Hybrid" icon="circle-nodes" href="/manage/high-availability#hybrid-deployment">
