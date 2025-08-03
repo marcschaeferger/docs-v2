@@ -35,8 +35,7 @@ Before installing Pangolin, ensure you've set up DNS for your domain(s) and open
   Connect to your server via SSH and download the installer:
   
   ```bash
-  wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.8.0/installer_linux_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')"
-  chmod +x ./installer
+  curl -fsSL https://digpangolin.com/get-installer.sh | bash
   ```
   
   The installer supports both AMD64 (x86_64) and ARM64 architectures.
