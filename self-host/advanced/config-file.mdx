@@ -507,13 +507,13 @@ This section contains the complete reference for all configuration options in `c
       </Note>
     </ResponseField>
 
-    <ResponseField name="allow_base_domain_resources" type="boolean">
-      Whether to allow resources on base domains.
+    <ResponseField name="allow_raw_resources" type="boolean">
+      Whether to allow raw TCP/UDP resource creation.
 
       **Default**: `true`
 
       <Note>
-        When disabled, only subdomain resources are allowed.
+        If set to `false`, users will only be able to create http/https resources.
       </Note>
     </ResponseField>
 
