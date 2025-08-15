@@ -97,6 +97,16 @@
                   "self-host/advanced/database-options",
                   "self-host/advanced/integration-api"
                 ]
+              },
+              {
+                "group": "Community Guides",
+                "pages": [
+                  "self-host/community-guides/overview",
+                  "self-host/community-guides/geoblock",
+                  "self-host/community-guides/crowdsec",
+                  "self-host/community-guides/metrics",
+                  "self-host/community-guides/homeassistant"
+                ]
               }
             ]
           },
