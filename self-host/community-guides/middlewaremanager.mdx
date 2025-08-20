@@ -1,8 +1,15 @@
-# Enhancing Your Pangolin Deployment with the Middleware Manager
+---
+title: "Middleware Manager"
+---
 
 <Note>  
 This is a community guide and not officially supported. For issues, contributions, or bug reports, please use the [official GitHub repository](https://github.com/hhftechnology/middleware-manager).  
 </Note>  
+
+## What is Middleware Manager?
+
+The **Middleware Manager** is a microservice that extends your existing traefik deployments.  
+It provides a **web UI** to attach Traefik middlewares to resources without editing Pangolin itself.  
 
 :warning: **Security Warning**  
 Middlewares can strengthen security but also create vulnerabilities if misconfigured.  
@@ -15,10 +22,6 @@ Middlewares can strengthen security but also create vulnerabilities if misconfig
 
 ---
 
-## What is Middleware Manager?
-
-The **Pangolin Middleware Manager** is a microservice that extends your existing Pangolin deployment.  
-It provides a **web UI** to attach Traefik middlewares to resources without editing Pangolin itself.  
 
 ### Key Use Cases
 * External authentication (Authelia, Authentik, JWT)  
@@ -159,13 +162,12 @@ middlewares:
 
 ## Final Notes
 
-The Middleware Manager bridges Pangolin’s simplicity with Traefik’s powerful middleware ecosystem.
+The Middleware Manager gives you a UI to work with Traefik’s powerful middleware ecosystem.
 
 * Start with simple configs → test thoroughly → expand gradually.
 * Use templates where possible.
 * Always validate in staging before production.
 
-Happy proxying 🚀
 
 ```
 
