@@ -26,7 +26,7 @@
             "group": "Manage Pangolin",
             "pages": [
               "manage/points-of-presence",
-              "manage/high-availability",
+              "manage/managed",
               {
                 "group": "Sites",
                 "pages": [
@@ -74,15 +74,18 @@
             "group": "Self-host Pangolin",
             "pages": [
               "self-host/quick-install",
+              "self-host/quick-install-managed",
               {
                 "group": "Manual Installation",
                 "pages": [
                   "self-host/manual/docker-compose",
-                  "self-host/manual/unraid"
+                  "self-host/manual/unraid",
+                  "self-host/manual/managed"
                 ]
               },
               "self-host/choosing-a-vps",
               "self-host/dns-and-networking",
+              "self-host/convert-managed",
               "self-host/how-to-update",
               "self-host/supporter-program",
               "self-host/system-architecture",

@@ -1,0 +1,102 @@
+---
+title: "Quick Install Managed"
+description: "Deploy your own managed Pangolin reverse proxy server in under 10 minutes with our automated installer"
+---
+
+<Note>
+
+[Why would I want to deploy a managed Pangolin instance?](../manage/managed.mdx)
+
+</Note>
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- **Linux server** with root access and public IP address
+- **Open ports on firewall** for 80 (TCP), 443 (TCP), 51820 (UDP), and 21820 (UDP for clients)
+
+<Tip>
+**Recommended**: Ubuntu 20.04+ or Debian 11+ for best compatibility and performance.
+</Tip>
+
+## Choose Your Server
+
+Need help choosing? See our [complete VPS guide](/self-host/choosing-a-vps) for suggestions.
+
+## DNS & Networking
+
+Before installing Pangolin, ensure you've opened the required port on your firewall. See our guide on [DNS & networking](/self-host/dns-and-networking) for more information.
+
+## Installation Process
+
+<Steps>
+<Step title="Download the installer">
+  Connect to your server via SSH and download the installer:
+  
+  ```bash
+  curl -fsSL https://digpangolin.com/get-installer.sh | bash
+  ```
+  
+  The installer supports both AMD64 (x86_64) and ARM64 architectures.
+</Step>
+
+<Step title="Run the installer">
+  Execute the installer with root privileges:
+  
+  ```bash 
+  sudo ./installer
+  ```
+  
+  The installer places all files in the current directory. Move the installer to your desired installation directory before running it.
+</Step>
+
+<Step title="Do you already have credentials from the dashboard?">
+
+If you are on your game and have already generated credentials for this PoP in the dashboard enter them here.
+
+<Tip>
+If you don't have them yet you can just select no when asked and we will create it in a later step.
+</Tip>
+
+</Step>
+
+<Step title="The public addressable IP address for this PoP">
+
+    Enter either the public IP address of your server or a domain name that resolves to it. 
+
+    If you choose to use a domain keep in mind this just resolves your PoP on the internet while the actual subdomains for resources will be managed in the cloud.
+
+</Step>
+
+<Step title="Generate credentials">
+
+If you did not enter credentials earlier then you should see something like the following: 
+
+```
+Your managed credentials have been obtained successfully.
+        ID:     he4g78wevj25msf
+        Secret: n7sd18twfko0q0vrb7wyclqzbvvnx1fqt7ezv8xewhdb9s7d
+```
+
+Go to the [Pangolin dashboard](https://pangolin.fossorial.io/) and log in. Navigate to the "Self-hosted" section and add a new PoP. Use this ID and secret to register your PoP.
+
+<Tip>
+More than one account can use the same PoP credentials. This is useful for teams.
+</Tip>
+
+</Step>
+
+</Steps>
+
+## Post-Installation Setup
+
+Once installation completes successfully, you'll see:
+
+```
+Installation complete!
+```
+
+Navigate to the [Pangolin dashboard](https://pangolin.fossorial.io/) and create sites, resources, and targets for your managed PoP.
+
+{/* ## Video Walkthrough */}
