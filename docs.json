@@ -25,7 +25,7 @@
           {
             "group": "Manage Pangolin",
             "pages": [
-              "manage/points-of-presence",
+              "manage/nodes",
               "manage/managed",
               {
                 "group": "Sites",

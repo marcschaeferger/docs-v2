@@ -2,25 +2,25 @@
 title: "Introduction to Pangolin"
 ---
 
-Pangolin is an open-source and identity-aware tunneled reverse proxy server. Pangolin's distributed architecture with points of presence provide highly available ingress to ensure applications always remain accessible.
+Pangolin is an open-source and identity-aware tunneled reverse proxy server. Pangolin's distributed architecture with nodes provide highly available ingress to ensure applications always remain accessible.
 
 <Frame caption="Screenshot of resources page from the Pangolin Dashboard.">
   <img src="/images/fossorial-dashboard.png" alt="Pangolin Dashboard"/>
 </Frame>
 
-Pangolin establishes secure connections from edge networks to PoPs, bypassing the need for public inbound ports and complex firewall configurations. Pangolin is incredibly useful for exposing local services, IoT devices, or internal applications to the internet without direct exposure, enhancing security by reducing attack surface and simplifying network management. Additionally, Pangolin acts as an identity-aware proxy by authenticating every request against admin-defined access controls and rules.
+Pangolin establishes secure connections from edge networks to nodes, bypassing the need for public inbound ports and complex firewall configurations. Pangolin is incredibly useful for exposing local services, IoT devices, or internal applications to the internet without direct exposure, enhancing security by reducing attack surface and simplifying network management. Additionally, Pangolin acts as an identity-aware proxy by authenticating every request against admin-defined access controls and rules.
 
 <Columns cols={2}>
   <Card title="How it works" icon="map" href="/about/how-pangolin-works">
     Learn how the Pangolin system works from the server to the edge network.
   </Card>
-  <Card title="Points of Presence" icon="circle-nodes" href="/manage/points-of-presence">
+  <Card title="nodes" icon="circle-nodes" href="/manage/points-of-presence">
     Learn about how Pangolin provides highly available ingress to your backend.
   </Card>
 </Columns>
 
 <Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
-  Use Cloud for a highly available and access-controllerd ingress service with points of presence all over the world.
+  Use Cloud for a highly available and access-controllerd ingress service with nodes all over the world.
 </Card>
 
 <Columns cols={2}>
@@ -29,7 +29,7 @@ Pangolin establishes secure connections from edge networks to PoPs, bypassing th
     icon="server"
     href="/self-host/quick-install"
   >
-    Install and manage your own single point of presence Pangolin server on your own infrastructure.
+    Install and manage your own single node Pangolin server on your own infrastructure.
   </Card>
   <Card
     title="Install Site"

@@ -1,35 +1,35 @@
 ---
-title: "Self host a Managed PoP"
+title: "Self-host Managed Nodes"
 description: "Learn about Pangolin's managed deployment mode"
 ---
 
-In this deployment modality you can host your own points of presence with cloud coordination and automatic failover. Data always transits your servers and the cloud handles orchestration between all of your PoPs.
+In this deployment modality you can host your own nodes with cloud coordination and automatic failover. Data always transits your servers and the cloud handles orchestration between all of your nodes.
 
 Its essentially just the normal self hosted pangolin setup, but with added benefits of cloud integration and coordinated failover.
 
 <Tip>
-    You can deploy a managed Pangolin PoP in seconds [using the installer](../self-host/quick-install-managed). 
+    You can deploy a managed Pangolin node in seconds [using the installer](../self-host/quick-install-managed). 
 </Tip>
 
 ### How It Works
 
-- **You Host the PoP**: Manage the infrastructure for your points of presence, which connect your Newt tunnels.
+- **You Host the node**: Manage the infrastructure for your nodes, which connect your Newt tunnels.
 - **We Handle the Rest**: Pangolin Cloud manages the control plane, DNS, certificate management, database, and backups.
-- **Failover Made Simple**: Host multiple PoPs with automatic failover between them. Optionally, if your PoPs are unavailable, traffic automatically fails over to our cloud PoPs.
+- **Failover Made Simple**: Host multiple nodes with automatic failover between them. Optionally, if your nodes are unavailable, traffic automatically fails over to our cloud nodes.
 
 <Frame>
   <img src="/images/ha.svg" width="400" centered/>
 </Frame>
 
 <Note>
-    For detailed information about how points of presence work and their advantages, see our [Points of Presence](/manage/points-of-presence) documentation.
+    For detailed information about how nodes work and their advantages, see our [Nodes](/manage/nodes) documentation.
 </Note>
 
 ### Benefits
 
 - **Data Control**: Traffic flows through your servers, giving you control over data transit costs, privacy, and works with your security policies.
 - **High Availability**: Eliminates the complexity of managing high availability while still owning your own infrastructure.
-- **Less Management Overhead**: While we update the cloud with new features you don't need to touch your PoPs unless you want to.
+- **Less Management Overhead**: While we update the cloud with new features you don't need to touch your nodes unless you want to.
 
 <Tip>
 Managed deployment is ideal for organizations that need high availability while maintaining control over their infrastructure and data transit.

@@ -65,7 +65,7 @@ Pangolin provides secure, application-specific ingress and routing without the l
 </Card>
 
 <Card title="Highly Available Mesh" icon="circle-nodes" href="/manage/points-of-presence">
-Multiple points of presence ensure high availability.
+Multiple nodes ensure high availability.
 </Card>
 </CardGroup>
 
@@ -78,7 +78,7 @@ Multiple points of presence ensure high availability.
 | **Network Requirements** | Public IP, open ports | No public IP needed |
 | **Access Control** | Network-level | Zero-trust, granular |
 | **Authentication** | Basic credentials | Multi-factor, SSO, OIDC |
-| **Infrastructure** | Single server | Distributed points of presence |
+| **Infrastructure** | Single server | Distributed nodes |
 | **Security Model** | Network-based trust | Identity-based trust |
 
 <Card title="Try Pangolin Cloud" icon="rocket" href="https://pangolin.fossorial.io/auth/signup">
@@ -87,6 +87,6 @@ Multiple points of presence ensure high availability.
 
 # Pangolin vs. Mesh VPN (e.g., Tailscale, Netbird)
 
-Pangolin and mesh VPNs like Tailscale or Netbird both provide secure remote access, but they differ in their approach and functionality. Mesh VPNs focus on creating peer-to-peer connections between devices for full network access, while Pangolin is designed to expose specific applications or services securely through points of presence, with no need for client-side software on user devices.
+Pangolin and mesh VPNs like Tailscale or Netbird both provide secure remote access, but they differ in their approach and functionality. Mesh VPNs focus on creating peer-to-peer connections between devices for full network access, while Pangolin is designed to expose specific applications or services securely through nodes, with no need for client-side software on user devices.
 
 Pangolin is a better choice for application-specific access with zero-trust security and no client-side software requirements. Mesh VPNs like Tailscale or Netbird are more suitable for full network access and peer-to-peer connectivity. For environments prioritizing granular access control and simplicity, Pangolin offers a more focused and secure solution. 

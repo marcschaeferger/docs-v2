@@ -3,7 +3,7 @@ title: "How Pangolin Works"
 description: "Learn about Pangolin's architecture and how its components work together to provide secure application access"
 ---
 
-Pangolin provides secure, application-specific ingress to your applications through a network of points of presence. Users connect to the closest point of presence, which authenticates them and routes their requests through secure tunnels to your applications.
+Pangolin provides secure, application-specific ingress to your applications through a network of nodes. Users connect to the closest node, which authenticates them and routes their requests through secure tunnels to your applications.
 
 <Frame>
   <img src="/images/diagram.svg" width="400" centered/>
@@ -12,12 +12,12 @@ Pangolin provides secure, application-specific ingress to your applications thro
 ## How It Works
 
 <Steps>
-<Step title="User enters through point of presence">
-  DNS automatically routes users to the closest available regional point of presence (PoP). A PoP is always available because the control plane fails over between PoPs.
+<Step title="User enters through node">
+  DNS automatically routes users to the closest available regional node. A node is always available because the control plane fails over between nodes.
 </Step>
 
 <Step title="Authentication and authorization">
-  The point of presence verifies the user's identity, checks access permissions, and applies context aware rules such as IP and path based filters, geoblocking, and rate limiting.
+  The node verifies the user's identity, checks access permissions, and applies context aware rules such as IP and path based filters, geoblocking, and rate limiting.
 </Step>
 
 <Step title="Secure tunnel routing">
@@ -30,26 +30,26 @@ Pangolin provides secure, application-specific ingress to your applications thro
 </Steps>
 
 <Info>
-Points of presence provide a mesh of high availability - if one location goes down, traffic automatically routes to the next closest location.
+nodes provide a mesh of high availability - if one location goes down, traffic automatically routes to the next closest location.
 </Info>
 
 ## Deployment Options
 
 <CardGroup cols={2}>
 <Card title="Pangolin Cloud" icon="cloud" href="https://pangolin.fossorial.io/auth/signup">
-  Large network of points of presence with automatic failover and routing to your backend services.
+  Large network of nodes with automatic failover and routing to your backend services.
 </Card>
 
 <Card title="Managed" icon="circle-nodes" href="/manage/managed">
-  Host your own multiple points of presence with cloud coordination and automatic failover. Data always transits your servers.
+  Host your own multiple nodes with cloud coordination and automatic failover. Data always transits your servers.
 </Card>
 
 <Card title="Self-Hosted" icon="server" href="/self-host/quick-install">
-  Fully self-hosted, self-contained Pangolin server acting as a single point of presence.
+  Fully self-hosted, self-contained Pangolin server acting as a single node.
 </Card>
 
 <Card title="Learn More" icon="book" href="/manage/points-of-presence">
-  Detailed information about points of presence and high availability options.
+  Detailed information about nodes and high availability options.
 </Card>
 </CardGroup>
 
@@ -61,7 +61,7 @@ Points of presence provide a mesh of high availability - if one location goes do
 </Card>
 
 <Card title="Ingress Mesh" icon="globe">
-  Users always connect to the closest available point of presence.
+  Users always connect to the closest available node.
 </Card>
 
 <Card title="Zero-Trust Security" icon="shield">
@@ -69,6 +69,6 @@ Points of presence provide a mesh of high availability - if one location goes do
 </Card>
 
 <Card title="High Availability" icon="check-double">
-  Multiple points of presence, failover, and load balancing between tunnels ensures there is always a way for users to access your applications.
+  Multiple nodes, failover, and load balancing between tunnels ensures there is always a way for users to access your applications.
 </Card>
 </CardGroup>
