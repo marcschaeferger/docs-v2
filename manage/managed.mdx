@@ -1,36 +1,72 @@
 ---
-title: "Self-host Managed Nodes"
-description: "Learn about Pangolin's managed deployment mode"
+title: "Managed Self-Hosted"
+description: "More reliable and low-maintenance self-hosted Pangolin server with extra bells and whistles"
 ---
 
-In this deployment modality you can host your own nodes with cloud coordination and automatic failover. Data always transits your servers and the cloud handles orchestration between all of your nodes.
+**Managed Self-Hosted Pangolin** is a deployment option designed for people who want simplicity and extra reliability while still keeping their data private and self-hosted.
 
-Its essentially just the normal self hosted pangolin setup, but with added benefits of cloud integration and coordinated failover.
+With this option, you still run your own Pangolin node — your tunnels, SSL termination, and traffic all stay on your server. The difference is that management and monitoring are handled through our cloud dashboard, which unlocks a number of significant benefits.
 
 <Tip>
     You can deploy a managed Pangolin node in seconds [using the installer](../self-host/quick-install-managed). 
 </Tip>
 
-### How It Works
+## How It Works
 
-- **You Host the node**: Manage the infrastructure for your nodes, which connect your Newt tunnels.
-- **We Handle the Rest**: Pangolin Cloud manages the control plane, DNS, certificate management, database, and backups.
-- **Failover Made Simple**: Host multiple nodes with automatic failover between them. Optionally, if your nodes are unavailable, traffic automatically fails over to our cloud nodes.
+The managed self-hosted approach gives you the best of both worlds:
+
+- **You Host the Node**: You maintain complete control over your infrastructure and where your data flows. Your tunnels, SSL termination, and all traffic processing happen on your servers.
+- **We Handle Coordination**: Pangolin Cloud manages the control plane, DNS, certificate management, database, and backups through our cloud dashboard.
+- **Seamless Failover**: Deploy multiple nodes with automatic failover between them. If your nodes become unavailable, traffic can optionally fail over to our cloud infrastructure until you restore service.
 
 <Frame>
   <img src="/images/ha.svg" width="400" centered/>
 </Frame>
 
+## Why Choose Managed Self-Hosted?
+
+**Data Control & Privacy**: All your traffic flows through your own servers, giving you complete control over data transit, costs, and ensuring compliance with your security policies.
+
+**Simplified High Availability**: Get enterprise-grade reliability without the complexity of managing distributed systems, load balancers, and monitoring infrastructure yourself.
+
+**Reduced Operational Burden**: Focus on your core business while we handle the operational complexity of keeping your tunneling infrastructure running smoothly.
+
 <Note>
     For detailed information about how nodes work and their advantages, see our [Nodes](/manage/nodes) documentation.
 </Note>
 
-### Benefits
+## Key Benefits
 
-- **Data Control**: Traffic flows through your servers, giving you control over data transit costs, privacy, and works with your security policies.
-- **High Availability**: Eliminates the complexity of managing high availability while still owning your own infrastructure.
-- **Less Management Overhead**: While we update the cloud with new features you don't need to touch your nodes unless you want to.
+### ✅ Simpler Operations
+No need to run your own mail server or set up complex alerting. You'll get health checks and downtime alerts out of the box, making it much easier to monitor your infrastructure without additional complexity.
+
+### 🔄 Automatic Updates
+The cloud dashboard evolves quickly, so you get new features and bug fixes without having to manually pull new containers every time. Your self-hosted node stays current automatically.
+
+### 🔧 Less Maintenance
+No database migrations, backups, or extra infrastructure to manage. We handle that in the cloud, so you can focus on what matters most to your business.
+
+### 📊 Cloud Failover
+If your node goes down, your tunnels can temporarily fail over to our cloud points of presence until you bring it back online. This ensures continuous availability even during maintenance windows.
+
+### 🛡️ High Availability (PoPs)
+You can also attach multiple nodes to your account for redundancy and better performance. Deploy nodes across different regions or providers for maximum reliability.
+
+### ⚡ Future Enhancements
+We're planning to add more analytics, alerting, and management tools to make your deployment even more robust. You'll automatically benefit from these improvements as they're released.
+
+## Getting Started
 
 <Tip>
-Managed deployment is ideal for organizations that need high availability while maintaining control over their infrastructure and data transit.
+    You can deploy a managed Pangolin node in seconds [using the installer](../self-host/quick-install-managed). 
+</Tip>
+
+Ready to convert your existing self-hosted node to managed? Learn how in our [conversion guide](../self-host/convert-managed).
+
+<Note>
+    For detailed information about how nodes work and their advantages, see our [Nodes](/manage/nodes) documentation.
+</Note>
+
+<Tip>
+Managed deployment is ideal for organizations that need high availability and reduced operational overhead while maintaining complete control over their infrastructure and data transit.
 </Tip>
