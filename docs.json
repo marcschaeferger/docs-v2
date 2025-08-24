@@ -38,8 +38,9 @@
               },
               {
                 "group": "Resources",
-                "pages": ["manage/resources/tcp-udp-resources"]
+                "pages": ["manage/resources/targets", "manage/resources/tcp-udp-resources", "manage/resources/client-resources"]
               },
+              "manage/healthchecks-failover",
               {
                 "group": "Clients",
                 "pages": [

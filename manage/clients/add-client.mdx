@@ -83,7 +83,7 @@ gerbil:
 </Step>
 
 <Step title="Configure resources">
-  Create RAW TCP/UDP resources for what you would like to access through the client. For example, to SSH into a server, create a resource like `22:localhost:22`.
+  Create [client resources](../resources/site-resources.mdx) for what you would like to access through the client. For example, to SSH into a server, create a resource like `22:localhost:22`.
 </Step>
 
 <Step title="Verify connection">
@@ -119,13 +119,7 @@ Sites have two operating modalities when accepting clients:
 
 ### Proxy Mode
 
-When you run Newt with `--accept-clients` it will run fully in user space. This means you do not need to give the container or binary any special permissions. It will NOT create a virtual network interface on the host. Instead you should create raw TCP/UDP resources in Pangolin to configure what ports clients can hit and where they should go.
-
-For example, if you wanted to SSH into your server you could add a resource for it:
-
-<Frame caption="Pangolin UI showing example SSH resource.">
-  <img src="/images/ssh_resource.png" alt="SSH Resource"/>
-</Frame>
+When you run Newt with `--accept-clients` it will run fully in user space. This means you do not need to give the container or binary any special permissions. It will NOT create a virtual network interface on the host. Instead you should create [client resources](../resources/client-resources.mdx) in Pangolin to configure what ports clients can hit and where they should go.
 
 ### Native Mode
 
@@ -137,25 +131,23 @@ In native mode with both `--accept-clients` and `--native`, Newt will create a n
 
 #### Remote Subnets
 
-Additionally, you can add remote subnets to the site settings in Pangolin to forward remote networks through Newt. This can let Newt act as a traditional VPN server to route to anything on your local network.
+In native mode, you can add remote subnets to the site settings in Pangolin to forward remote networks through Newt. This can let Newt act as a traditional VPN server to route to anything on your local network.
 
 <Frame caption="Pangolin UI showing remote subnets for clients.">
   <img src="/images/remote_subnets.png" alt="Remote Subnets"/>
 </Frame>
 
+This will configure a route on the Olm side of the tunnel to route this subnet down the tunnel. When it reaches the other end, can be routed to the appropriate destination by the host.
+
 This may require Linux that you have forwarding enabled:
-
-```bash
-sysctl -w net.ipv4.ip_forward=1
-```
-
-And make it persistent:
 
 ```bash
 sudo nano /etc/sysctl.conf
 
 net.ipv4.ip_forward = 1
 ```
+
+...and [setup NAT](https://www.geeksforgeeks.org/linux-unix/using-masquerading-with-iptables-for-network-address-translation-nat/) or other routing so that destination networks can route back to the Olm client. Remember the source address of the packets will be the IP address of the Olm client in this situation and the destination will be an IP on the remote subnet network.
 
 ## Notes
 

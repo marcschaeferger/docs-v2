@@ -1,0 +1,82 @@
+---
+title: "Targets"
+description: "Configure destination endpoints for resource routing and load balancing"
+---
+
+## Overview
+
+When you create a resource in Pangolin, you define different targets that specify where traffic should be routed within your network. Each target represents a specific destination that the resource can proxy to when handling incoming requests.
+
+<Note>
+Targets are created on the Newt tunnel, enabling traffic to reach destinations on the remote network without requiring additional routing configuration.
+</Note>
+
+## How Targets Work
+
+### Target Routing
+
+Targets function as destination endpoints for your resources:
+
+1. **Resource Creation**: When you create a resource, you configure one or more targets
+2. **Traffic Routing**: Incoming traffic is routed to the appropriate target based on your configuration
+3. **Network Access**: Newt proxy routes traffic to the local network through the tunnel
+4. **Direct Connection**: No additional routing is necessary on the remote network
+
+## Multi-Site Targets (v1.9.0+)
+
+With the introduction of update 1.9.0, targets now have sites associated with them. This enhancement provides significant benefits for reliability and load distribution.
+
+### Site-Distributed Resources
+
+You can now configure targets across different sites for the same resource:
+
+<Card title="High Availability">
+  Distribute your resources across multiple sites so that if one site goes down, traffic automatically continues to be served from other available sites.
+</Card>
+
+<Card title="Load Balancing">
+  Set up load balancing across sites to distribute traffic in a round-robin fashion between all available targets.
+</Card>
+
+### Load Balancing Requirements
+
+<Warning>
+Load balancing between different targets only works when sites are connected to the same node. In managed Pangolin instances with multiple nodes, ensure load balancing occurs on the same node.
+</Warning>
+
+To ensure effective load balancing in multi-node environments:
+
+```bash
+newt --prefer-endpoint <specific-endpoint> <other-args>
+```
+
+<Note>
+Pangolin currently does not load balance between nodes, only between targets on the same node.
+</Note>
+
+## Configuring Targets
+
+<Steps>
+<Step title="Navigate to Resources">
+  In the Pangolin dashboard, go to the **Resources** section.
+</Step>
+
+<Step title="Create or Edit Resource">
+  Either create a new resource or select an existing resource to edit.
+</Step>
+
+<Step title="Add Target">
+  Click **Add Target** to configure a new destination.
+</Step>
+
+<Step title="Configure Target Details">
+  Specify the target configuration:
+  - **Address**: IP address or hostname of the target service
+  - **Port**: Port number where the service is listening
+  - **Site**: Select the site where this target is located
+</Step>
+</Steps>
+
+<Note>
+Pangolin uses round-robin load balancing by default, distributing traffic evenly across all targets.
+</Note>
