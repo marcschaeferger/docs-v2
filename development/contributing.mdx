@@ -139,10 +139,9 @@ The easiest way to resolve this is to run Gerbil and have it register in your de
 
 ```bash
 ./gerbil \
---remoteConfig http://localhost:3001/api/v1/gerbil/get-config \
---reportBandwidthTo http://localhost:3001/api/v1/gerbil/receive-bandwidth \
---generateAndSaveKeyTo=/var/key \
---reachableAt=http://localhost:3003
+--reachableAt=http://gerbil:3003 \
+--generateAndSaveKeyTo=/var/config/key \
+--remoteConfig=http://pangolin:3001/api/v1/
 ```
 </Note>
 
