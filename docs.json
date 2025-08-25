@@ -38,7 +38,11 @@
               },
               {
                 "group": "Resources",
-                "pages": ["manage/resources/targets", "manage/resources/tcp-udp-resources", "manage/resources/client-resources"]
+                "pages": [
+                  "manage/resources/targets",
+                  "manage/resources/tcp-udp-resources",
+                  "manage/resources/client-resources"
+                ]
               },
               "manage/healthchecks-failover",
               {
@@ -111,7 +115,8 @@
                   "self-host/community-guides/metrics",
                   "self-host/community-guides/homeassistant"
                 ]
-              }
+              },
+              "self-host/telemetry"
             ]
           },
           {
@@ -168,5 +173,11 @@
       "apiKey": "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
       "apiHost": "https://digpangolin.com/relay-O7yI"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/telemetry",
+      "destination": "/self-host/telemetry"
+    }
+  ]
 }
