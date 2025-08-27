@@ -1,5 +1,5 @@
 ---
-title: "Bypass Rules"
+title: "Rules"
 description: "Configure rules to allow or deny access to resources without authentication"
 ---
 
@@ -12,6 +12,10 @@ Rules allow you to either "allow" and bypass the Pangolin auth system (no pin, l
 
 <Card title="Deny Rules" icon="x">
   Completely reject requests that match the rule. Useful for blocking admin paths or sensitive endpoints.
+</Card>
+
+<Card title="Pass to Auth" icon="x">
+  Pass requests that match the rule to the next stage for user to authenticate with SSO, password, or pin. Useful for enforcing auth on specific paths while allowing others.
 </Card>
 </CardGroup>
 
@@ -52,6 +56,20 @@ Path match rules allow URL patterns defined with plain text and wildcards (`*`) 
 
 - **Validation:**  
   Each pattern segment must correspond to a URL segment, and wildcards match zero or more characters within that segment. A pattern like `/blog*` only matches the first segment, so URLs with extra segments require additional placeholders (e.g., `/blog*/*`).
+
+### Country
+
+<Note>
+Geo blocking is only available for targets created with managed nodes or in the cloud because we need to host services to resolve IP addresses and evolve it quickly as network change.
+
+Fully self hosted users can install a [Traefik plugin](/self-host/community-guides/geoblock) for geo blocking support.
+</Note>
+
+Country match rules allow you to specify allowed or denied countries for requests based on their IP address. This is useful for geo-restrictions or compliance with regional regulations.
+
+We use a IP database to geolocate the IP address but this is not always accurate. We try to keep it updated, but there may be cases where the location is incorrect.
+
+Select the "ALL" option to match all countries for allowing or denying access.
 
 ### CIDR
 

@@ -45,6 +45,7 @@
                 ]
               },
               "manage/healthchecks-failover",
+              "manage/geoblocking",
               {
                 "group": "Clients",
                 "pages": [
@@ -56,7 +57,7 @@
               {
                 "group": "Access Control",
                 "pages": [
-                  "manage/access-control/bypass-rules",
+                  "manage/access-control/rules",
                   "manage/access-control/forwarded-headers"
                 ]
               },
