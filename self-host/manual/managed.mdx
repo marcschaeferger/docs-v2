@@ -210,6 +210,10 @@ entryPoints:
     address: ":80"
   websecure:
     address: ":443"
+    proxyProtocol:
+      trustedIPs:
+        - 0.0.0.0/0
+        - ::1/128
     transport:
       respondingTimeouts:
         readTimeout: "30m"
