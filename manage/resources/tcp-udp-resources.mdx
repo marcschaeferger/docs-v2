@@ -9,6 +9,13 @@ This feature is only available in self-hosted Pangolin instances.
 
 Pangolin supports raw TCP and UDP traffic because Newt can pass anything through the tunnel.
 
+Ensure you have the flag enabled in the config file:
+
+```
+flags:
+  allow_raw_resources: true
+```
+
 These resources can either be:
 1. **Publically Proxied:** Map the resource to a port on the host Pangolin server, so you can access the resource from `<server-public-ip>:<mapped-port>`. This is useful if you want to access the resource over the public internet, such as exposing a game server like Minecraft.
 2. **Internal Exposure:** Map services accessible on the same network as the site to an internal port on the site address. This is useful if you only want internal exposure to a resource when connected with a client.
