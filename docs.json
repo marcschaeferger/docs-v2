@@ -133,6 +133,21 @@
     "global": {
       "anchors": [
         {
+          "anchor": "Website",
+          "href": "https://digpangolin.com",
+          "icon": "globe"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://digpangolin.com/blog",
+          "icon": "book"
+        },
+        {
+          "anchor": "Support Plans",
+          "href": "https://digpangolin.com/support",
+          "icon": "life-ring"
+        },
+        {
           "anchor": "GitHub",
           "href": "https://github.com/fosrl/pangolin",
           "icon": "github"
