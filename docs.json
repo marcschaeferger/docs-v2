@@ -79,20 +79,28 @@
           {
             "group": "Self-host Pangolin",
             "pages": [
-              "self-host/quick-install",
               "self-host/quick-install-managed",
+              {
+                "group": "Manual Installation",
+                "pages": ["self-host/manual/managed"]
+              },
+              "self-host/choosing-a-vps",
+              "self-host/how-to-update"
+            ]
+          },
+          {
+            "group": "Community Edition",
+            "pages": [
+              "self-host/quick-install",
               {
                 "group": "Manual Installation",
                 "pages": [
                   "self-host/manual/docker-compose",
-                  "self-host/manual/unraid",
-                  "self-host/manual/managed"
+                  "self-host/manual/unraid"
                 ]
               },
-              "self-host/choosing-a-vps",
               "self-host/dns-and-networking",
               "self-host/convert-managed",
-              "self-host/how-to-update",
               "self-host/supporter-program",
               "self-host/system-architecture",
               {
@@ -128,25 +136,14 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Blog",
+        "href": "https://digpangolin.com/blog"
       }
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Website",
-          "href": "https://digpangolin.com",
-          "icon": "globe"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://digpangolin.com/blog",
-          "icon": "book"
-        },
-        {
-          "anchor": "Support Plans",
-          "href": "https://digpangolin.com/support",
-          "icon": "life-ring"
-        },
         {
           "anchor": "GitHub",
           "href": "https://github.com/fosrl/pangolin",
@@ -156,6 +153,11 @@
           "anchor": "Discord",
           "href": "https://discord.gg/HCJR8Xhme4",
           "icon": "discord"
+        },
+        {
+          "anchor": "Support Plans",
+          "href": "https://digpangolin.com/support",
+          "icon": "life-ring"
         }
       ]
     }

@@ -1,11 +1,14 @@
 ---
-title: "Quick Install Managed"
-description: "Deploy your own managed Pangolin reverse proxy server in under 10 minutes with our automated installer"
+title: "Quick Install Guide"
+description: "Deploy your own managed Pangolin instance in under 10 minutes with our automated installer"
 ---
 
 <Note>
 
-[Why would I want to deploy a managed Pangolin instance?](../manage/managed.mdx)
+Self-host your own Pangolin node using the cloud control plane for out of the box high availability and a number of other benefits.
+**It's free and all traffic stays on your infrastructure.**
+
+[Why would I want to deploy a managed Pangolin instance?](/manage/managed)
 
 </Note>
 
@@ -22,8 +25,9 @@ description: "Deploy your own managed Pangolin reverse proxy server in under 10 
 
 Before you begin, ensure you have:
 
-- **Linux server** with root access and public IP address
-- **Open ports on firewall** for 80 (TCP), 443 (TCP), 51820 (UDP), and 21820 (UDP for clients)
+- **Pangolin Cloud** account. You can [create a free account here](https://pangolin.fossorial.io/auth/signup). No subscription required.
+- **Linux server** with root access and public IP address.
+- **Open ports on firewall** for 80 (TCP), 443 (TCP), 51820 (UDP), and 21820 (UDP for clients).
 
 <Tip>
 **Recommended**: Ubuntu 20.04+ or Debian 11+ for best compatibility and performance.
@@ -33,9 +37,9 @@ Before you begin, ensure you have:
 
 Need help choosing? See our [complete VPS guide](/self-host/choosing-a-vps) for suggestions.
 
-## DNS & Networking
+## Networking
 
-Before installing Pangolin, ensure you've opened the required port on your firewall. See our guide on [DNS & networking](/self-host/dns-and-networking) for more information.
+Before installing Pangolin, ensure you've opened the required port on your firewall. See our guide on [networking](/self-host/dns-and-networking#port-configuration) for more information.
 
 ## Installation Process
 
@@ -74,7 +78,13 @@ If you don't have them yet you can just select no when asked and we will create 
 
     Enter either the public IP address of your server or a domain name that resolves to it. 
 
-    If you choose to use a domain keep in mind this just resolves your node on the internet while the actual subdomains for resources will be managed in the cloud.
+    <Note>
+      The installer will attempt resolve and prefill your public IP address. Verify this is correct before preceding.
+    </Note>
+
+    <Warning>
+      If you choose to use a domain keep in mind this just resolves your node on the internet while the actual subdomains for resources will be managed in the cloud.
+    </Warning>
 
 </Step>
 
@@ -88,7 +98,7 @@ Your managed credentials have been obtained successfully.
         Secret: n7sd18twfko0q0vrb7wyclqzbvvnx1fqt7ezv8xewhdb9s7d
 ```
 
-Go to the [Pangolin dashboard](https://pangolin.fossorial.io/) and log in. Navigate to the "Self-hosted" section and add a new node. Use this ID and secret to register your node.
+Go to the [Pangolin dashboard](https://pangolin.fossorial.io/) and log in. Navigate to the "Self-hosted" section and add a new node. Select the adopt method. Use this ID and secret to register your node.
 
 <Tip>
 More than one account can use the same node credentials. This is useful for teams.
