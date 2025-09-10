@@ -23,7 +23,7 @@
             ]
           },
           {
-            "group": "Manage Pangolin",
+            "group": "Pangolin",
             "pages": [
               "manage/nodes",
               "manage/managed",
@@ -77,7 +77,7 @@
             ]
           },
           {
-            "group": "Self-host Pangolin",
+            "group": "Self-host Managed Pangolin",
             "pages": [
               "self-host/quick-install-managed",
               {
