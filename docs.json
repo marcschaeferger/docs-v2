@@ -122,7 +122,9 @@
                   "self-host/community-guides/geoblock",
                   "self-host/community-guides/crowdsec",
                   "self-host/community-guides/metrics",
-                  "self-host/community-guides/homeassistant"
+                  "self-host/community-guides/homeassistant",
+                  "self-host/community-guides/middlewaremanager",
+                  "self-host/community-guides/traefiklogsdashboard"
                 ]
               },
               "self-host/telemetry"
