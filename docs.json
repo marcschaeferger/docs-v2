@@ -152,6 +152,11 @@
           "icon": "github"
         },
         {
+          "anchor": "Slack",
+          "href": "https://digpangolin.com/slack",
+          "icon": "slack"
+        },
+        {
           "anchor": "Discord",
           "href": "https://discord.gg/HCJR8Xhme4",
           "icon": "discord"
