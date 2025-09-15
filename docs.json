@@ -46,6 +46,7 @@
               },
               "manage/healthchecks-failover",
               "manage/geoblocking",
+              "manage/blueprints",
               {
                 "group": "Clients",
                 "pages": [

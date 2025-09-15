@@ -1,0 +1,319 @@
+---
+title: "Blueprints"
+description: "Pangolin Blueprints are declarative configurations that allow you to define your resources and their settings in a structured format"
+---
+
+Blueprints provide a way to define your Pangolin resources and their configurations in a structured, declarative format. This allows for easier management, version control, and automation of your resource setups.
+
+## Overview
+
+Pangolin supports two blueprint formats:
+1. **YAML Configuration Files**: Standalone configuration files
+2. **Docker Labels**: Configuration embedded in Docker Compose files
+
+## YAML Configuration Format
+
+### Proxy Resources
+
+Proxy resources are used to expose HTTP, TCP, or UDP services through Pangolin. Below is an example configuration for proxy resources:
+
+```yaml
+proxy-resources:
+  resource-nice-id-uno:
+    name: this is a http resource
+    protocol: http
+    full-domain: uno.example.com
+    host-header: example.com
+    tls-server-name: example.com
+    headers:
+      - name: X-Example-Header
+        value: example-value
+      - name: X-Another-Header
+        value: another-value
+    rules:
+      - action: allow
+        match: ip
+        value: 1.1.1.1
+      - action: deny
+        match: cidr 
+        value: 2.2.2.2/32
+      - action: pass
+        match: path
+        value: /admin
+    targets:
+    - site: lively-yosemite-toad
+      hostname: localhost
+      method: http
+      port: 8000
+    - site: slim-alpine-chipmunk
+      hostname: localhost
+      path: /admin
+      path-match: exact
+      method: https
+      port: 8001
+  resource-nice-id-dos:
+    name: this is a raw resource
+    protocol: tcp
+    proxy-port: 3000
+    targets:
+    - site: lively-yosemite-toad 
+      hostname: localhost
+      port: 3000
+```
+
+### Authentication Configuration
+
+<Note>
+Authentication is off by default. You can enable it by adding the relevant fields in the `auth` section as shown in the example below.
+</Note>
+
+```yaml
+proxy-resources:
+  secure-resource:
+    name: Secured Resource
+    protocol: http
+    full-domain: secure.example.com
+    auth:
+      pincode: 123456
+      password: your-secure-password
+      sso-enabled: true
+      sso-roles:
+        - Member
+        - Admin
+      sso-users:
+        - user@example.com
+      whitelist-users:
+        - admin@example.com
+```
+
+### Targets-Only Resources
+
+You can define simplified resources that contain only target configurations. This is useful for adding targets to existing resources or for simple configurations:
+
+```yaml
+proxy-resources:
+  additional-targets:
+    targets:
+    - site: another-site
+      hostname: backend-server
+      method: https
+      port: 8443
+    - site: another-site
+      hostname: backup-server
+      method: http
+      port: 8080
+```
+
+<Note>
+When using targets-only resources, the `name` and `protocol` fields are not required. All other resource-level validations are skipped for these simplified configurations.
+</Note>
+
+### Client Resources
+
+Client resources are only accessible when connected via an Olm client:
+
+```yaml
+client-resources:
+  client-resource-nice-id-uno:
+    name: this is my resource
+    protocol: tcp
+    proxy-port: 3001
+    hostname: localhost
+    internal-port: 3000
+    site: lively-yosemite-toad
+```
+
+## Docker Labels Format
+
+For containerized applications, you can define blueprints using Docker labels.
+
+### Enabling Docker Socket Access
+
+To use Docker labels, enable the Docker socket when running Newt:
+
+```bash
+newt --docker-socket /var/run/docker.sock <other-args>
+```
+
+or using the environment variable:
+
+```bash
+DOCKER_SOCKET=/var/run/docker.sock
+```
+
+### Docker Compose Example
+
+```yaml
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PANGOLIN_ENDPOINT=https://p.fosrl.io
+      - NEWT_ID=h1rbsgku89wf9z3
+      - NEWT_SECRET=z7g54mbcwkglpx1aau9gb8mzcccoof2fdbs97keoakg2pp5z
+      - DOCKER_SOCKET=/var/run/docker.sock
+
+  nginx1:
+    image: nginxdemos/hello
+    container_name: nginx1
+    labels:
+      # Proxy Resource Configuration
+      - pangolin.proxy-resources.nginx.name=nginx
+      - pangolin.proxy-resources.nginx.full-domain=nginx.fosrl.io
+      - pangolin.proxy-resources.nginx.protocol=http
+      - pangolin.proxy-resources.nginx.headers[0].name=X-Example-Header
+      - pangolin.proxy-resources.nginx.headers[0].value=example-value
+      # Target Configuration - the port and hostname will be auto-detected
+      - pangolin.proxy-resources.nginx.targets[0].method=http
+      - pangolin.proxy-resources.nginx.targets[0].path=/path
+      - pangolin.proxy-resources.nginx.targets[0].path-match=prefix
+
+  nginx2:
+    image: nginxdemos/hello
+    container_name: nginx2
+    labels:
+        # Additional target for the same resource where the port and hostname are explicit
+      - pangolin.proxy-resources.nginx.targets[1].method=http
+      - pangolin.proxy-resources.nginx.targets[1].hostname=nginx2
+      - pangolin.proxy-resources.nginx.targets[1].port=80
+
+networks:
+  default:
+    name: pangolin_default
+```
+
+This will create a resource that looks like the following: 
+
+<Frame caption="Pangolin UI showing Docker Compose blueprint example">
+  <img src="/images/docker-compose-blueprint-example.png" alt="Example resource"/>
+</Frame>
+
+### Docker Labels Considerations
+
+<Card title="Automatic Discovery">
+  When hostname and internal port are not explicitly defined in labels, Pangolin will automatically detect them from the container configuration.
+</Card>
+
+<Card title="Site Assignment">
+  If no site is specified in the labels, the resource will be assigned to the Newt site that discovered the container.
+</Card>
+
+<Card title="Configuration Merging">
+  Configuration across different containers is automatically merged to form complete resource definitions. This allows you to distribute targets across multiple containers while maintaining a single logical resource.
+</Card>
+
+## Configuration Properties
+
+### Proxy Resources
+
+| Property | Type | Required | Description | Constraints |
+|----------|------|----------|-------------|-------------|
+| `name` | string | Conditional | Human-readable name for the resource | Required unless targets-only resource |
+| `protocol` | string | Conditional | Protocol type (`http`, `tcp`, or `udp`) | Required unless targets-only resource |
+| `full-domain` | string | HTTP only | Full domain name for HTTP resources | Required for HTTP protocol, must be unique |
+| `proxy-port` | number | TCP/UDP only | Port for raw TCP/UDP resources | Required for TCP/UDP, 1-65535, must be unique within proxy-resources |
+| `ssl` | boolean | No | Enable SSL/TLS for the resource | - |
+| `enabled` | boolean | No | Whether the resource is enabled | Defaults to `true` |
+| `host-header` | string | No | Custom Host header for requests | - |
+| `tls-server-name` | string | No | SNI name for TLS connections | - |
+| `headers` | array | No | Custom headers to add to requests | Each header requires `name` and `value` (min 1 char each) |
+| `rules` | array | No | Access control rules | See Rules section below |
+| `auth` | object | HTTP only | Authentication configuration | See Authentication section below |
+| `targets` | array | Yes | Target endpoints for the resource | See Targets section below |
+
+### Target Configuration
+
+| Property | Type | Required | Description | Constraints |
+|----------|------|----------|-------------|-------------|
+| `site` | string | No | Site identifier where the target is located | - |
+| `hostname` | string | Yes | Target hostname or IP address | - |
+| `port` | number | Yes | Port on the target system | 1-65535 |
+| `method` | string | HTTP only | Protocol method (`http`, `https`, or `h2c`) | Required for HTTP protocol targets |
+| `enabled` | boolean | No | Whether the target is enabled | Defaults to `true` |
+| `internal-port` | number | No | Internal port mapping | 1-65535 |
+| `path` | string | HTTP only | Path prefix, exact path, or regex pattern | - |
+| `path-match` | string | HTTP only | Path matching type (`prefix`, `exact`, or `regex`) | - |
+
+### Authentication Configuration
+
+Not allowed on TCP/UDP resources.
+
+| Property | Type | Required | Description | Constraints |
+|----------|------|----------|-------------|-------------|
+| `pincode` | number | No | 6-digit PIN for access | Must be exactly 6 digits |
+| `password` | string | No | Password for access | - |
+| `sso-enabled` | boolean | No | Enable SSO authentication | Defaults to `false` |
+| `sso-roles` | array | No | Allowed SSO roles | Cannot include "Admin" role |
+| `sso-users` | array | No | Allowed SSO user emails | Must be valid email addresses |
+| `whitelist-users` | array | No | Whitelisted user emails | Must be valid email addresses |
+
+### Rules Configuration
+
+| Property | Type | Required | Description | Constraints |
+|----------|------|----------|-------------|-------------|
+| `action` | string | Yes | Rule action (`allow`, `deny`, or `pass`) | - |
+| `match` | string | Yes | Match type (`cidr`, `path`, `ip`, or `country`) | - |
+| `value` | string | Yes | Value to match against | Format depends on match type |
+
+### Client Resources
+
+These are resources used with Pangolin Olm clients (e.g., SSH, RDP).
+
+| Property | Type | Required | Description | Constraints |
+|----------|------|----------|-------------|-------------|
+| `name` | string | Yes | Human-readable name for the resource | 2-100 characters |
+| `protocol` | string | Yes | Protocol type (`tcp` or `udp`) | - |
+| `proxy-port` | number | Yes | Port accessible to clients | 1-65535, must be unique within client-resources |
+| `hostname` | string | Yes | Target hostname or IP address | 1-255 characters |
+| `internal-port` | number | Yes | Port on the target system | 1-65535 |
+| `site` | string | No | Site identifier where the resource is located | 2-100 characters |
+| `enabled` | boolean | No | Whether the resource is enabled | Defaults to `true` |
+
+## Validation Rules and Constraints
+
+### Resource-Level Validations
+
+1. **Targets-Only Resources**: A resource can contain only the `targets` field, in which case `name` and `protocol` are not required.
+
+2. **Protocol-Specific Requirements**:
+   - **HTTP Protocol**: Must have `full-domain` and all targets must have `method` field
+   - **TCP/UDP Protocol**: Must have `proxy-port` and targets must NOT have `method` field
+   - **TCP/UDP Protocol**: Cannot have `auth` configuration
+
+3. **Port Uniqueness**:
+   - `proxy-port` values must be unique within `proxy-resources`
+   - `proxy-port` values must be unique within `client-resources`
+   - Cross-validation between proxy and client resources is not enforced
+
+4. **Domain Uniqueness**: `full-domain` values must be unique across all proxy resources
+
+5. **Target Method Requirements**: When protocol is `http`, all non-null targets must specify a `method`
+
+## Common Validation Errors
+
+When working with blueprints, you may encounter these validation errors:
+
+### "Admin role cannot be included in sso-roles"
+The `Admin` role is reserved and cannot be included in the `sso-roles` array for authentication configuration.
+
+### "Duplicate 'full-domain' values found"
+Each `full-domain` must be unique across all proxy resources. If you need multiple resources for the same domain, use different subdomains or paths.
+
+### "Duplicate 'proxy-port' values found"
+Port numbers in `proxy-port` must be unique within their resource type (proxy-resources or client-resources separately).
+
+### "When protocol is 'http', all targets must have a 'method' field"
+All targets in HTTP proxy resources must specify whether they use `http`, `https`, or `h2c`.
+
+### "When protocol is 'tcp' or 'udp', targets must not have a 'method' field"
+TCP and UDP targets should not include the `method` field as it's only applicable to HTTP resources.
+
+### "When protocol is 'tcp' or 'udp', 'auth' must not be provided"
+Authentication is only supported for HTTP resources, not TCP or UDP.
+
+### "Resource must either be targets-only or have both 'name' and 'protocol' fields"
+Resources must either contain only the `targets` field (targets-only) or include both `name` and `protocol` for complete resource definitions.
