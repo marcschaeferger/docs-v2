@@ -54,16 +54,16 @@ This guide assumes you already are familiar with Kubernetes concepts and you ful
 			<Tip>See <Link href="https://github.com/fosrl/helm-charts/tree/main/charts/newt">Newt chart values configuration options</Link>.</Tip>
 
 		    ```yaml title="values-newt.yaml"
-            newtInstances:
-              - name: main
-                enabled: true
-                auth:
-                  existingSecretName: newt-cred
-                  keys:
-                    endpointKey: PANGOLIN_ENDPOINT
-                    idKey: NEWT_ID
-                    secretKey: NEWT_SECRET
-            ```
+		    newtInstances:
+		      - name: main
+		        enabled: true
+		        auth:
+		          existingSecretName: newt-cred
+		          keys:
+		            endpointKey: PANGOLIN_ENDPOINT
+		            idKey: NEWT_ID
+		            secretKey: NEWT_SECRET
+		    ```
 			</Step>
 			<Step title="Newt Installation">
 
