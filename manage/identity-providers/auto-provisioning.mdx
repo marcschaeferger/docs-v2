@@ -3,61 +3,33 @@ title: "Auto Provisioning"
 description: "Automatically create and manage user accounts from external identity providers"
 ---
 
-Auto provisioning is a feature that allows you to automatically create and manage user accounts in Pangolin when they log in using an external identity provider. This is useful for organizations that want to streamline the onboarding process for new users and ensure that their user accounts are always up-to-date.
+Auto provisioning is a feature that allows you to automatically create and manage user accounts in Pangolin when they log in using an external identity provider rather than pre-provisioning a user with a role. This is useful for organizations that want to streamline the onboarding process for new users and ensure that their user accounts are always up-to-date.
 
 You will be able to programmatically decide the roles and organizations for new users based on the information provided by the identity provider.
-
-<CardGroup cols={2}>
-<Card title="What it does" icon="users">
-  Automatically creates user accounts when users log in through external identity providers.
-</Card>
-
-<Card title="Benefits" icon="bolt">
-  Streamlines onboarding and keeps user accounts up-to-date with external identity systems.
-</Card>
-</CardGroup>
 
 ## Enable Auto Provision
 
 Toggle the "Auth Provision Users" switch when creating or editing an identity provider.
 
+<Frame>
+  <img src="/images/auto-provision.png" />
+</Frame>
+
 ## What if Auto Provisioning is Disabled?
 
 If auto provision is disabled, organization admins will need to manually create the user accounts and select the role for each user. When creating a user, you can select the identity provider that the user will be associated with. A user will not be able to log in using the identity provider if a user is not pre-provisioned in the system.
 
-## How Auto Provisioning Works
-
-It is helpful to think of the auto provisioning process as follows:
-
-<Steps>
-<Step title="User Login">
-  User successfully logs in using an identity provider.
-</Step>
-
-<Step title="Account Creation">
-  Pangolin creates a user account for the user.
-</Step>
-
-<Step title="Organization Evaluation">
-  Pangolin will loop through each organization and evaluate the JMESPath expression for the organization. If the expression does not return true or the same ID as the current organization, the user will not be added to the organization.
-</Step>
-
-<Step title="Role Assignment">
-  For each organization, Pangolin will evaluate the JMESPath expression for the role. If no role is found with the exact name in that organization, the user will not be added to the organization.
-</Step>
-</Steps>
+<Frame>
+  <img src="/images/create-idp-user.png" />
+</Frame>
 
 ## Configuration Options
 
-### Organization Policies
-
-You can configure policy for each organization with its own roles selector expression and organization selector expression.
-
-### Default (Fallback) Policy
-
-You can optionally configure a default policy for all organizations. This will be used if the organization does not have its own policy configured.
-
 ## Selecting Roles
+
+You can choose between "Select a Role" and "Expression". Selecting a role will apply that role to all auto provisioned users. The expression will be evaluated against the token response from the IdP on each login (see examples below). You can always manually change the role of the user after they're provisioned.
+
+### Expressions
 
 Use JMESPath to map attributes from the identity provider to roles in Pangolin. See [JMESPath](https://jmespath.org/) for more information on how to use JMESPath.
 
@@ -66,7 +38,7 @@ The expression will be matched against each organization. Meaning:
 - The result of the expression must return the exact string of the role name as it is defined in the organization.
 - If no matching role is found, the user will not be added to the organization.
 
-### Example
+### Example: Role Selection 
 
 **Expression:**
 ```
@@ -94,7 +66,33 @@ contains(groups, 'admin') && 'Admin' || 'Member'
 
 This example will return the string "Admin". If the user is not a member of the "admin" group, it will return "Member".
 
-## Selecting Organizations
+## Community Edition
+
+In the Community Edition, identity providers are managed at the server level and not the individual organization. This means you must define policies per organization to map users to specific organizations and roles within those organizations. After you create an IdP, on the edit page, you can manage organization policies via the "Organization Policies" tab. You can set default (fallback) policies, or define them on a per org basis.
+
+### How Organization Policies Are Evalutated
+
+It is helpful to think of the auto provisioning process as follows:
+
+<Steps>
+<Step title="User Login">
+  User successfully logs in using an identity provider.
+</Step>
+
+<Step title="Account Creation">
+  Pangolin creates a user account for the user.
+</Step>
+
+<Step title="Organization Evaluation">
+  Pangolin will loop through each organization and evaluate the JMESPath expression for the organization. If the expression does not return true or the same ID as the current organization, the user will not be added to the organization.
+</Step>
+
+<Step title="Role Assignment">
+  For each organization, Pangolin will evaluate the JMESPath expression for the role. If no role is found with the exact name in that organization, the user will not be added to the organization.
+</Step>
+</Steps>
+ 
+### Selecting Organizations
 
 Use JMESPath to map attributes from the identity provider to organizations in Pangolin. See [JMESPath](https://jmespath.org/) for more information on how to use JMESPath.
 
@@ -159,9 +157,13 @@ This example will return true since the user is a member of the "home-lab" group
 }
 ```
 
+### Default (Fallback) Policy
+
+You can optionally configure a default policy for all organizations. This will be used if the organization does not have its own policy configured.
+
 This example will always return 'home-lab' meaning the user will always be added to the "home-lab" organization.
 
-### Example 3: Dynamic Organization Selection
+### Example 1: Dynamic Organization Selection
 
 **Expression:**
 ```
@@ -188,4 +190,3 @@ contains(groups, '{{orgId}}')
 ```
 
 When Pangolin evaluates this expression against the "home-lab" organization, it will replace `{{orgId}}` with "home-lab". The result of the expression will return true since the user is a member of the "home-lab" group.
-

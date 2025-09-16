@@ -69,6 +69,7 @@
                   "manage/identity-providers/auto-provisioning",
                   "manage/identity-providers/openid-connect",
                   "manage/identity-providers/google",
+                  "manage/identity-providers/azure",
                   "manage/identity-providers/pocket-id",
                   "manage/identity-providers/zitadel"
                 ]

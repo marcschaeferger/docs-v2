@@ -1,25 +1,19 @@
 ---
 title: "Add Identity Providers"
-description: "Configure external identity providers for user authentication"
+description: "Configure external identity providers for user authentication to resources and the organization"
 ---
 
-<Note>
-Identity providers are only available in Community Edition Pangolin instances.
-</Note>
+Identity providers allow your users to log into Pangolin and Pangolin resources using their existing accounts from external identity systems like Google, Microsoft Azure, or Okta. Instead of creating separate Pangolin accounts, users can authenticate with their familiar work or personal credentials.
 
-Identity providers let you authenticate Pangolin users using external identity providers. This is useful for organizations that want to use their existing identity provider infrastructure to manage user authentication.
+**This feature is for you if:**
+- Your organization already uses an identity provider like Google Workspace, Microsoft Entra ID, Okta, or similar systems
+- You want to centralize user management and avoid maintaining separate Pangolin accounts
+- You need to control who can access Pangolin resources through your existing user directory
+- You want users to access Pangolin using their existing credentials without creating new passwords
 
-For example, you may have users defined in Authentik, and you want these users to be able to log in to Pangolin using their existing credentials.
-
-<CardGroup cols={2}>
-<Card title="What it does" icon="users">
-  Allows users to authenticate using external identity providers instead of Pangolin's built-in authentication.
-</Card>
-
-<Card title="When to use" icon="gear">
-  Useful for organizations with existing identity infrastructure like Authentik, Keycloak, or Okta.
-</Card>
-</CardGroup>
+<Frame>
+  <img src="/images/create-idp.png" />
+</Frame>
 
 ## Supported Identity Providers
 
@@ -27,16 +21,32 @@ For example, you may have users defined in Authentik, and you want these users t
 
 This can be used to connect to any external identity provider that supports the OpenID Connect protocol such as:
 
-- **Authentik**
-- **Keycloak**
-- **Okta**
-- **Other OIDC-compliant providers**
+- Authentik
+- Keycloak
+- Okta
+- Other OIDC-compliant providers
+
+### Google
+
+<Note>
+Google IdP is only available in Pangolin Cloud and Managed Self-hosted.
+</Note>
+
+Easily set up Google Workspace authentication for your organization. Users can sign in with their Google accounts and access Pangolin resources using their existing Google credentials. Perfect for organizations already using Google Workspace for email, calendar, and other services.
+
+### Azure Entra ID
+
+<Note>
+Azure Entra ID IdP is only available in Pangolin Cloud and Managed Self-hosted.
+</Note>
+
+Integrate with Microsoft's enterprise identity platform to allow users to authenticate using their Azure Active Directory accounts. Ideal for organizations using Microsoft 365 or other Azure services, providing seamless single sign-on across your Microsoft ecosystem.
 
 ## How to Add an Identity Provider
 
 <Steps>
-<Step title="Access Server Admin">
-  Select the "Identity Providers" tab in the Server Admin UI.
+<Step title="Navigate to Identity Providers">
+  In the Pangolin organization, select the "Identity Providers" section in the sidebar.
 </Step>
 
 <Step title="Add New Provider">
@@ -44,7 +54,13 @@ This can be used to connect to any external identity provider that supports the 
 </Step>
 
 <Step title="Select Type">
-  Select the type of identity provider you want to add (OAuth2/OIDC).
+  Select the type of identity provider you want to add (OAuth2/OIDC, Google, Azure Entra ID).
+</Step>
+
+<Step title="Set up Auto Provisioning (Optional)">
+  Select the "Auto Provision Users" checkbox to automatically provision users and assign roles in Pangolin when they log in using an external identity provider. See [Auto Provision](/manage/identity-providers/auto-provisioning) for more information.
+  
+  If this is disabled, you will need to pre-provision a user in Pangolin before they can log in using an external identity provider.
 </Step>
 
 <Step title="Configure Settings">
@@ -52,7 +68,8 @@ This can be used to connect to any external identity provider that supports the 
 </Step>
 </Steps>
 
+In the Community Edition, identity providers are created and managed via the Server Admin UI rather than the organization settings.
+
 ## Auto Provisioning
 
-See [Auto Provision](manage/identity-providers/auto-provisioning) for more information on how to automatically provision users and assign orgs and roles in Pangolin when they log in using an external identity provider.
-
+See [Auto Provision](/manage/identity-providers/auto-provisioning) for more information on how to automatically provision users and assign orgs and roles in Pangolin when they log in using an external identity provider.

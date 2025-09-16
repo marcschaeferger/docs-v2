@@ -1,9 +1,9 @@
 ---
-title: "Zitadel SSO"
+title: "Zitadel"
 description: "Configure Zitadel Single Sign-On using OpenID Connect"
 ---
 
-The following steps will integrate **Zitadel** with **Pangolin SSO** using OpenID Connect (OIDC).
+The following steps will integrate Zitadel with Pangolin SSO using OpenID Connect (OIDC).
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ You need to configure an application in Zitadel:
 </Step>
 
 <Step title="Leave Redirect URIs Blank">
-  Leave `Redirect URIs` blank for now.
+  Leave `Redirect URIs` blank for now. We'll come back to this once the IdP is created.
 </Step>
 </Steps>
 
@@ -53,9 +53,9 @@ When you click create, you'll be shown the `ClientSecret` and `ClientId`. Make s
 
 ## Configuring Identity Providers in Pangolin
 
-In Pangolin, go to the **Server Admin** section. Select "Identity Providers" before proceeding with the "Add Identity Provider" button.
+In Pangolin, go to “Identity Providers” and click “Add Indentity Provider”. Select the OAuth2/OIDC provider option.
 
-**Name** should be set to something memorable (eg. Zitadel). The **Provider Type** should be set to the default `OAuth2/OIDC`.
+"Name" should be set to something memorable (eg. Zitadel). The "Provider Type" should be set to the default `OAuth2/OIDC`.
 
 ### OAuth2/OIDC Configuration (Provider Credentials and Endpoints)
 
@@ -79,10 +79,10 @@ In the OAuth2/OIDC Configuration, you'll need the following fields:
 
 ## Token Configuration
 
-You should leave all of the paths default. In the **Scopes** field, add `openid profile email`.
+You should leave all of the paths default. In the "Scopes" field, add `openid profile email`.
 
 <Note>
-Set the **Identifier Path** to "preferred_username" for Zitadel integration.
+Set the "Identifier Path" to `preferred_username` for Zitadel integration.
 </Note>
 
 When you're done, click "Create Identity Provider"! Then, copy the Redirect URL in the "General" tab as you will now need this for your **Zitadel application**.
