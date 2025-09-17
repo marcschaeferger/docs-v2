@@ -13,6 +13,18 @@ Pangolin supports two blueprint formats:
 
 ## YAML Configuration Format
 
+YAML config can be applied using the API or from a Newt site. _Application through a CLI tool is planned._
+
+<Card title="Newt YAML">
+
+    Newt automatically discovers and applies blueprints defined in YAML format when passing the `--blueprint-file` argument. For example
+
+    ```bash
+    newt --blueprint-file /path/to/blueprint.yaml <other-args>
+    ```
+
+</Card>
+
 ### Proxy Resources
 
 Proxy resources are used to expose HTTP, TCP, or UDP services through Pangolin. Below is an example configuration for proxy resources:
@@ -110,7 +122,7 @@ When using targets-only resources, the `name` and `protocol` fields are not requ
 
 ### Client Resources
 
-Client resources are only accessible when connected via an Olm client:
+Client resources define proxied resources accessible when connected via an Olm client:
 
 ```yaml
 client-resources:

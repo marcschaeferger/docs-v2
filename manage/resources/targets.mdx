@@ -54,29 +54,54 @@ newt --prefer-endpoint <specific-endpoint> <other-args>
 Pangolin currently does not load balance between nodes, only between targets on the same node.
 </Note>
 
-## Configuring Targets
+## Path-Based Routing
 
-<Steps>
-<Step title="Navigate to Resources">
-  In the Pangolin dashboard, go to the **Resources** section.
-</Step>
+Path-based routing allows you to direct traffic to different targets based on the request path. This enables sophisticated routing scenarios where different services can handle different parts of your application.
 
-<Step title="Create or Edit Resource">
-  Either create a new resource or select an existing resource to edit.
-</Step>
+### How Path-Based Routing Works
 
-<Step title="Add Target">
-  Click **Add Target** to configure a new destination.
-</Step>
+Each target can be configured with optional path routing parameters:
 
-<Step title="Configure Target Details">
-  Specify the target configuration:
-  - **Address**: IP address or hostname of the target service
-  - **Port**: Port number where the service is listening
-  - **Site**: Select the site where this target is located
-</Step>
-</Steps>
+- **Path**: The path pattern to match against incoming requests
+- **Match**: The matching strategy to use when comparing the request path
 
-<Note>
-Pangolin uses round-robin load balancing by default, distributing traffic evenly across all targets.
-</Note>
+When a request comes in, Pangolin evaluates the path against all targets and routes traffic to the target with the matching path configuration.
+
+### Match Types
+
+Pangolin supports three different matching strategies:
+
+<Card title="Exact Match">
+  **exact**: The request path must match the configured path exactly.
+  
+  Example: Path `/api/users` with exact match only matches `/api/users`
+</Card>
+
+<Card title="Prefix Match">
+  **prefix**: The request path must start with the configured path.
+  
+  Example: Path `/api` with prefix match matches `/api/users`, `/api/orders`, `/api/users/123`, etc.
+</Card>
+
+<Card title="Regex Match">
+  **regex**: The request path is matched against a regular expression pattern.
+  
+  Example: Path `^/api/users/[0-9]+$` with regex match matches `/api/users/123` but not `/api/users/abc`
+</Card>
+
+<Frame caption="Pangolin UI showing targets with path-based routing configuration">
+  <img src="/images/targets_config.png" alt="Targets example"/>
+</Frame>
+
+### Load Balancing with Path-Based Routing
+
+When multiple targets have the same path and match configuration, Pangolin will load balance between them using round-robin distribution.
+
+**Example Scenario:**
+- Target 1: Path `/api`, Match `prefix`, Address `10.0.1.10:8080`
+- Target 2: Path `/api`, Match `prefix`, Address `10.0.1.11:8080`
+- Target 3: Path `/web`, Match `prefix`, Address `10.0.1.12:80`
+
+In this configuration:
+- Requests to `/api/users` will be load balanced between Target 1 and Target 2
+- Requests to `/web/dashboard` will only go to Target 3
