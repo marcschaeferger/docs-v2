@@ -25,6 +25,22 @@ YAML config can be applied using the API or from a Newt site. _Application throu
 
 </Card>
 
+<Card title="API YAML">
+
+    You can also apply blueprints directly through the Pangolin API with an API key. [Take a look at the API documentation for more details.](https://api.pangolin.fossorial.io/v1/docs/#/Organization/put_org__orgId__blueprint)
+
+    POST to `/org/{orgId}/blueprint` with a base64 encodes JSON body like the following:
+
+    ```json
+    {
+      "blueprint": "base64-encoded-json-content"
+    }
+    ```
+
+    [See this python example](https://github.com/fosrl/pangolin/blob/dev/blueprint.py)
+
+</Card>
+
 ### Proxy Resources
 
 Proxy resources are used to expose HTTP, TCP, or UDP services through Pangolin. Below is an example configuration for proxy resources:
