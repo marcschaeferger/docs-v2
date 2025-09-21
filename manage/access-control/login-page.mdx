@@ -1,0 +1,50 @@
+---
+title: "Custom Login Page"
+description: "Configure a custom authentication page URL for your organization"
+---
+
+<Note>
+Custom auth pages are only available in managed self-hosted nodes or in the cloud.
+</Note>
+
+Custom organization authentication pages let you serve the login page at your own domain instead of the default `pangolin.fossorial.io`. This provides better user experience and brand consistency.
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/fD-NpigE4Vw?si=M5BBiqoKRWSZNGU1"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+## Benefits
+
+**For Resource Authentication:**
+- Users are redirected to your custom domain for login
+- Familiar domain builds trust and security awareness
+- Consistent branding throughout the authentication flow
+
+**For Identity Provider Integration:**
+- Centralized login page for your organization
+- Choose between multiple login methods (Google, Azure, etc.)
+- Platform SSO: login once, access all Pangolin resources
+- Direct access to the Pangolin management dashboard
+
+<Frame>
+  <img src="/images/org-auth-page.png" />
+</Frame>
+
+## Configuration
+
+1. Go to **Settings** in your organization sidebar
+2. Use the domain picker to select your custom domain
+3. Save your changes
+
+<Note>
+You need to add a custom domain to your organization first. Free domains (`*.tunneled.to`, `*.hostlocal.app`, etc.) cannot be used for auth pages. [Learn how to add domains](/manage/domains#adding-domains)
+</Note>
+
+<Frame>
+  <img src="/images/set-org-auth-page-domain.png" />
+</Frame>

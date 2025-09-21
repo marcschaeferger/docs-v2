@@ -59,7 +59,8 @@
                 "group": "Access Control",
                 "pages": [
                   "manage/access-control/rules",
-                  "manage/access-control/forwarded-headers"
+                  "manage/access-control/forwarded-headers",
+                  "manage/access-control/login-page"
                 ]
               },
               {
