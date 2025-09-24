@@ -32,6 +32,7 @@
                 "pages": [
                   "manage/sites/add-site",
                   "manage/sites/install-site",
+                  "manage/sites/install-kubernetes",
                   "manage/sites/configure-site",
                   "manage/sites/update-site"
                 ]
@@ -99,8 +100,7 @@
                 "group": "Manual Installation",
                 "pages": [
                   "self-host/manual/docker-compose",
-                  "self-host/manual/unraid",
-                  "self-host/manual/kubernetes"
+                  "self-host/manual/unraid"
                 ]
               },
               "self-host/dns-and-networking",
