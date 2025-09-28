@@ -130,6 +130,39 @@ services:
       - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
 ```
 
+#### Config file injected as Compose Secret
+
+A safer but slightly more complex way is to use [Compose Secrets](https://docs.docker.com/compose/how-tos/use-secrets/). First, create a `JSON` file containing your configuration:
+
+```json title="newt-config.secret"
+{
+  "id": "2ix2t8xk22ubpfy",
+  "secret": "nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2",
+  "endpoint": "https://example.com",
+  "tlsClientCert": ""
+}
+```
+
+Then register and reference the secret in your `docker-compose.yml`:
+
+```yaml title="docker-compose.yml"
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - CONFIG_FILE=/run/secrets/newt-config
+    secrets:
+      - newt-config
+
+secrets:
+  newt-config:
+    file: ./newt-config.secret
+```
+
+This allows you to separate sensitive secrets from plain configuration, improving security when storing or sharing your `docker-compose.yml` anywhere else.
+
 #### CLI Arguments
 
 ```yaml title="docker-compose.yml"
