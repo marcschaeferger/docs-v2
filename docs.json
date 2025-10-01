@@ -8,6 +8,10 @@
     "light": "#F36117",
     "dark": "#F36117"
   },
+  "banner": {
+    "content": "We're hiring a software engineer! [Click here](https://click.fossorial.io/L0OXr) to get in touch.",
+    "dismissible": true
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
