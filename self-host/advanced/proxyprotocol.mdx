@@ -1,17 +1,17 @@
 ---
-title: "New file"
-description: "Description of your new file."
+title: "Proxy Protocol"
+description: "Using Proxy Protocol to Preserve Client IPs for TCP/UDP backends"
 ---
 
 # Proxy Protocol (Advanced)
 
-Did you ever want to get the real ip instead of newt's IP or traefik's IP for TCP/UDP applications? Then follow below, Just be warned this is not a begineer guide.  
+Did you ever want to get the real ip instead of newt's IP or traefik's IP for TCP/UDP applications? Then follow below, Just be warned this is not a begineer guide.
 
 This guide shows how to enable Proxy Protocol manually until a GUI option becomes available.
 
 ⚠️ It’s an advanced setup, so you’ll be editing configuration files and running cli commands. ⚠️
 
-In Pangolin, make a TCP resource or UDP resource.  
+In Pangolin, make a TCP resource or UDP resource.
 
 > **Note:** Not all applications support Proxy Protocol. If you send Proxy Protocol headers to an application that isn't configured for it or doesn't support it, the connection will fail entirely.
 
@@ -21,11 +21,11 @@ In Pangolin, make a TCP resource or UDP resource.
 
 In Pangolin, go into **Resources** and create a TCP or UDP route like you normally would — pointing it to your resource which accepts Proxy Protocol.
 
-Say I'm using `tcp-8888` with Pangolin.  
+Say I'm using `tcp-8888` with Pangolin.
 
 I configure it to hit my Proxy Protocol–enabled service such as Minecraft Paper or Velocity.
 
-It'll give you a **port** to put into the compose file and an **entryPoint** to add into the `traefik_config.yml`.  
+It'll give you a **port** to put into the compose file and an **entryPoint** to add into the `traefik_config.yml`.
 
 Only do the second, not the first.
 
@@ -144,19 +144,20 @@ tcp:
       proxyProtocol:
         version: 1
 ```
+
 ---
+
 Also do note.. If you change the dummy (8888) info at all for the destination or the port or the site.. you will need to repopulate the info all over again. Starting from the JQ line above.
 
 ---
-
 
 ## Downstream Applications
 
 For downstream applications, you'll need to configure them to trust Proxy Protocol connections originating from the system where **Newt** connects to the service.
 
-For example:  
+For example:
 
-If the Newt is running on **Host B** at `192.168.1.5`,  
+If the Newt is running on **Host B** at `192.168.1.5`,
 
 your service on **Host A** at `192.168.1.4` needs to trust `192.168.1.5` as a trusted Proxy Protocol source.
 
