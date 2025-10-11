@@ -1,9 +1,7 @@
 ---
-title: "Proxy Protocol"
+title: "Proxy Protocol (Advanced)"
 description: "Using Proxy Protocol to Preserve Client IPs for TCP/UDP backends"
 ---
-
-# Proxy Protocol (Advanced)
 
 Did you ever want to get the real ip instead of newt's IP or traefik's IP for TCP/UDP applications? Then follow below, Just be warned this is not a begineer guide.
 
@@ -127,7 +125,7 @@ tcp:
 ### UDP Example
 
 ```yaml
-tcp:
+udp:
   routers:
     servicename-rtr:
       entryPoints:
