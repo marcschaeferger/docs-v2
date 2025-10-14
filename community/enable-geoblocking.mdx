@@ -9,6 +9,19 @@ To enable geoblocking in Pangolin Community you must download and place the Maxm
 Remember to keep the GeoIP database updated regularly, as IP-to-country mappings can change over time. You can just repeat the download and extraction steps periodically to ensure your database is current.
 </Tip>
 
+You can use the installer to download and place the database for you, just grab the latest installer:
+
+  ```bash
+  curl -fsSL https://digpangolin.com/get-installer.sh | bash
+  ```
+Then run the installer again:
+
+  ```bash
+  ./installer
+  ```
+
+### Manual Installation Steps
+
 <Steps>
 <Step title="Download and extract the GeoIP database">
   Download and extract the GeoLite2 Country database using the following commands:
