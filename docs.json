@@ -29,8 +29,6 @@
                     {
                         "group": "Pangolin",
                         "pages": [
-                            "manage/nodes",
-                            "manage/managed",
                             {
                                 "group": "Sites",
                                 "pages": [
@@ -85,20 +83,6 @@
                         ]
                     },
                     {
-                        "group": "Self-host Managed Pangolin",
-                        "pages": [
-                            "self-host/quick-install-managed",
-                            {
-                                "group": "Manual Installation",
-                                "pages": [
-                                    "self-host/manual/managed"
-                                ]
-                            },
-                            "self-host/choosing-a-vps",
-                            "self-host/how-to-update"
-                        ]
-                    },
-                    {
                         "group": "Community Edition",
                         "pages": [
                             "self-host/quick-install",
@@ -110,7 +94,8 @@
                                 ]
                             },
                             "self-host/dns-and-networking",
-                            "self-host/convert-managed",
+                                                        "self-host/choosing-a-vps",
+                            "self-host/how-to-update",
                             "self-host/supporter-program",
                             "self-host/system-architecture",
                             {
@@ -139,6 +124,21 @@
                                 ]
                             },
                             "self-host/telemetry"
+                        ]
+                    },
+                    {
+                        "group": "Remote Nodes",
+                        "pages": [
+                            "remote/nodes",
+                            "remote/convert-remote",
+                            "remote/remote",
+                            "remote/quick-install-remote",
+                            {
+                                "group": "Manual Installation",
+                                "pages": [
+                                    "self-host/manual/remote"
+                                ]
+                            }
                         ]
                     },
                     {
