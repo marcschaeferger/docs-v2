@@ -110,6 +110,21 @@ Choose your preferred development approach. We strongly recommend **Docker Compo
   </Warning>
 </Step>
 
+<Step title="Set your environment">
+Choose to build from the oss/enterprise/saas codebase:
+  ```bash
+  npm run set:oss
+  # or npm run set:enterprise
+  # or npm run set:saas
+  ```
+
+Then choose your database:
+  ```bash
+  npm run set:sqlite
+  # or npm run set:pg
+  ```
+</Step>
+
 <Step title="Generate database schema">
   Generate the database schema and push it:
 
