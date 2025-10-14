@@ -2,7 +2,7 @@
     "$schema": "https://mintlify.com/docs.json",
     "theme": "aspen",
     "name": "Pangolin Docs",
-    "description": "Pangolin is a self-hosted alternative to Cloudflare Tunnels, designed to provide secure and highly-available ingress access to applications.",
+    "description": "Pangolin is a communityed alternative to Cloudflare Tunnels, designed to provide secure and highly-available ingress access to applications.",
     "colors": {
         "primary": "#F36117",
         "light": "#F36117",
@@ -85,45 +85,46 @@
                     {
                         "group": "Community Edition",
                         "pages": [
-                            "self-host/quick-install",
+                            "community/quick-install",
                             {
                                 "group": "Manual Installation",
                                 "pages": [
-                                    "self-host/manual/docker-compose",
-                                    "self-host/manual/unraid"
+                                    "community/manual/docker-compose",
+                                    "community/manual/unraid"
                                 ]
                             },
-                            "self-host/dns-and-networking",
-                                                        "self-host/choosing-a-vps",
-                            "self-host/how-to-update",
-                            "self-host/supporter-program",
-                            "self-host/system-architecture",
+                            "community/dns-and-networking",
+                            "community/choosing-a-vps",
+                            "community/how-to-update",
+                            "community/supporter-program",
+                            "community/system-architecture",
+                            "community/enable-geoblocking",
                             {
                                 "group": "Advanced Configuration",
                                 "pages": [
-                                    "self-host/advanced/config-file",
-                                    "self-host/advanced/wild-card-domains",
-                                    "self-host/advanced/cloudflare-proxy",
-                                    "self-host/advanced/without-tunneling",
-                                    "self-host/advanced/container-cli-tool",
-                                    "self-host/advanced/database-options",
-                                    "self-host/advanced/integration-api"
+                                    "community/advanced/config-file",
+                                    "community/advanced/wild-card-domains",
+                                    "community/advanced/cloudflare-proxy",
+                                    "community/advanced/without-tunneling",
+                                    "community/advanced/container-cli-tool",
+                                    "community/advanced/database-options",
+                                    "community/advanced/integration-api"
                                 ]
                             },
                             {
                                 "group": "Community Guides",
                                 "pages": [
-                                    "self-host/community-guides/overview",
-                                    "self-host/community-guides/proxyprotocol",
-                                    "self-host/community-guides/geoblock",
-                                    "self-host/community-guides/crowdsec",
-                                    "self-host/community-guides/metrics",
-                                    "self-host/community-guides/homeassistant",
-                                    "self-host/community-guides/middlewaremanager",
-                                    "self-host/community-guides/traefiklogsdashboard"
+                                    "community/community-guides/overview",
+                                    "community/community-guides/proxyprotocol",
+                                    "community/community-guides/geoblock",
+                                    "community/community-guides/crowdsec",
+                                    "community/community-guides/metrics",
+                                    "community/community-guides/homeassistant",
+                                    "community/community-guides/middlewaremanager",
+                                    "community/community-guides/traefiklogsdashboard"
                                 ]
                             },
-                            "self-host/telemetry"
+                            "community/telemetry"
                         ]
                     },
                     {
@@ -136,7 +137,7 @@
                             {
                                 "group": "Manual Installation",
                                 "pages": [
-                                    "self-host/manual/remote"
+                                    "community/manual/remote"
                                 ]
                             }
                         ]
@@ -213,7 +214,7 @@
     "redirects": [
         {
             "source": "/telemetry",
-            "destination": "/self-host/telemetry"
+            "destination": "/community/telemetry"
         }
     ]
 }
