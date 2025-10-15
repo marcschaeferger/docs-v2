@@ -91,6 +91,15 @@ Your existing Pangolin data will stay in the database, so feel free to try manag
     ```
 </Step>
 
+<Step title="Change the repo and tag">
+    Update the Pangolin repo to use the remote node image. In your `docker-compose.yml`, change the `pangolin` service to use the remote image:
+
+    ```yaml
+    pangolin:
+        image: fosrl/pangolin-node:latest
+    ```
+</Step>
+
 <Step title="Add ping to Traefik">
     Edit your `config/traefik/traefik_config.yml` file to add a ping endpoint for health checks. Add this to the bottom of the file:
 
