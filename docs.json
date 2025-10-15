@@ -203,6 +203,10 @@
     {
       "source": "/telemetry",
       "destination": "/self-host/telemetry"
+    },
+    {
+      "source": "/community/:slug*",
+      "destination": "/self-host/:slug*"
     }
   ]
 }
