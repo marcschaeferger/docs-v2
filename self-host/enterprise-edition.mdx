@@ -1,0 +1,207 @@
+---
+title: "Enterprise Edition"
+description: "Learn about Pangolin Enterprise Edition features, licensing, and how to get started"
+---
+
+When self-hosting Pangolin, you can choose to run the **Community Edition** or the **Enterprise Edition**. Both editions provide the same core functionality, but the Enterprise Edition unlocks additional features for qualifying users.
+
+## Edition Comparison
+
+<CardGroup cols={2}>
+<Card title="Community Edition" icon="user">
+  • Fully compliant with AGPL-3 license  
+  • All core Pangolin features included  
+  • Perfect for personal use and small teams
+</Card>
+
+<Card title="Enterprise Edition" icon="building">
+  • Distributed under Fossorial Commercial License  
+  • Includes all Community Edition features  
+  • Unlocks "Paid Features" for qualifying users  
+  • Requires valid license key for activation
+</Card>
+</CardGroup>
+
+## Licensing Overview
+
+The Enterprise Edition is distributed under the **Fossorial Commercial License**, which provides different terms based on your organization's revenue:
+
+<Tabs>
+<Tab title="Personal Use">
+  **Free for individuals and small businesses**
+  
+  - **Revenue threshold**: Less than $100,000 USD annual revenue
+  - **License cost**: Free
+  - **Features**: Full access to all "Paid Features"
+  - **Usage**: Personal and small business use allowed
+  
+  <Check>
+  You still need to acquire a valid license key to unlock Enterprise features, even with free licensing.
+  </Check>
+</Tab>
+
+<Tab title="Business Use">
+  **Larger businesses require a paid license**
+  
+  - **Revenue threshold**: $100,000+ USD annual revenue
+  - **License cost**: Paid license required
+  - **Features**: Full access to all "Paid Features"
+  - **Usage**: Business use with commercial terms
+  
+  <Warning>
+  Businesses exceeding the revenue threshold must purchase a commercial license to use Enterprise Edition features.
+  </Warning>
+</Tab>
+</Tabs>
+
+## Getting Your License Key
+
+<Steps>
+<Step title="Create an account">
+  Visit [pangolin.fossorial.io](https://pangolin.fossorial.io) and create your account.
+</Step>
+
+<Step title="Navigate to licenses">
+  After logging in, go to the **Licenses** section in your account dashboard.
+</Step>
+
+<Step title="Fill out the application">
+  Complete the license application form.
+  
+  <Tip>
+  Innacurate representation is a violation of the license and will result in the license being revoked.
+  </Tip>
+</Step>
+
+<Step title="Receive your key">
+  Once approved, you'll receive your license key immediately. You can then activate it in your Pangolin instance in the Server Admin panel.
+</Step>
+</Steps>
+
+## License Requirements
+
+<AccordionGroup>
+<Accordion title="How many license keys do I need?">
+  **One key per Pangolin server instance**
+  
+  Each host (server) running Pangolin requires its own license key. You cannot share a single key across multiple servers.
+  
+  <Info>
+  If you're running multiple Pangolin instances for high availability, each database needs its own license key.
+  </Info>
+</Accordion>
+
+<Accordion title="Can I get a trial license?">
+  **7-day trial available for commercial users**
+  
+  Businesses that don't qualify for free licensing can request a 7-day trial key to evaluate the platform. Contact [sales@fossorial.io](mailto:sales@fossorial.io) for trial access.
+  
+  <Warning>
+  Trial keys are only available for organizations that exceed the free license revenue threshold.
+  </Warning>
+</Accordion>
+
+<Accordion title="What if I'm unsure about my license type?">
+  **Contact us for guidance**
+  
+  If you're uncertain whether you qualify for free licensing or need a commercial license, reach out to [sales@fossorial.io](mailto:sales@fossorial.io) with your organization details.
+  
+  We'll help determine the appropriate license type and pricing for your use case.
+</Accordion>
+</AccordionGroup>
+
+## Activating Enterprise Edition
+
+<Steps>
+<Step title="Use Enterprise Edition image">
+  Update your Docker Compose configuration to use the Enterprise Edition image:
+  
+  ```yaml
+  services:
+    pangolin:
+      image: fosrl/pangolin:ee-latest  # Enterprise Edition
+      # ... rest of configuration
+  ```
+  
+  <Warning>
+  The Enterprise Edition image is stagged with `ee` (e.g., `fosrl/pangolin:ee-latest`) and is different from the Community Edition (`fosrl/pangolin:latest`). Make sure to use the correct image.
+  </Warning>
+</Step>
+
+<Step title="Restart Pangolin">
+  Restart your Pangolin services to activate the license:
+  
+  ```bash
+  sudo docker compose restart pangolin
+  ```
+</Step>
+
+<Step title="Add license key to instance">
+  Log in to the Pangolin instance via the server admin credentials. Visit the Server Admin panel and naviage to the License section (`/admin/license`). Enter and activate the license key.
+  
+  <Info>
+  The license key should be provided exactly as received in your email confirmation.
+  </Info>
+</Step>
+
+<Step title="Verify activation">
+  Check your Pangolin dashboard to confirm Enterprise Edition features are unlocked.
+</Step>
+</Steps>
+
+## Current Enterprise Features
+
+<Note>
+The Enterprise Edition is currently in early development. Available features are nearly identical to the Community Edition, with additional enterprise-specific features rolling out soon.
+</Note>
+
+## Support and Contact
+
+<CardGroup cols={2}>
+<Card title="Sales Inquiries" icon="envelope">
+  **For licensing questions and quotes**
+  
+  Email: [sales@fossorial.io](mailto:sales@fossorial.io)
+  
+  Include your organization details and use case for faster assistance.
+</Card>
+</CardGroup>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+<Accordion title="Can I switch between editions?">
+  You can switch from Community to Enterprise Edition by:
+  
+  1. Updating your Docker image to `fosrl/pangolin-ee`
+  2. Adding your license key to the configuration
+  3. Restarting the services
+  
+  <Warning>
+  Switching back to Community Edition will disable Enterprise features and may require data migration.
+  </Warning>
+</Accordion>
+
+<Accordion title="Is Enterprise Edition opt-in?">
+  Enterprise Edition is fully opt-in. You can continue using the Community Edition.
+  
+  <Check>
+  The Community Edition will always remain free and open source with full AGPL-3 compliance.
+  </Check>
+</Accordion>
+
+<Accordion title="What happens if my license expires?">
+  If your license expires or becomes invalid:
+  
+  - Enterprise features will be disabled
+  - You can renew your license to restore Enterprise features
+</Accordion>
+
+<Accordion title="Can I use Enterprise Edition for personal projects?">
+  Individuals and small businesses under the revenue threshold can use Enterprise Edition for personal projects at no cost.
+  
+  <Info>
+  Personal use is explicitly allowed under the free license terms.
+  </Info>
+</Accordion>
+</AccordionGroup>

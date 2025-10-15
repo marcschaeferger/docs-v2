@@ -126,7 +126,8 @@
                   "self-host/community-guides/traefiklogsdashboard"
                 ]
               },
-              "self-host/telemetry"
+              "self-host/telemetry",
+              "self-host/enterprise-edition"
             ]
           },
           {
