@@ -3,10 +3,6 @@ title: "Health Checks"
 description: "Configure automated health monitoring and failover for high availability"
 ---
 
-<Note>
-Health checks are only available for targets created with managed self-hosted nodes or in the cloud.
-</Note>
-
 <iframe
   className="w-full aspect-video rounded-xl"
   src="https://www.youtube.com/embed/Xdme_2-AMas"
@@ -18,9 +14,7 @@ Health checks are only available for targets created with managed self-hosted no
 
 ## Overview
 
-Pangolin provides automated health checking for [targets](./resources/targets.mdx) to ensure traffic is only routed to healthy services. When you create targets with managed nodes or in the cloud, you can optionally define health check parameters to monitor the availability and responsiveness of your services.
-
-Health checks are essential for building highly available services, as they automatically remove unhealthy targets from traffic routing and load balancing.
+Pangolin provides automated health checking for [targets](./resources/targets.mdx) to ensure traffic is only routed to healthy services. Health checks are essential for building highly available services, as they automatically remove unhealthy targets from traffic routing and load balancing.
 
 ## How Health Checks Work
 
