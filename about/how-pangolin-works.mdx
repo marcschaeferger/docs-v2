@@ -3,7 +3,7 @@ title: "How Pangolin Works"
 description: "Learn about Pangolin's architecture and how its components work together to provide secure application access"
 ---
 
-Pangolin provides secure, application-specific ingress to your applications through a network of nodes. Users connect to the closest node, which authenticates them and routes their requests through secure tunnels to your applications.
+Pangolin provides secure, application-specific ingress to your applications through a network of nodes. Users connect to the closest node, which authenticates them and routes their requests through secure tunnels to your backend.
 
 <Frame>
   <img src="/images/diagram.svg" width="400" centered/>
@@ -29,10 +29,6 @@ Pangolin provides secure, application-specific ingress to your applications thro
 </Step>
 </Steps>
 
-<Info>
-Nodes provide a mesh of high availability - if one location goes down, traffic automatically routes to the next closest location.
-</Info>
-
 ## Deployment Options
 
 <CardGroup cols={2}>
@@ -40,7 +36,7 @@ Nodes provide a mesh of high availability - if one location goes down, traffic a
   Large network of nodes with automatic failover and routing to your backend services. We host the Pangolin server for you.
 </Card>
 
-<Card title="Community Edition" icon="server" href="/self-host/quick-install">
+<Card title="Self-host Pangolin" icon="server" href="/self-host/quick-install">
   Fully self-hosted, self-contained Pangolin server acting as a single node.
 </Card>
 

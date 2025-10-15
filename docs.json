@@ -1,220 +1,207 @@
 {
-    "$schema": "https://mintlify.com/docs.json",
-    "theme": "aspen",
-    "name": "Pangolin Docs",
-    "description": "Pangolin is a communityed alternative to Cloudflare Tunnels, designed to provide secure and highly-available ingress access to applications.",
-    "colors": {
-        "primary": "#F36117",
-        "light": "#F36117",
-        "dark": "#F36117"
-    },
-    "banner": {
-        "content": "We're hiring software engineers! [Click here](https://click.fossorial.io/L0OXr) to get in touch.",
-        "dismissible": true
-    },
-    "favicon": "/favicon.svg",
-    "navigation": {
-        "tabs": [
-            {
-                "tab": "Docs",
-                "groups": [
-                    {
-                        "group": "About",
-                        "pages": [
-                            "about/how-pangolin-works",
-                            "about/pangolin-vs-traditional-reverse-proxy",
-                            "about/pangolin-vs-vpn"
-                        ]
-                    },
-                    {
-                        "group": "Pangolin",
-                        "pages": [
-                            {
-                                "group": "Sites",
-                                "pages": [
-                                    "manage/sites/add-site",
-                                    "manage/sites/install-site",
-                                    "manage/sites/install-kubernetes",
-                                    "manage/sites/configure-site",
-                                    "manage/sites/update-site"
-                                ]
-                            },
-                            {
-                                "group": "Resources",
-                                "pages": [
-                                    "manage/resources/targets",
-                                    "manage/resources/tcp-udp-resources",
-                                    "manage/resources/client-resources"
-                                ]
-                            },
-                            "manage/healthchecks-failover",
-                            "manage/geoblocking",
-                            "manage/blueprints",
-                            {
-                                "group": "Clients",
-                                "pages": [
-                                    "manage/clients/add-client",
-                                    "manage/clients/install-client",
-                                    "manage/clients/configure-client"
-                                ]
-                            },
-                            {
-                                "group": "Access Control",
-                                "pages": [
-                                    "manage/access-control/rules",
-                                    "manage/access-control/forwarded-headers",
-                                    "manage/access-control/login-page"
-                                ]
-                            },
-                            {
-                                "group": "Identity Providers",
-                                "pages": [
-                                    "manage/identity-providers/add-an-idp",
-                                    "manage/identity-providers/auto-provisioning",
-                                    "manage/identity-providers/openid-connect",
-                                    "manage/identity-providers/google",
-                                    "manage/identity-providers/azure",
-                                    "manage/identity-providers/pocket-id",
-                                    "manage/identity-providers/zitadel"
-                                ]
-                            },
-                            "manage/domains",
-                            "manage/integration-api"
-                        ]
-                    },
-                    {
-                        "group": "Community Edition",
-                        "pages": [
-                            "community/quick-install",
-                            {
-                                "group": "Manual Installation",
-                                "pages": [
-                                    "community/manual/docker-compose",
-                                    "community/manual/unraid"
-                                ]
-                            },
-                            "community/dns-and-networking",
-                            "community/choosing-a-vps",
-                            "community/how-to-update",
-                            "community/supporter-program",
-                            "community/system-architecture",
-                            "community/enable-geoblocking",
-                            {
-                                "group": "Advanced Configuration",
-                                "pages": [
-                                    "community/advanced/config-file",
-                                    "community/advanced/wild-card-domains",
-                                    "community/advanced/cloudflare-proxy",
-                                    "community/advanced/without-tunneling",
-                                    "community/advanced/container-cli-tool",
-                                    "community/advanced/database-options",
-                                    "community/advanced/integration-api"
-                                ]
-                            },
-                            {
-                                "group": "Community Guides",
-                                "pages": [
-                                    "community/community-guides/overview",
-                                    "community/community-guides/proxyprotocol",
-                                    "community/community-guides/geoblock",
-                                    "community/community-guides/crowdsec",
-                                    "community/community-guides/metrics",
-                                    "community/community-guides/homeassistant",
-                                    "community/community-guides/middlewaremanager",
-                                    "community/community-guides/traefiklogsdashboard"
-                                ]
-                            },
-                            "community/telemetry"
-                        ]
-                    },
-                    {
-                        "group": "Remote Nodes",
-                        "pages": [
-                            "remote/nodes",
-                            "remote/convert-remote",
-                            "remote/remote",
-                            "remote/quick-install-remote",
-                            {
-                                "group": "Manual Installation",
-                                "pages": [
-                                    "community/manual/remote"
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "group": "Development",
-                        "pages": [
-                            "development/contributing",
-                            "development/feature-requests-and-bug-reports"
-                        ]
-                    }
-                ]
-            },
-            {
-                "tab": "Blog",
-                "href": "https://digpangolin.com/blog"
-            }
-        ],
-        "global": {
-            "anchors": [
-                {
-                    "anchor": "GitHub",
-                    "href": "https://github.com/fosrl/pangolin",
-                    "icon": "github"
-                },
-                {
-                    "anchor": "Slack",
-                    "href": "https://digpangolin.com/slack",
-                    "icon": "slack"
-                },
-                {
-                    "anchor": "Discord",
-                    "href": "https://digpangolin.com/discord",
-                    "icon": "discord"
-                },
-                {
-                    "anchor": "Support Plans",
-                    "href": "https://digpangolin.com/support",
-                    "icon": "life-ring"
-                }
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "aspen",
+  "name": "Pangolin Docs",
+  "description": "Pangolin is a self-hosted alternative to Cloudflare Tunnels, designed to provide secure and highly-available ingress access to applications.",
+  "colors": {
+    "primary": "#F36117",
+    "light": "#F36117",
+    "dark": "#F36117"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "About",
+            "pages": [
+              "about/pangolin-vs-traditional-reverse-proxy",
+              "about/pangolin-vs-vpn"
             ]
-        }
-    },
-    "logo": {
-        "light": "/logo/light.png",
-        "dark": "/logo/dark.png",
-        "href": "https://docs.digpangolin.com"
-    },
-    "navbar": {
-        "links": [
-            {
-                "label": "Contact Us",
-                "href": "mailto:numbat@fossorial.io"
-            }
-        ],
-        "primary": {
-            "type": "button",
-            "label": "Pangolin Dashboard",
-            "href": "https://pangolin.fossorial.io"
-        }
-    },
-    "footer": {
-        "socials": {
-            "github": "https://github.com/fosrl/pangolin",
-            "linkedin": "https://linkedin.com/company/digpangolin"
-        }
-    },
-    "integrations": {
-        "posthog": {
-            "apiKey": "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
-            "apiHost": "https://digpangolin.com/relay-O7yI"
-        }
-    },
-    "redirects": [
+          },
+          {
+            "group": "Manage Pangolin",
+            "pages": [
+              {
+                "group": "Sites",
+                "pages": [
+                  "manage/sites/add-site",
+                  "manage/sites/install-site",
+                  "manage/sites/install-kubernetes",
+                  "manage/sites/configure-site",
+                  "manage/sites/update-site"
+                ]
+              },
+              {
+                "group": "Resources",
+                "pages": [
+                  "manage/resources/targets",
+                  "manage/resources/tcp-udp-resources",
+                  "manage/resources/client-resources"
+                ]
+              },
+              {
+                "group": "Access Control",
+                "pages": [
+                  "manage/access-control/rules",
+                  "manage/access-control/forwarded-headers",
+                  "manage/access-control/login-page",
+                  "manage/geoblocking"
+                ]
+              },
+              {
+                "group": "Identity Providers",
+                "pages": [
+                  "manage/identity-providers/add-an-idp",
+                  "manage/identity-providers/auto-provisioning",
+                  "manage/identity-providers/openid-connect",
+                  "manage/identity-providers/google",
+                  "manage/identity-providers/azure",
+                  "manage/identity-providers/pocket-id",
+                  "manage/identity-providers/zitadel"
+                ]
+              },
+              {
+                "group": "Clients",
+                "pages": [
+                  "manage/clients/add-client",
+                  "manage/clients/install-client",
+                  "manage/clients/configure-client"
+                ]
+              },
+              "manage/healthchecks-failover",
+              "manage/blueprints",
+              {
+                "group": "Remote Nodes",
+                "pages": [
+                  "manage/remote-node/ha",
+                  "manage/remote-node/nodes",
+                  "manage/remote-node/quick-install-remote",
+                  "manage/remote-node/convert-remote"
+                ]
+              },
+              "manage/domains",
+              "manage/integration-api"
+            ]
+          },
+          {
+            "group": "Self-host Pangolin",
+            "pages": [
+              "self-host/quick-install",
+              {
+                "group": "Manual Installation",
+                "pages": [
+                  "self-host/manual/docker-compose",
+                  "self-host/manual/unraid"
+                ]
+              },
+              "self-host/dns-and-networking",
+              "self-host/choosing-a-vps",
+              "self-host/how-to-update",
+              "self-host/supporter-program",
+              {
+                "group": "Advanced Configuration",
+                "pages": [
+                  "self-host/advanced/config-file",
+                  "self-host/advanced/wild-card-domains",
+                  "self-host/advanced/cloudflare-proxy",
+                  "self-host/advanced/without-tunneling",
+                  "self-host/advanced/container-cli-tool",
+                  "self-host/advanced/database-options",
+                  "self-host/advanced/integration-api",
+                  "self-host/advanced/enable-geoblocking"
+                ]
+              },
+              {
+                "group": "Community Guides",
+                "pages": [
+                  "self-host/community-guides/overview",
+                  "self-host/community-guides/proxyprotocol",
+                  "self-host/community-guides/crowdsec",
+                  "self-host/community-guides/metrics",
+                  "self-host/community-guides/homeassistant",
+                  "self-host/community-guides/middlewaremanager",
+                  "self-host/community-guides/traefiklogsdashboard"
+                ]
+              },
+              "self-host/telemetry"
+            ]
+          },
+          {
+            "group": "Development",
+            "pages": [
+              "development/system-architecture",
+              "development/contributing",
+              "development/feature-requests-and-bug-reports"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Blog",
+        "href": "https://digpangolin.com/blog"
+      },
+      {
+        "tab": "Website",
+        "href": "https://digpangolin.com"
+      }
+    ],
+    "global": {
+      "anchors": [
         {
-            "source": "/telemetry",
-            "destination": "/community/telemetry"
+          "anchor": "GitHub",
+          "href": "https://github.com/fosrl/pangolin",
+          "icon": "github"
+        },
+        {
+          "anchor": "Slack",
+          "href": "https://digpangolin.com/slack",
+          "icon": "slack"
+        },
+        {
+          "anchor": "Discord",
+          "href": "https://digpangolin.com/discord",
+          "icon": "discord"
         }
-    ]
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://docs.digpangolin.com"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Contact Us",
+        "href": "mailto:numbat@fossorial.io"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Pangolin Dashboard",
+      "href": "https://pangolin.fossorial.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/fosrl/pangolin",
+      "linkedin": "https://linkedin.com/company/digpangolin"
+    }
+  },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
+      "apiHost": "https://digpangolin.com/relay-O7yI"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/telemetry",
+      "destination": "/self-host/telemetry"
+    }
+  ]
 }
