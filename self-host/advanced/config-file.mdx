@@ -31,20 +31,8 @@ flags:
   disable_signup_without_invite: true
   disable_user_create_org: true
 ```
-
-In managed mode: 
-
-```yaml title="config.yml"
-gerbil:
-    start_port: 51820
-    base_endpoint: "154.123.45.67" # REPLACE WITH YOUR IP OR DOMAIN
-
-managed:
-    id: "he4g78wevj25msf"
-    secret: "n7sd18twfko0q0vrb7wyclqzbvvnx1fqt7ezv8xewhdb9s7d"
-```
-
 <Warning>
+
 Generate a strong secret for `server.secret`. Use at least 32 characters with a mix of letters, numbers, and special characters.
 </Warning>
 
@@ -618,72 +606,12 @@ This section contains the complete reference for all configuration options in `c
   </Expandable>
 </ResponseField>
 
-### Managed Configuration
-
-<ResponseField name="managed" type="object">
-  Managed deployment configuration for connecting self-hosted instances to managed services.
-
-  <Expandable title="Managed">
-    {/* <ResponseField name="name" type="string">
-      Display name for the managed deployment.
-
-      **Example**: `My Self-Hosted Instance`
-    </ResponseField> */}
-
-    <ResponseField name="id" type="string">
-      Unique identifier for the managed deployment. Generated from the installer or the [Pangolin dashboard](https://pangolin.fossorial.io).
-
-      **Example**: `he4g78wevj25msf`
-    </ResponseField>
-
-    <ResponseField name="secret" type="string">
-      Secret key for authenticating with the managed service. Generated from the installer or the [Pangolin dashboard](https://pangolin.fossorial.io).
-
-      **Example**: `n7sd18twfko0q0vrb7wyclqzbvvnx1fqt7ezv8xewhdb9s7d`
-
-      <Warning>
-        Keep this secret secure and do not share it publicly.
-      </Warning>
-    </ResponseField>
-
-    <ResponseField name="endpoint" type="string">
-      The managed service endpoint to connect to. This can only change with enterprise deployments.
-
-      **Example**: `https://pangolin.fossorial.io`
-
-      **Default**: `https://pangolin.fossorial.io`
-    </ResponseField>
-
-    <ResponseField name="redirect_endpoint" type="string">
-      Custom redirect endpoint for authentication flows. This can only change for enterprise deployments.
-
-      **Example**: `https://my-pangolin.example.com`
-
-      <Note>
-        If not specified, the default dashboard URL will be used.
-      </Note>
-    </ResponseField>
-  </Expandable>
-</ResponseField>
-
 ## Environment Variables
 
 Some configuration values can be set using environment variables for enhanced security:
 
-<CardGroup cols={2}>
-<Card title="Server Secret" icon="key">
-  **Variable**: `SERVER_SECRET`
-  
-  **Config**: `server.secret`
-  
-  Use this to avoid hardcoding secrets in your config file.
-</Card>
-
-<Card title="Email Password" icon="mail">
-  **Variable**: `EMAIL_SMTP_PASS`
-  
-  **Config**: `email.smtp_pass`
-  
-  Keep SMTP passwords secure using environment variables.
-</Card>
-</CardGroup>
+| Name | Variable | Config |
+|------|----------|--------|
+| Server Secret | `SERVER_SECRET` | `server.secret` | 
+| Email Password | `EMAIL_SMTP_PASS` | `email.smtp_pass` |
+| PostgreSQL Connection String | `POSTGRES_CONNECTION_STRING` | `postgres.connection_string` |

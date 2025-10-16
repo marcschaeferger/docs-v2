@@ -79,7 +79,8 @@
                   "manage/remote-node/ha",
                   "manage/remote-node/nodes",
                   "manage/remote-node/quick-install-remote",
-                  "manage/remote-node/convert-remote"
+                  "manage/remote-node/convert-remote",
+                  "manage/remote-node/config-file"
                 ]
               },
               "manage/domains",
