@@ -90,7 +90,7 @@ Pangolin supports three different matching strategies:
 </Card>
 
 <Frame caption="Pangolin UI showing targets with path-based routing configuration">
-  <img src="/images/targets_config.png" alt="Targets example"/>
+  <img src="/images/targets_config_path_match.png" alt="Targets example"/>
 </Frame>
 
 ### Load Balancing with Path-Based Routing
@@ -105,3 +105,111 @@ When multiple targets have the same path and match configuration, Pangolin will 
 In this configuration:
 - Requests to `/api/users` will be load balanced between Target 1 and Target 2
 - Requests to `/web/dashboard` will only go to Target 3
+
+
+
+
+
+## Path Rewriting
+
+Path rewriting allows you to modify the request path before it reaches your backend service. This enables you to expose different URL structures to your users while maintaining your existing backend API paths.
+
+<Note>
+  Path rewriting requires path-based routing to be configured first. You must set up a Path Match before you can configure path rewriting.
+</Note>
+
+### How Path Rewriting Works
+
+After Pangolin matches a request using path-based routing, it can rewrite the path before forwarding the request to your target service. Each target with path matching configured can optionally include path rewriting:
+
+- **Rewrite Type**: The strategy to use for rewriting the path
+- **Rewrite Value**: The new path or pattern to apply (optional for Strip Prefix)
+
+The rewriting happens after the path match evaluation but before the request reaches your backend service.
+
+### Rewrite Types
+
+Pangolin supports four different rewriting strategies:
+
+<Card title="Prefix Rewrite">
+  **prefix**: Replaces the matched portion with a new prefix, preserving the rest of the path.
+ 
+  - With Prefix Match: `/api` → `/v2/api` transforms `/api/users` into `/v2/api/users`
+  - With Exact Match: `/old` → `/new` transforms `/old` into `/new`
+  - With Regex Match: Uses the regex pattern with the rewrite value as replacement
+</Card>
+
+<Card title="Exact Rewrite">
+  **exact**: Replaces the matched path with the exact rewrite path.
+ 
+  Example: Match path `/api/users` → Rewrite to `/users` transforms `/api/users` into `/users`
+</Card>
+
+<Card title="Regex Rewrite">
+  **regex**: Uses regular expression substitution to transform the path. Works with any match type.
+ 
+  - With Regex Match: Uses the regex pattern directly
+  - With Prefix Match: Automatically captures everything after the prefix with `(.*)` 
+  - With Exact Match: Matches the exact path
+  
+  Example: Match path `^/api/v1/(.*)` (regex) → Rewrite to `/api/v2/$1` transforms `/api/v1/users` into `/api/v2/users`
+</Card>
+
+<Card title="Strip Prefix">
+  **stripPrefix**: Removes the matched prefix from the path.
+ 
+  - With Prefix Match: Efficiently strips the prefix using Traefik's stripPrefix middleware
+  - With Exact/Regex Match: Uses regex replacement to remove the matched portion
+  - Optionally add a new prefix after stripping by providing a rewrite value
+  
+  Example: Match path `/api` (prefix) → Strip Prefix transforms `/api/users` into `/users`
+  
+  Example with new prefix: Match path `/old` (prefix) → Strip Prefix + Rewrite to `/new` transforms `/old/users` into `/new/users`
+</Card>
+
+<Frame caption="Pangolin UI showing path rewriting configuration">
+  <img src="/images/targets_config_path_rewrite.png" alt="Targets with path rewriting"/>
+</Frame>
+
+### Configuration Requirements
+
+<Warning>
+  Path rewriting validation ensures your configuration is valid:
+  - Path rewriting requires path matching to be configured first
+  - When using rewrite types other than Strip Prefix, both rewrite path and rewrite type must be specified together
+  - For regex path matching, the path pattern must be a valid regular expression
+  - Strip Prefix works with any match type, but is most effective with Prefix match type
+</Warning>
+
+### Automatic Path Normalization
+
+Pangolin automatically normalizes paths to ensure correct routing:
+- Non-regex paths that don't start with `/` will have `/` prepended automatically
+- Non-regex rewrite paths that don't start with `/` will have `/` prepended automatically
+- This ensures consistent behavior across different configurations
+
+### Load Balancing with Path Rewriting
+
+All targets with identical path match and path rewrite configurations will be load balanced together.
+
+**Example:**
+- Target 1: Match `/api` (prefix), Rewrite `/v2` (prefix), Address `10.0.1.10:8080`
+- Target 2: Match `/api` (prefix), Rewrite `/v2` (prefix), Address `10.0.1.11:8080`
+- Target 3: Match `/api` (prefix), Strip Prefix, Address `10.0.1.12:8080`
+
+Requests to `/api/users` will:
+- Load balance between Target 1 and Target 2 (both rewrite to `/v2/users`)
+- NOT be sent to Target 3 (different rewrite configuration - strips to `/users`)
+
+### Priority Calculation
+
+When using path rewriting, request priority is automatically calculated to ensure proper routing order:
+
+- Base priority: 100
+- Path matching adds +10 to priority
+- Exact match adds +5 more
+- Prefix match adds +3 more
+- Regex match adds +2 more
+- Root path `/` gets priority 1 (lowest, acts as catch-all)
+- Custom priorities override the automatic calculation
+
