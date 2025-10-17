@@ -13,7 +13,7 @@ The **new Traefik Log Dashboard (v2)** introduces a **lightweight agent-based ar
 
 ---
 
-## 🚀 Highlights (New in v2)
+## Highlights (New in v2)
 
 * **Agent-based architecture**: The Go-powered agent parses logs, exposes metrics, and supports multiple Traefik instances.
 * **Multi-agent support**: Monitor multiple Traefik setups (e.g., production, staging) from one dashboard.
@@ -55,7 +55,7 @@ accessLog:
       defaultMode: keep
 ````
 
-> 💡 Tip: JSON format is required for accurate parsing by the new agent.
+> Tip: JSON format is required for accurate parsing by the new agent.
 
 ---
 
@@ -138,7 +138,7 @@ GeoIP is optional but highly recommended for geographic analytics and maps.
 
 ### 1. Create a free MaxMind account
 
-👉 [GeoLite2 Signup](https://www.maxmind.com/en/geolite2/signup)
+[GeoLite2 Signup](https://www.maxmind.com/en/geolite2/signup)
 Generate a license key and export it for Docker use:
 
 ```bash
@@ -201,12 +201,12 @@ You should see real-time traffic metrics, GeoIP maps, error tracking, and system
 
 ## Key Features
 
-✅ **Real-time analytics** for request rates, response times, and errors
-✅ **GeoIP maps** with both City and Country-level resolution
-✅ **System health** (CPU, memory, disk)
-✅ **Multi-agent support** (monitor multiple Traefik instances)
-✅ **Secure API authentication** via token
-✅ **Responsive modern UI**
+**Real-time analytics** for request rates, response times, and errors
+**GeoIP maps** with both City and Country-level resolution
+**System health** (CPU, memory, disk)
+**Multi-agent support** (monitor multiple Traefik instances)
+**Secure API authentication** via token
+**Responsive modern UI**
 
 ---
 
@@ -256,20 +256,7 @@ Then, in the **Dashboard → Settings → Agents**, add each agent URL and token
 | ----------------------------------------- | -------------------------------- | ------------- |
 | `TRAEFIK_LOG_DASHBOARD_SYSTEM_MONITORING` | Enables system stats             | `true`        |
 | `TRAEFIK_LOG_DASHBOARD_LOG_FORMAT`        | Log parsing format               | `json`        |
-| `GOMEMLIMIT`                              | Go memory cap                    | `512MiB–1GiB` |
-| `GOGC`                                    | Garbage collector aggressiveness | `20–50`       |
-| `sampleRate` (Traefik)                    | Sampling rate for OTLP tracing   | `0.1` (10%)   |
 
-Example (Traefik OTLP tracing):
-
-```yaml
-tracing:
-  otlp:
-    grpc:
-      endpoint: "traefik-agent:5000"
-      insecure: true
-  sampleRate: 0.1
-```
 
 ---
 
@@ -287,16 +274,16 @@ tracing:
 
 ## Summary
 
-✅ Replaces the old `log-dashboard-backend` + `log-dashboard-frontend` with the new **agent-based architecture**
-✅ Supports **multiple Traefik instances**
-✅ Adds **GeoLite2 Country + City databases**
-✅ Integrates **real-time analytics + system monitoring**
-✅ Uses **MaxMind license key** for authentication and updates
+Replaces the old `log-dashboard-backend` + `log-dashboard-frontend` with the new **agent-based architecture**
+Supports **multiple Traefik instances**
+Adds **GeoLite2 Country + City databases**
+Integrates **real-time analytics + system monitoring**
+Uses **MaxMind license key** for authentication and updates
+More stable with less memory
 
 ---
 
 **Project Repository** → [https://github.com/hhftechnology/traefik-log-dashboard](https://github.com/hhftechnology/traefik-log-dashboard)
-**Discord Community** → [Join here](https://discord.gg/HDCt9MjyMJ)
 
 ```
 
