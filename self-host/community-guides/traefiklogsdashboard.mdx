@@ -1,34 +1,44 @@
 ---
-title: "Traefik Log Dashboard"
+title: "Traefik Log Dashboard (v2 – Agent Architecture)"
 ---
 
 <Note>  
 This is a community guide and is not officially supported. For issues or advanced configuration, please visit the [official repository](https://github.com/hhftechnology/traefik-log-dashboard).  
 </Note>  
 
-If you’re already using the **Pangolin stack with Traefik as your reverse proxy**, you have powerful routing in place. But raw log files and scattered metrics make it difficult to truly understand traffic patterns.
+If you’re already using the **Pangolin stack with Traefik as your reverse proxy**, you already have robust routing in place.  
+However, raw logs can be hard to interpret — making it difficult to visualize request patterns, latency, and geographic origins.
 
-The **Enhanced Traefik Log Dashboard** adds **real-time monitoring, OpenTelemetry support, and geolocation analytics**, giving you a full picture of your traffic.
+The **new Traefik Log Dashboard (v2)** introduces a **lightweight agent-based architecture** with **multi-instance scalability, enhanced GeoIP analytics, and a modern Next.js frontend** for real-time insights into your Traefik traffic.
 
-## Features
+---
 
-* **OpenTelemetry OTLP Support**: Real-time traces from Traefik v3+
-* **Hybrid Monitoring**: Combine OTLP traces with traditional log parsing
-* **Geolocation**: MaxMind GeoIP integration with automatic updates
-* **Analytics**: Live request rates, response times, error tracking
-* **Production Ready**: Resource limits, health checks, optimized GC/memory
+## 🚀 Highlights (New in v2)
+
+* **Agent-based architecture**: The Go-powered agent parses logs, exposes metrics, and supports multiple Traefik instances.
+* **Multi-agent support**: Monitor multiple Traefik setups (e.g., production, staging) from one dashboard.
+* **Next.js 14 frontend**: Real-time charts, filters, and system stats in a responsive UI.
+* **Enhanced GeoIP**: Supports both **City** and **Country** MaxMind databases.
+* **System monitoring**: Built-in CPU, memory, and disk tracking.
+* **Bearer token authentication**: Secure access between dashboard and agents.
+* **Backward compatible** with existing Traefik log setups.
+
+---
 
 ## Prerequisites
 
-* Docker + Docker Compose
-* Traefik v3.0+ (for OTLP) or v2.x (logs only)
-* A working Pangolin stack
+* Docker + Docker Compose  
+* Traefik v2.x or v3.x (logs in JSON format)  
+* A working **Pangolin stack**  
+* (Optional) MaxMind GeoLite2 databases (City + Country)
 
-## Step 1: Configure Traefik
+---
 
-### For OTLP + Logs (Recommended)
+## Step 1: Configure Traefik Logs
 
-Update `./config/traefik/traefik_config.yml`:
+Ensure Traefik is outputting **JSON logs** and **access logs** are written to a file.
+
+Update your `./config/traefik/traefik_config.yml`:
 
 ```yaml
 log:
@@ -39,178 +49,254 @@ log:
 accessLog:
   filePath: "/var/log/traefik/access.log"
   format: json
+  fields:
+    defaultMode: keep
+    headers:
+      defaultMode: keep
+````
 
-tracing:
-  otlp:
-    http:
-      endpoint: "http://log-dashboard-backend:4318/v1/traces"
-  sampleRate: 0.1 # Adjust as needed - 0.1 for 10% sampling
-  globalAttributes:
-    environment: "production"
-    service.version: "v3.0"
-    deployment.environment: "pangolin"
-```
+> 💡 Tip: JSON format is required for accurate parsing by the new agent.
 
-### For Logs Only
+---
 
-```yaml
-log:
-  level: INFO
-  filePath: "/var/log/traefik/traefik.log"
+## Step 2: Add Dashboard and Agent Services
 
-accessLog:
-  filePath: "/var/log/traefik/access.log"
-  format: json
-```
-
-## Step 2: Add Dashboard Services
-
-Extend your existing `docker-compose.yml` with:
+Extend your existing `docker-compose.yml` with the new services.
 
 ```yaml
-  log-dashboard-backend:
-    image: ghcr.io/hhftechnology/traefik-log-dashboard-backend:latest
-    container_name: log-dashboard-backend
+# Traefik Log Dashboard Agent
+  traefik-agent:
+    image: hhftechnology/traefik-log-dashboard-agent:latest
     restart: unless-stopped
     ports:
-      - "4317:4317"   # OTLP gRPC
-      - "4318:4318"   # OTLP HTTP
+      - "5000:5000"
     volumes:
+      - ./data/positions:/data
       - ./config/traefik/logs:/logs:ro
-      - ./config/maxmind:/maxmind:ro
+      - ./config/maxmind:/geoip:ro
     environment:
-      - PORT=3001
-      - TRAEFIK_LOG_FILE=/logs/access.log
-      - OTLP_ENABLED=true
-      - OTLP_GRPC_PORT=4317
-      - OTLP_HTTP_PORT=4318
-      - USE_MAXMIND=true
-      - MAXMIND_DB_PATH=/maxmind/GeoLite2-City.mmdb
-      - MAXMIND_FALLBACK_ONLINE=true
-      - GOGC=50
-      - GOMEMLIMIT=500MiB
+      # Log Paths
+      - TRAEFIK_LOG_DASHBOARD_ACCESS_PATH=/logs/access.log
+      - TRAEFIK_LOG_DASHBOARD_ERROR_PATH=/logs/traefik.log
+      
+      # Authentication
+      - TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN=YOUR_API_TOKEN
+      
+      # System Monitoring
+      - TRAEFIK_LOG_DASHBOARD_SYSTEM_MONITORING=true
+      
+      # GeoIP Configuration
+      - TRAEFIK_LOG_DASHBOARD_GEOIP_ENABLED=true
+      - TRAEFIK_LOG_DASHBOARD_GEOIP_CITY_DB=/geoip/GeoLite2-City.mmdb
+      - TRAEFIK_LOG_DASHBOARD_GEOIP_COUNTRY_DB=/geoip/GeoLite2-Country.mmdb
+      
+      # Log Format
+      - TRAEFIK_LOG_DASHBOARD_LOG_FORMAT=json
+      
+      # Server Port
+      - PORT=5000
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/api/logs/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
-  log-dashboard-frontend:
-    image: ghcr.io/hhftechnology/traefik-log-dashboard-frontend:latest
-    container_name: log-dashboard-frontend
+  # Traefik Log Dashboard - Web UI
+  traefik-dashboard:
+    image: hhftechnology/traefik-log-dashboard:dev-oltp
+    container_name: traefik-log-dashboard
     restart: unless-stopped
     ports:
-      - "3000:80"
+      - "3000:3000"
     environment:
-      - BACKEND_SERVICE=log-dashboard-backend
-      - BACKEND_PORT=3001
+      # Agent Configuration
+      - AGENT_API_URL=http://traefik-agent:5000
+      - AGENT_API_TOKEN=YOUR_API_TOKEN
+      - NODE_ENV=production
+      - PORT=3000
     depends_on:
-      - log-dashboard-backend
+      traefik-agent:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 ```
 
-## Step 3: Setup MaxMind GeoIP (Optional but Recommended)
+Please replace the YOUR_API_TOKEN with a secure token of your choice.  
 
-1. Create a free MaxMind account → [GeoLite2 signup](https://www.maxmind.com/en/geolite2/signup)
-2. Generate a license key
-3. Create directory:
+> 🆕 The new agent replaces both `log-dashboard-backend` and `log-dashboard-frontend` from the previous guide.
+
+---
+
+## Step 3: Setup MaxMind GeoIP (City + Country)
+
+GeoIP is optional but highly recommended for geographic analytics and maps.
+
+### 1. Create a free MaxMind account
+
+👉 [GeoLite2 Signup](https://www.maxmind.com/en/geolite2/signup)
+Generate a license key and export it for Docker use:
 
 ```bash
+export MAXMIND_LICENSE_KEY=your_license_key_here
 mkdir -p ./config/maxmind
-export MAXMIND_LICENSE_KEY=your_key_here
 ```
 
-4. (Optional) Add updater service:
+### 2. Add the GeoIP Database Updater
+
+Append this to your `docker-compose.yml`:
 
 ```yaml
+  # Optional: MaxMind GeoIP Database Updater
   maxmind-updater:
     image: alpine:latest
-    container_name: maxmind-db-updater
+    restart: "no"
     volumes:
       - ./config/maxmind:/data
     environment:
-      - MAXMIND_LICENSE_KEY=${MAXMIND_LICENSE_KEY}
+      - MAXMIND_LICENSE_KEY=${MAXMIND_LICENSE_KEY:-your-license-key-here}
     command: >
       sh -c "
         apk add --no-cache wget tar &&
         cd /data &&
-        wget -O GeoLite2-City.tar.gz 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz' &&
-        tar -xzf GeoLite2-City.tar.gz --strip-components=1 '*/GeoLite2-City.mmdb' &&
-        rm -f GeoLite2-City.tar.gz
+        if [ ! -f GeoLite2-City.mmdb ] || [ \"$(find . -name 'GeoLite2-City.mmdb' -mtime +7)\" ]; then
+          echo 'Updating GeoLite2-City database...'
+          wget -O GeoLite2-City.tar.gz 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${MAXMIND_LICENSE_KEY}&suffix=tar.gz' &&
+          tar --wildcards -xzf GeoLite2-City.tar.gz --strip-components=1 '*/GeoLite2-City.mmdb' &&
+          rm -f GeoLite2-City.tar.gz
+        fi &&
+        if [ ! -f GeoLite2-Country.mmdb ] || [ \"$(find . -name 'GeoLite2-Country.mmdb' -mtime +7)\" ]; then
+          echo 'Updating GeoLite2-Country database...'
+          wget -O GeoLite2-Country.tar.gz 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=${MAXMIND_LICENSE_KEY}&suffix=tar.gz' &&
+          tar --wildcards -xzf GeoLite2-Country.tar.gz --strip-components=1 '*/GeoLite2-Country.mmdb' &&
+          rm -f GeoLite2-Country.tar.gz
+        fi &&
+        echo 'GeoIP databases updated successfully.'
       "
 ```
 
-## Step 4: Launch Stack
+---
+
+## Step 4: Launch the Stack
 
 ```bash
 docker compose up -d
 docker compose ps
 ```
 
+---
+
 ## Step 5: Access the Dashboard
 
-* **Frontend UI** → [http://localhost:3000](http://localhost:3000)
+* **Web UI** → [http://localhost:3000](http://localhost:3000)
+* Default data source: `traefik-agent:5000`
+
+You should see real-time traffic metrics, GeoIP maps, error tracking, and system performance indicators.
+
+---
 
 ## Key Features
 
-* **Real-time statistics** (requests, response times, error rates)
-* **Interactive world map** (request origins via MaxMind)
-* **Service insights** (performance by router/service)
-* **Hybrid monitoring** (OTLP + logs together)
+✅ **Real-time analytics** for request rates, response times, and errors
+✅ **GeoIP maps** with both City and Country-level resolution
+✅ **System health** (CPU, memory, disk)
+✅ **Multi-agent support** (monitor multiple Traefik instances)
+✅ **Secure API authentication** via token
+✅ **Responsive modern UI**
+
+---
+
+## Advanced: Multi-Agent Setup
+
+You can deploy multiple `traefik-agent` instances across environments and connect them all to a single dashboard.
+
+Example:
+
+```yaml
+  traefik-agent-prod:
+    image: hhftechnology/traefik-log-dashboard-agent:latest
+    ports: ["5000:5000"]
+    environment:
+      - TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN=prod_token
+      - TRAEFIK_LOG_DASHBOARD_ACCESS_PATH=/logs/access.log
+      - TRAEFIK_LOG_DASHBOARD_GEOIP_ENABLED=true
+    volumes:
+      - /var/log/traefik/prod:/logs:ro
+      - ./config/maxmind:/geoip:ro
+      - ./data/positions-prod:/data
+
+  traefik-agent-staging:
+    image: hhftechnology/traefik-log-dashboard-agent:latest
+    ports: ["5001:5000"]
+    environment:
+      - TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN=staging_token
+      - TRAEFIK_LOG_DASHBOARD_ACCESS_PATH=/logs/access.log
+    volumes:
+      - /var/log/traefik/staging:/logs:ro
+      - ./config/maxmind:/geoip:ro
+
+  traefik-dashboard:
+    image: hhftechnology/traefik-log-dashboard:latest
+    ports: ["3000:3000"]
+    environment:
+      - NODE_ENV=production
+```
+
+Then, in the **Dashboard → Settings → Agents**, add each agent URL and token.
+
+---
 
 ## Performance Tuning
 
-For production or high-traffic environments, you may want to adjust settings to optimize resource usage and throughput.
+| Setting                                   | Description                      | Recommended   |
+| ----------------------------------------- | -------------------------------- | ------------- |
+| `TRAEFIK_LOG_DASHBOARD_SYSTEM_MONITORING` | Enables system stats             | `true`        |
+| `TRAEFIK_LOG_DASHBOARD_LOG_FORMAT`        | Log parsing format               | `json`        |
+| `GOMEMLIMIT`                              | Go memory cap                    | `512MiB–1GiB` |
+| `GOGC`                                    | Garbage collector aggressiveness | `20–50`       |
+| `sampleRate` (Traefik)                    | Sampling rate for OTLP tracing   | `0.1` (10%)   |
 
-### Reduce OTLP Sampling
-Lower sampling to avoid overwhelming storage and dashboards:
-
-```yaml
-tracing:
-  sampleRate: 0.1  # 10% sampling in production
-````
-
-### Prefer gRPC over HTTP
-
-For lower latency and higher throughput, enable gRPC instead of HTTP:
+Example (Traefik OTLP tracing):
 
 ```yaml
 tracing:
   otlp:
     grpc:
-      endpoint: "log-dashboard-backend:4317"
+      endpoint: "traefik-agent:5000"
       insecure: true
+  sampleRate: 0.1
 ```
 
-### Tune Backend Memory
-
-Set environment variables in `log-dashboard-backend`:
-
-```yaml
-environment:
-  - GOGC=20        # More aggressive garbage collection
-  - GOMEMLIMIT=1GiB # Hard memory limit
-```
-
-### Resource Limits
-
-Add CPU and memory constraints to containers:
-
-```yaml
-deploy:
-  resources:
-    limits:
-      cpus: "1.0"
-      memory: 512M
-    reservations:
-      cpus: "0.2"
-      memory: 128M
-```
-
-These adjustments help keep the dashboard responsive while minimizing resource overhead.
-
+---
 
 ## Troubleshooting
 
-* **OTLP not showing** → Check Traefik `tracing` config + ports `4317/4318`
-* **Logs not loading** → Ensure Traefik logs in JSON, volume mounted correctly
-* **GeoIP errors** → Verify `MAXMIND_LICENSE_KEY` and DB path
-* **Maxmind download errors** → Check license key validity by trying url with key directly in your browser
-* **Docker logs for Traefik not showing** →  Use `docker exec -it traefik tail -f /var/log/traefik/traefik.log` instead of `docker logs traefik -f` to see real-time logs on the command line.
+| Issue                 | Cause                    | Fix                                                                 |
+| --------------------- | ------------------------ | ------------------------------------------------------------------- |
+| Dashboard not loading | Container not healthy    | `docker compose ps` → check `health`                                |
+| No logs appearing     | Wrong log path or format | Ensure `access.log` is JSON and volume mounted                      |
+| GeoIP missing         | Missing databases        | Run `maxmind-updater` or mount both `.mmdb` files                   |
+| Auth errors           | Token mismatch           | Verify `AGENT_API_TOKEN` matches `TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN` |
+| Slow UI               | Large logs               | Use JSON logs + incremental read; prune logs periodically           |
 
 ---
+
+## Summary
+
+✅ Replaces the old `log-dashboard-backend` + `log-dashboard-frontend` with the new **agent-based architecture**
+✅ Supports **multiple Traefik instances**
+✅ Adds **GeoLite2 Country + City databases**
+✅ Integrates **real-time analytics + system monitoring**
+✅ Uses **MaxMind license key** for authentication and updates
+
+---
+
+**Project Repository** → [https://github.com/hhftechnology/traefik-log-dashboard](https://github.com/hhftechnology/traefik-log-dashboard)
+**Discord Community** → [Join here](https://discord.gg/HDCt9MjyMJ)
+
+```
 
