@@ -1,6 +1,6 @@
 # Pangolin Documentation
 
-Welcome to the official documentation for [Pangolin](https://github.com/fosrl/pangolin), a modern reverse proxy and networking solution. This documentation site is hosted at [docs.digpangolin.com](https://docs.digpangolin.com) and provides comprehensive guides, API references, and resources for getting started with Pangolin.
+Welcome to the official documentation for [Pangolin](https://github.com/fosrl/pangolin), a modern reverse proxy and networking solution. This documentation site is hosted at [docs.pangolin.net](https://docs.pangolin.net) and provides comprehensive guides, API references, and resources for getting started with Pangolin.
 
 ## About This Documentation
 
