@@ -143,11 +143,11 @@
       },
       {
         "tab": "Blog",
-        "href": "https://digpangolin.com/blog"
+        "href": "https://pangolin.net/blog"
       },
       {
         "tab": "Website",
-        "href": "https://digpangolin.com"
+        "href": "https://pangolin.net/"
       }
     ],
     "global": {
@@ -159,12 +159,12 @@
         },
         {
           "anchor": "Slack",
-          "href": "https://digpangolin.com/slack",
+          "href": "https://pangolin.net/slack",
           "icon": "slack"
         },
         {
           "anchor": "Discord",
-          "href": "https://digpangolin.com/discord",
+          "href": "https://pangolin.net/discord",
           "icon": "discord"
         }
       ]
@@ -173,7 +173,7 @@
   "logo": {
     "light": "/logo/light.png",
     "dark": "/logo/dark.png",
-    "href": "https://docs.digpangolin.com"
+    "href": "https://docs.pangolin.net"
   },
   "navbar": {
     "links": [
@@ -197,7 +197,7 @@
   "integrations": {
     "posthog": {
       "apiKey": "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
-      "apiHost": "https://digpangolin.com/relay-O7yI"
+      "apiHost": "https://pangolin.net/relay-O7yI"
     }
   },
   "redirects": [
