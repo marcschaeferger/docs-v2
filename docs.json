@@ -179,13 +179,13 @@
     "links": [
       {
         "label": "Contact Us",
-        "href": "mailto:numbat@fossorial.io"
+        "href": "mailto:numbat@pangolin.net"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Pangolin Dashboard",
-      "href": "https://pangolin.fossorial.io"
+      "href": "https://app.pangolin.net"
     }
   },
   "footer": {
