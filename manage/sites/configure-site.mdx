@@ -264,7 +264,7 @@ services:
     container_name: newt
     restart: unless-stopped
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.fossorial.io
+      - PANGOLIN_ENDPOINT=https://app.pangolin.net
       - NEWT_ID=2ix2t8xk22ubpfy
       - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
       - HEALTH_FILE=/tmp/healthy
@@ -281,7 +281,7 @@ services:
     command:
       - --id 31frd0uzbjvp721
       - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
-      - --endpoint https://pangolin.fossorial.io
+      - --endpoint https://app.pangolin.net
       - --health-file /tmp/healthy
 ```
 
@@ -341,7 +341,7 @@ services:
     container_name: newt
     restart: unless-stopped
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.fossorial.io
+      - PANGOLIN_ENDPOINT=https://app.pangolin.net
       - NEWT_ID=2ix2t8xk22ubpfy
       - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
       - ACCEPT_CLIENTS=true
@@ -364,7 +364,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.fossorial.io
+      - PANGOLIN_ENDPOINT=https://app.pangolin.net
       - NEWT_ID=2ix2t8xk22ubpfy
       - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
       - DOCKER_SOCKET=/var/run/docker.sock
@@ -449,7 +449,7 @@ services:
     container_name: newt
     restart: unless-stopped
     environment:
-      - PANGOLIN_ENDPOINT=https://pangolin.fossorial.io
+      - PANGOLIN_ENDPOINT=https://app.pangolin.net
       - NEWT_ID=2ix2t8xk22ubpfy
       - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
       - TLS_CLIENT_CERT=./client.p12

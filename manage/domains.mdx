@@ -100,9 +100,9 @@ When using domain delegation, you'll need to update your domain's nameservers:
 ```dns
 Type: NS
 Name: test.example.com
-Value: ns-east.fossorial.io
-Value: ns-west.fossorial.io
-Value: ns-central.fossorial.io
+Value: ns1.pangolin.net
+       ns2.pangolin.net
+       ns3.pangolin.net
 ```
 
 ### For Single Domain (CNAME)
@@ -114,12 +114,12 @@ When using CNAME domains, you'll need to add CNAME records:
 Record 1:
 Type: CNAME
 Name: test.example.com
-Value: 0nbn5rpcq4wthq6.cname.fossorial.io
+Value: 0nbn5rpcq4wthq6.cname.pangolin.net
 
 Record 2:
 Type: CNAME
 Name: _acme-challenge.test.example.com
-Value: _acme-challenge.0nbn5rpcq4wthq6.cname.fossorial.io
+Value: _acme-challenge.0nbn5rpcq4wthq6.cname.pangolin.net
 ```
 
 <Check>
