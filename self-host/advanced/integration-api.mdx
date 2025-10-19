@@ -14,11 +14,11 @@ flags:
   enable_integration_api: true
 ```
 
-If you want to specify a port other than the default `3004`, you can do so in the config as well:
+If you want to specify a port other than the default `3003`, you can do so in the config as well:
 
 ```yaml title="config.yml"
 server:
-  integration_port: 3004 # Specify different port
+  integration_port: 3003 # Specify different port
 ```
 
 ## Configure Traefik Routing
@@ -49,7 +49,7 @@ Add the following configuration to your `config/traefik/dynamic_config.yml` to e
     int-api-service:
       loadBalancer:
         servers:
-          - url: "http://pangolin:3004"
+          - url: "http://pangolin:3003"
 ```
 
 ## Access Documentation
