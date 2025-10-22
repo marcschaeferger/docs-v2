@@ -41,6 +41,11 @@ The expression will be matched against each organization. Meaning:
 ### Example: Role Selection 
 
 **Expression:**
+
+<Note>
+When entering in a string, JMESPatch requires it be surrounded by `'` (single quotes). See below:
+</Note>
+
 ```
 contains(groups, 'admin') && 'Admin' || 'Member'
 ```
@@ -68,7 +73,9 @@ This example will return the string "Admin". If the user is not a member of the 
 
 ## Community Edition
 
-In the Community Edition, identity providers are managed at the server level and not the individual organization. This means you must define policies per organization to map users to specific organizations and roles within those organizations. After you create an IdP, on the edit page, you can manage organization policies via the "Organization Policies" tab. You can set default (fallback) policies, or define them on a per org basis.
+In the Community Edition, identity providers are managed at the server level and not the individual organization. This means you must define policies per organization to map users to specific organizations and roles within those organizations. 
+
+After you create an IdP, on the edit page, you can manage organization policies via the "Organization Policies" tab. You can set default (fallback) policies, or define them on a per org basis.
 
 ### How Organization Policies Are Evalutated
 
@@ -91,6 +98,10 @@ It is helpful to think of the auto provisioning process as follows:
   For each organization, Pangolin will evaluate the JMESPath expression for the role. If no role is found with the exact name in that organization, the user will not be added to the organization.
 </Step>
 </Steps>
+
+### Selecting Roles
+
+See above examples.
  
 ### Selecting Organizations
 
@@ -132,6 +143,10 @@ contains(groups, 'home-lab')
 This example will return true since the user is a member of the "home-lab" group.
 
 ### Example 2: Fixed Organization
+
+<Note>
+When entering in a string, JMESPatch requires it be surrounded by `'` (single quotes). See below:
+</Note>
 
 **Expression:**
 ```
