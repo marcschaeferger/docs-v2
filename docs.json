@@ -209,5 +209,10 @@
       "source": "/community/:slug*",
       "destination": "/self-host/:slug*"
     }
-  ]
+  ],
+  "seo": {
+    "metatags": {
+      "canonical": "https://docs.pangolin.net"
+    }
+  }
 }
