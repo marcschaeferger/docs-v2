@@ -112,7 +112,8 @@
                   "self-host/advanced/container-cli-tool",
                   "self-host/advanced/database-options",
                   "self-host/advanced/integration-api",
-                  "self-host/advanced/enable-geoblocking"
+                  "self-host/advanced/enable-geoblocking",
+                  "self-host/advanced/metrics"
                 ]
               },
               {
