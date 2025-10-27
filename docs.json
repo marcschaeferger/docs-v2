@@ -201,6 +201,23 @@
       "apiHost": "https://pangolin.net/relay-O7yI"
     }
   },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "vscode",
+      {
+        "title": "Request a feature",
+        "description": "Open a GitHub discussion to request a new feature",
+        "icon": "plus",
+        "href": "https://github.com/fosrl/pangolin/discussions"
+      }
+    ]
+  },
   "redirects": [
     {
       "source": "/telemetry",
