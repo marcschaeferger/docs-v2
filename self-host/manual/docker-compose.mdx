@@ -317,3 +317,49 @@ http:
 ## Pangolin Configuration
 
 Create `config/config.yml` with your Pangolin settings. See the [configuration guide](/self-host/advanced/config-file) for detailed options and examples.
+
+
+## Internal DNS for a self-hosted IdP behind Pangolin
+
+If you also serve your OIDC provider through the **same Pangolin/Traefik stack**, add the IdP domain (e.g. `idp.example.com`) as a Docker network **alias** on the service exposing HTTP/HTTPS **inside** the compose network. This ensures in-stack callbacks and token/userinfo requests resolve without hair‑pinning out to the public internet.
+
+### Scenario A: Traefik shares gerbil network namespace
+Traefik attaches with `network_mode: service:gerbil`; expose alias on `gerbil`:
+
+```yaml
+services:
+  gerbil:
+    networks:
+      default:
+        aliases:
+          - idp.example.com
+    ports:
+      - 443:443
+      - 80:80
+
+  traefik:
+    network_mode: "service:gerbil"
+```
+
+### Scenario B: Traefik has its own network namespace
+Traefik runs independently; add alias on `traefik`:
+
+```yaml
+services:
+  traefik:
+    networks:
+      default:
+        aliases:
+          - idp.example.com
+    ports:
+      - 443:443
+      - 80:80
+```
+
+<Note>
+Public DNS does not change; the alias only augments internal container DNS resolution.
+</Note>
+
+<Tip>
+If OIDC flows fail internally with DNS errors or timeouts, verify the alias and that Traefik actually serves the IdP endpoints on 80/443.
+</Tip>

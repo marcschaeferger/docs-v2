@@ -64,3 +64,60 @@ Determine how to access information from the claims token returned by the identi
   Generally, `openid profile email` is sufficient for most use cases.
   </Note>
 </ResponseField>
+
+## If your IdP is hosted behind the same Pangolin stack
+
+When your OpenID Connect (OIDC) provider is also served **through this Pangolin stack** (e.g. via Traefik on the same host) and your IdP URL like `https://idp.example.com` points to this host, containers in the stack must resolve the IdP hostname **internally** for callbacks and token exchanges.
+
+Add the IdP domain as a **Docker network alias** on the service exposing ports `80`/`443` inside the compose network:
+
+<Tabs>
+  <Tab title="Traefik shares gerbil netns">
+  Traefik uses `network_mode: service:gerbil` and therefore reuses gerbil's network namespace.
+  ```yaml
+  services:
+    gerbil:
+      networks:
+        default:
+          aliases:
+            - idp.example.com  # IdP hostname resolves internally
+      ports:
+        - 443:443
+        - 80:80
+
+    traefik:
+      network_mode: "service:gerbil"
+  ```
+  </Tab>
+  <Tab title="Traefik has own netns">
+  Traefik runs in its own namespace and directly exposes 80/443.
+  ```yaml
+  services:
+    traefik:
+      networks:
+        default:
+          aliases:
+            - idp.example.com
+      ports:
+        - 443:443
+        - 80:80
+  ```
+  </Tab>
+</Tabs>
+
+<Info>
+Public DNS remains unchanged. The alias only affects **internal service-to-service resolution** for OIDC redirects and token/userinfo requests.
+</Info>
+
+### When to add the alias
+
+* You host the IdP behind the same Traefik/Pangolin stack.
+* OIDC flows originate from containers that must reach the IdP hostname internally (authorization callback, token exchange, userinfo).
+
+### If Traefik runs elsewhere
+
+If Traefik is external (different host or Kubernetes), ensure internal DNS resolves the IdP domain appropriately (CoreDNS override, /etc/hosts, or service alias in that environment).
+
+<Tip>
+Remove the alias only if all OIDC flows successfully resolve the IdP via public DNS from within the stack (hairpin NAT working). Keeping the alias avoids edge cases.
+</Tip>
